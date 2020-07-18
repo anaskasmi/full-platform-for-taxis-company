@@ -1,0 +1,144 @@
+<template>
+  <div class="text-center">
+    <v-dialog v-model="showDirectorLogin" width="450">
+      <v-card>
+        <v-toolbar color="info" dark flat>
+          <v-icon class="mr-5">verified_user</v-icon>
+
+          <v-toolbar-title>Director Login</v-toolbar-title>
+
+          <div class="flex-grow-1"></div>
+        </v-toolbar>
+
+        <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation class="pt-8">
+            <v-text-field
+              v-if="!loading"
+              v-model="email"
+              :rules="emailRules"
+              label="E-mail"
+              required
+            ></v-text-field>
+
+            <v-progress-circular v-if="loading" indeterminate color="primary"></v-progress-circular>
+
+            <v-text-field
+              v-model="password"
+              v-if="!loading"
+              :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+              :rules="[passwordRules.required, passwordRules.min]"
+              :type="showPassword ? 'text' : 'password'"
+              name="input-10-1"
+              label="Password"
+              hint="At least 8 characters"
+              counter
+              @click:append="showPassword = !showPassword"
+            ></v-text-field>
+
+            <v-checkbox label="remeber me" v-model="checkbox" class="mt-5 pa-0"></v-checkbox>
+            <v-btn
+              :disabled="!valid"
+              color="primary"
+              class="mb-2"
+              @click="login()"
+              outlined
+              block
+              tile
+            >Login</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      loading: false,
+      valid: false,
+      name: "",
+      email: "",
+      password: "",
+      showPassword: false,
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      passwordRules: {
+        required: v => !!v || "Password is required",
+        min: v => v.length >= 8 || "Min 8 characters"
+      },
+      checkbox: false
+    };
+  },
+  computed: {
+    showDirectorLogin: {
+      get() {
+        return this.$store.state.showDirectorLogin;
+      },
+      set(newval) {
+        if (newval === true) {
+          this.$store.commit("showDirectorLogin_on");
+        } else {
+          this.$store.commit("showDirectorLogin_off");
+        }
+      }
+    }
+  },
+  methods: {
+    showDirectorLogin_on: function() {
+      this.$store.commit(showDirectorLogin_on);
+    },
+    showDirectorLogin_off: function() {
+      this.$store.commit(showDirectorLogin_off);
+    },
+    login() {
+      this.loading = true;
+
+      this.$store
+        .dispatch("retrieveToken", {
+          type: "director",
+          email: this.email,
+          password: this.password,
+          remember_me: this.checkbox
+        })
+        .then(res => {
+          this.loading = false;
+          this.showDirectorLogin = false;
+          if (!res.data.changePassword) {
+            this.$swal(
+              "welcome !",
+              "you were logged in successfully as a Director!",
+              "success"
+            );
+            this.$router.push({ name: "DirectorDashboard_profile" });
+          } else {
+            let vm = this;
+            this.$router.push({ name: "DirectorDashboard_profile" });
+            this.$swal(
+              "welcome !",
+              "you were logged in successfully as a Director!",
+              "success"
+            ).then(async function(res) {
+              await vm.$swal("", "Please change your password!", "warning");
+              await vm.$router.push({
+                name: "DirectorDashboard_changePassword"
+              });
+            });
+          }
+        })
+        .catch(err => {
+          this.loading = false;
+          this.password = null;
+          this.$swal(
+            "Try again !",
+            "Sorry this does not match our records !",
+            "warning"
+          );
+        });
+    }
+  }
+};
+</script>
