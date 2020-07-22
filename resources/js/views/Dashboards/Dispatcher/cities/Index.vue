@@ -1,115 +1,248 @@
 <template>
-  <div class="wrapper_box">
-    <NavbarDispatcher></NavbarDispatcher>
-    <Drawer></Drawer>
-    <!-- start add dialog -->
-    <v-dialog v-model="addDialogIsOpen" max-width="450px">
-      <v-card v-if="addDialogIsOpen">
-        <v-card-text>
-          <v-container>
-            <div class="row float-right">
-              <v-btn text color="black" class="float-right" @click="closeAddDialog()">
-                <v-icon>close</v-icon>
-              </v-btn>
-            </div>
-            <v-container>
-              <v-row class="mt-12">
-                <v-text-field
-                  autocomplete="false"
-                  class
-                  label="City Name"
-                  required
-                  v-model="cityName_addForm"
-                  v-on:keyup.enter="addRotationType()"
-                ></v-text-field>
-     
-              </v-row>
-             
-              <v-row>
-                <v-btn color="info" class="mt-2" tile block @click="addRotationType()">Add</v-btn>
-              </v-row>
-            </v-container>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <!-- end add dialog -->
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
 
-    <!-- start edit dialog -->
-    <v-dialog v-model="editDialogIsOpen" max-width="500px">
-      <v-card v-if="editDialogIsOpen">
-        <v-card-text>
-          <v-container>
-            <div class="row float-right">
-              <v-btn text color="black" class="float-right" @click="closeEditDialog()">
-                <v-icon>close</v-icon>
-              </v-btn>
-            </div>
-            <v-container>
-              <v-row class="mt-12">
-                <v-text-field
-                  autocomplete="false"
-                  class
-                  label="City Name"
-                  required
-                  v-model="cityName_editForm"
-                  v-on:keyup.enter="editRotationType()"
-                ></v-text-field>
-              </v-row>
+            <div class="wrapper_box">
+                <NavbarDispatcher></NavbarDispatcher>
+                <Drawer></Drawer>
+                <!-- start add dialog -->
+                <v-dialog v-model="addDialogIsOpen" max-width="450px">
+                    <v-card v-if="addDialogIsOpen">
+                        <v-card-text>
+                            <v-container>
+                                <div class="row float-right">
+                                    <v-btn text color="black" class="float-right" @click="closeAddDialog()">
+                                        <v-icon>close</v-icon>
+                                    </v-btn>
+                                </div>
+                                <v-container>
+                                    <v-row class="mt-12">
+                                        <v-text-field
+                                            autocomplete="false"
+                                            class
+                                            label="City Name"
+                                            required
+                                            v-model="cityName_addForm"
+                                            v-on:keyup.enter="addRotationType()"
+                                        ></v-text-field>
 
-              <v-row>
-                <v-btn color="info" class="mt-2" tile block @click="editRotationType()">UPDATE</v-btn>
-              </v-row>
-            </v-container>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <!-- end edit dialig -->
-    <!-- header -->
-    <div class="col-12">
-    <v-btn color="grey" text tile class="float-left" :to="rotationsManagerRoute">
-      <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
-    </v-btn>
+                                    </v-row>
+
+                                    <v-row>
+                                        <v-btn color="info" class="mt-2" tile block @click="addRotationType()">Add</v-btn>
+                                    </v-row>
+                                </v-container>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+                <!-- end add dialog -->
+
+                <!-- start edit dialog -->
+                <v-dialog v-model="editDialogIsOpen" max-width="500px">
+                    <v-card v-if="editDialogIsOpen">
+                        <v-card-text>
+                            <v-container>
+                                <div class="row float-right">
+                                    <v-btn text color="black" class="float-right" @click="closeEditDialog()">
+                                        <v-icon>close</v-icon>
+                                    </v-btn>
+                                </div>
+                                <v-container>
+                                    <v-row class="mt-12">
+                                        <v-text-field
+                                            autocomplete="false"
+                                            class
+                                            label="City Name"
+                                            required
+                                            v-model="cityName_editForm"
+                                            v-on:keyup.enter="editRotationType()"
+                                        ></v-text-field>
+                                    </v-row>
+
+                                    <v-row>
+                                        <v-btn color="info" class="mt-2" tile block @click="editRotationType()">UPDATE</v-btn>
+                                    </v-row>
+                                </v-container>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+                <!-- end edit dialig -->
+                <!-- header -->
+                <div class="col-12">
+                    <v-btn color="grey" text tile class="float-left" :to="rotationsManagerRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                    </v-btn>
+                </div>
+                <div class="wrapper_header mt-10">
+                    <div class="title_header text-uppercase">Cities</div>
+                    <v-btn
+                        link
+                        tile
+                        class="ma-2 button_header"
+                        outlined
+                        color="success "
+                        @click="openAddDialog()"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New City</div>
+                    </v-btn>
+                </div>
+                <hr />
+                <!-- progress -->
+                <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                <!-- table -->
+                <div class="table-responsive" v-if="!isLoading">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(city,i) in cities" :key="i">
+                            <td>{{city.name}}</td>
+                            <td class="text-right">
+                                <v-icon color="green" class="mx-1" @click="openEditDialog(city)">edit</v-icon>
+                                <v-icon color="red" class="mx-1" @click="deleteRotationType(city)">delete</v-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDispatcher></NavbarDispatcher>
+            <div class="container px-4">
+                <div class="wrapper_box">
+
+                    <!-- start add dialog -->
+                    <v-dialog v-model="addDialogIsOpen" max-width="450px">
+                        <v-card v-if="addDialogIsOpen">
+                            <v-card-text>
+                                <v-container>
+                                    <div class="row float-right">
+                                        <v-btn text color="black" class="float-right" @click="closeAddDialog()">
+                                            <v-icon>close</v-icon>
+                                        </v-btn>
+                                    </div>
+                                    <v-container>
+                                        <v-row class="mt-12">
+                                            <v-text-field
+                                                autocomplete="false"
+                                                class
+                                                label="City Name"
+                                                required
+                                                v-model="cityName_addForm"
+                                                v-on:keyup.enter="addRotationType()"
+                                            ></v-text-field>
+
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-btn color="info" class="mt-2" tile block @click="addRotationType()">Add</v-btn>
+                                        </v-row>
+                                    </v-container>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                    <!-- end add dialog -->
+
+                    <!-- start edit dialog -->
+                    <v-dialog v-model="editDialogIsOpen" max-width="500px">
+                        <v-card v-if="editDialogIsOpen">
+                            <v-card-text>
+                                <v-container>
+                                    <div class="row float-right">
+                                        <v-btn text color="black" class="float-right" @click="closeEditDialog()">
+                                            <v-icon>close</v-icon>
+                                        </v-btn>
+                                    </div>
+                                    <v-container>
+                                        <v-row class="mt-12">
+                                            <v-text-field
+                                                autocomplete="false"
+                                                class
+                                                label="City Name"
+                                                required
+                                                v-model="cityName_editForm"
+                                                v-on:keyup.enter="editRotationType()"
+                                            ></v-text-field>
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-btn color="info" class="mt-2" tile block @click="editRotationType()">UPDATE</v-btn>
+                                        </v-row>
+                                    </v-container>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                    <!-- end edit dialig -->
+                    <!-- header -->
+                    <div class="">
+                        <v-btn color="grey" text block tile class="" :to="rotationsManagerRoute">
+                            <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                        </v-btn>
+                    </div>
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        Log Sheet
+                    </div>
+                    <hr>
+                    <v-btn
+                        link
+                        tile
+                        block
+                        class=""
+                        outlined
+                        color="success "
+                        @click="openAddDialog()"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New City</div>
+                    </v-btn>
+                    <hr />
+                    <!-- progress -->
+                    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                    <!-- table -->
+                    <div class="table-responsive" v-if="!isLoading">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(city,i) in cities" :key="i">
+                                <td>{{city.name}}</td>
+                                <td class="text-right">
+                                    <v-icon color="green" class="mx-1" @click="openEditDialog(city)">edit</v-icon>
+                                    <v-icon color="red" class="mx-1" @click="deleteRotationType(city)">delete</v-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="wrapper_header mt-10">
-      <div class="title_header text-uppercase">Cities</div>
-      <v-btn
-        link
-        tile
-        class="ma-2 button_header"
-        outlined
-        color="success "
-        @click="openAddDialog()"
-      >
-        <v-icon left>mdi-pencil</v-icon>
-        <div>New City</div>
-      </v-btn>
-    </div>
-    <hr />
-    <!-- progress -->
-    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
-    <!-- table -->
-    <div class="table-responsive" v-if="!isLoading">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(city,i) in cities" :key="i">
-            <td>{{city.name}}</td>
-            <td class="text-right">
-              <v-icon color="green" class="mx-1" @click="openEditDialog(city)">edit</v-icon>
-              <v-icon color="red" class="mx-1" @click="deleteRotationType(city)">delete</v-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 </template>
 <script>
 import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
@@ -131,9 +264,9 @@ export default {
       editDialogIsOpen: false,
       editedId: "",
       cityName_addForm: "",
-     
+
       cityName_editForm: "",
-     
+
       isLoading: true,
       rotationsManagerRoute:{ name: "DispatcherDashboard_rotationsManager",}
     };
@@ -165,7 +298,7 @@ export default {
     closeAddDialog() {
       this.addDialogIsOpen = false;
       this.cityName_addForm = "";
-    
+
     },
 
     openEditDialog(city) {
@@ -182,7 +315,7 @@ export default {
     addRotationType() {
       if (
         !this.cityName_addForm ||
-        
+
         this.cityName_addForm == " "
       ) {
         this.$swal({

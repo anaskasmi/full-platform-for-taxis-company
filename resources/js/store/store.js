@@ -8,6 +8,8 @@ export const store = new Vuex.Store({
 
     state: {
 
+
+
         BASE_URL: 'http://app.test',
         // BASE_URL : 'https://mytaxioffice.com',
         //tokens
@@ -27,12 +29,14 @@ export const store = new Vuex.Store({
         showNavbarDispatcher: false,
         //Drawers
         showDrawerDriver: false,
+
         showDrawerAdmin: false,
         showDrawerDirector: false,
         showDrawerDispatcher: false,
         //daily log sheet components
         showDay: false,
         showCurrentMonth: false,
+
         showPastMonth: false,
         showCurrentYear: false,
         showPastYear: false,

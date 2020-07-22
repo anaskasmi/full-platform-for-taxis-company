@@ -48,7 +48,11 @@
 
         >
 
-            <v-toolbar-title>My Taxi Office</v-toolbar-title>
+            <v-toolbar-title >
+                <router-link to="/" class="text-white">
+                    My Taxi Office
+                </router-link>
+            </v-toolbar-title>
 
             <v-spacer></v-spacer>
 
@@ -102,15 +106,15 @@
                 items: [
                     {title: 'Profile', link: {name: 'DriverDashboard_profile'}},
                     {title: 'Trips', link: {name: 'DriverDashboard_trips'}},
-                    {title: 'Daily LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
-                    {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
+                    {title: 'LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
+                    // {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
                     {title: 'Rotations', link: {name: 'DriverDashboard_rotations_categories'}},
                 ],
                 mobileItems: [
                     {title: 'Profile', link: {name: 'DriverDashboard_profile'}},
                     {title: 'Trips', link: {name: 'DriverDashboard_trips'}},
-                    {title: 'Daily LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
-                    {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
+                    {title: 'LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
+                    // {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
                     {title: 'Rotations', link: {name: 'DriverDashboard_rotations_categories'}},
                     {title: 'Change Password', link: {name: 'DriverDashboard_changePassword'}},
                     // {title: 'Logout', link: {name: '#'}},

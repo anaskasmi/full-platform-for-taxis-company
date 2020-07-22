@@ -1,152 +1,318 @@
 <template>
-  <div>
-    <NavbarDispatcher></NavbarDispatcher>
-    <Drawer></Drawer>
-    <!-- page loading start -->
-    <div class="text-center">
-      <v-dialog v-model="pageIsLoading" hide-overlay persistent width="500">
-        <v-card color="primary" dark>
-          <v-card-text>
-            Please wait !
-            <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
-    </div>
-    <!-- page loading end -->
-    <!-- back button -->
-    <div class="row col-12">
-      <v-btn color="grey" text tile class="float-left" :to="authorizationFilesRoute">
-        <v-icon class="mr-2">keyboard_return</v-icon>Authorization Files
-      </v-btn>
-    </div>
-    <hr />
-
-    <div>
-      <form id="form" v-on:submit.prevent>
-        <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
-          <v-toolbar-title>Document Information</v-toolbar-title>
-        </v-app-bar>
-        <!-- first name  -->
-        <div class="form-group">
-          <v-text-field label="First name" name="first_name" type="text"></v-text-field>
-        </div>
-        <!-- last name  -->
-        <div class="form-group">
-          <v-text-field label="Last name" name="last_name" type="text"></v-text-field>
-        </div>
-        <!-- Account Number  -->
-        <div class="form-group">
-          <v-text-field label="Account Number" name="account_number" type="text"></v-text-field>
-        </div>
-        <!-- Account Type  -->
-        <v-select
-          label="Account Type"
-          name="account_type"
-          ref="edit_envelopes_ref"
-          :items="accountTypesNames"
-          v-model="authorizationFile.account_type"
-        ></v-select>
-        <!-- PO Number  -->
-        <div class="form-group">
-          <v-text-field label="PO Number" name="po_number" type="text"></v-text-field>
-        </div>
-        <!-- Status  -->
-
-        <v-select
-          label="Status"
-          name="status"
-          ref="edit_envelopes_ref"
-          :items="statuses"
-          v-model="authorizationFile.status"
-        ></v-select>
-
-        <!-- Expiry Date -->
-        <v-menu
-          v-model="expiry_date_modal"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          min-width="290px"
-        >
-          <template v-slot:activator="{  }">
-            <v-text-field
-              readonly
-              autocomplete="off"
-              v-model="authorizationFile.expiry_date"
-              label="Expiry Date (yyyy-mm-dd)"
-              prepend-icon="event"
-              name="expiry_date"
-              @click="expiry_date_modal=true;"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="authorizationFile.expiry_date"
-
-            @input="expiry_date_modal = false;"
-          ></v-date-picker>
-        </v-menu>
-
-
-        <v-row align="center" justify="center" class="col-12">
-          <v-row>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
             <div>
-              <label for="image">
-                <input
-                  type="file"
-                  @change="onFileChange"
-                  accept="image/png, image/jpeg, image/bmp, application/pdf"
-                  id="image"
-                  class="inputfile"
-                  name="file_path"
-                />
-                <div
-                  v-if="document_url && fileExtention=='pdf'"
-                  class="upload_btn upload_info border border-info ml-3"
-                >
-                  <v-icon color="blue darken-2">mdi-upload-outline</v-icon>
-                  {{filename}}
+                <NavbarDispatcher></NavbarDispatcher>
+                <Drawer></Drawer>
+                <!-- page loading start -->
+                <div class="text-center">
+                    <v-dialog v-model="pageIsLoading" hide-overlay persistent width="500">
+                        <v-card color="primary" dark>
+                            <v-card-text>
+                                Please wait !
+                                <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
                 </div>
+                <!-- page loading end -->
+                <!-- back button -->
+                <div class="row col-12">
+                    <v-btn color="grey" text tile class="float-left" :to="authorizationFilesRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>Authorization Files
+                    </v-btn>
+                </div>
+                <hr />
 
-                <div v-else class="upload_btn upload_info border border-info ml-3">
-                  <v-icon color="blue darken-2">mdi-upload-outline</v-icon>UPLOAD AUTHORIZATION FILE
+                <div>
+                    <form id="form" v-on:submit.prevent>
+                        <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
+                            <v-toolbar-title>Document Information</v-toolbar-title>
+                        </v-app-bar>
+                        <!-- first name  -->
+                        <div class="form-group">
+                            <v-text-field label="First name" name="first_name" type="text"></v-text-field>
+                        </div>
+                        <!-- last name  -->
+                        <div class="form-group">
+                            <v-text-field label="Last name" name="last_name" type="text"></v-text-field>
+                        </div>
+                        <!-- Account Number  -->
+                        <div class="form-group">
+                            <v-text-field label="Account Number" name="account_number" type="text"></v-text-field>
+                        </div>
+                        <!-- Account Type  -->
+                        <v-select
+                            label="Account Type"
+                            name="account_type"
+                            ref="edit_envelopes_ref"
+                            :items="accountTypesNames"
+                            v-model="authorizationFile.account_type"
+                        ></v-select>
+                        <!-- PO Number  -->
+                        <div class="form-group">
+                            <v-text-field label="PO Number" name="po_number" type="text"></v-text-field>
+                        </div>
+                        <!-- Status  -->
+
+                        <v-select
+                            label="Status"
+                            name="status"
+                            ref="edit_envelopes_ref"
+                            :items="statuses"
+                            v-model="authorizationFile.status"
+                        ></v-select>
+
+                        <!-- Expiry Date -->
+                        <v-menu
+                            v-model="expiry_date_modal"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{  }">
+                                <v-text-field
+                                    readonly
+                                    autocomplete="off"
+                                    v-model="authorizationFile.expiry_date"
+                                    label="Expiry Date (yyyy-mm-dd)"
+                                    prepend-icon="event"
+                                    name="expiry_date"
+                                    @click="expiry_date_modal=true;"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker
+                                v-model="authorizationFile.expiry_date"
+
+                                @input="expiry_date_modal = false;"
+                            ></v-date-picker>
+                        </v-menu>
+
+
+                        <v-row align="center" justify="center" class="col-12">
+                            <v-row>
+                                <div>
+                                    <label for="image">
+                                        <input
+                                            type="file"
+                                            @change="onFileChange"
+                                            accept="image/png, image/jpeg, image/bmp, application/pdf"
+                                            id="image"
+                                            class="inputfile"
+                                            name="file_path"
+                                        />
+                                        <div
+                                            v-if="document_url && fileExtention=='pdf'"
+                                            class="upload_btn upload_info border border-info ml-3"
+                                        >
+                                            <v-icon color="blue darken-2">mdi-upload-outline</v-icon>
+                                            {{filename}}
+                                        </div>
+
+                                        <div v-else class="upload_btn upload_info border border-info ml-3">
+                                            <v-icon color="blue darken-2">mdi-upload-outline</v-icon>UPLOAD AUTHORIZATION FILE
+                                        </div>
+                                    </label>
+                                </div>
+                            </v-row>
+
+                        </v-row>
+                        <!-- Document image  -->
+                        <div v-if="document_url && fileExtention!='pdf'">
+                            <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
+                                <v-toolbar-title>Document File</v-toolbar-title>
+                            </v-app-bar>
+                            <div v-if="document_url" id="preview" class="col-12 ma-auto align-center">
+                                <img
+                                    v-if="document_url"
+                                    :src="document_url"
+                                    class="shadow-lg p-3 mb-5 bg-white rounded"
+                                />
+                            </div>
+                        </div>
+                        <!-- Document pdf  -->
+                        <div id="preview" class="ma-auto align-center"></div>
+
+                        <!-- submit btn -->
+                        <div class="row col-12 mt-4" v-if="!pageIsLoading">
+                            <v-btn color="primary" tile class="float-left" @click="AddAuthorizationFile()">submit</v-btn>
+                            <v-btn
+                                color="grey lighten-1"
+                                dark
+                                tile
+                                class="float-left mx-4"
+                                @click="$router.go(-1)"
+                            >cancel</v-btn>
+                        </div>
+                    </form>
                 </div>
-              </label>
             </div>
-          </v-row>
-          
-        </v-row>
-        <!-- Document image  -->
-        <div v-if="document_url && fileExtention!='pdf'">
-          <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
-            <v-toolbar-title>Document File</v-toolbar-title>
-          </v-app-bar>
-          <div v-if="document_url" id="preview" class="col-12 ma-auto align-center">
-            <img
-              v-if="document_url"
-              :src="document_url"
-              class="shadow-lg p-3 mb-5 bg-white rounded"
-            />
-          </div>
         </div>
-        <!-- Document pdf  -->
-        <div id="preview" class="ma-auto align-center"></div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
 
-        <!-- submit btn -->
-        <div class="row col-12 mt-4" v-if="!pageIsLoading">
-          <v-btn color="primary" tile class="float-left" @click="AddAuthorizationFile()">submit</v-btn>
-          <v-btn
-            color="grey lighten-1"
-            dark
-            tile
-            class="float-left mx-4"
-            @click="$router.go(-1)"
-          >cancel</v-btn>
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDispatcher></NavbarDispatcher>
+
+            <div class="container px-4">
+                <div>
+                    <!-- page loading start -->
+                    <div class="text-center">
+                        <v-dialog v-model="pageIsLoading" hide-overlay persistent width="500">
+                            <v-card color="primary" dark>
+                                <v-card-text>
+                                    Please wait !
+                                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
+                    </div>
+                    <!-- page loading end -->
+                    <!-- back button -->
+                    <div class="">
+                        <v-btn color="grey" text tile block class="text-center" :to="authorizationFilesRoute">
+                            <v-icon class="mr-2">keyboard_return</v-icon>Authorization Files
+                        </v-btn>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <form id="form" v-on:submit.prevent>
+                            <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
+                                <v-toolbar-title>Document Information</v-toolbar-title>
+                            </v-app-bar>
+                            <!-- first name  -->
+                            <div class="form-group">
+                                <v-text-field label="First name" name="first_name" type="text"></v-text-field>
+                            </div>
+                            <!-- last name  -->
+                            <div class="form-group">
+                                <v-text-field label="Last name" name="last_name" type="text"></v-text-field>
+                            </div>
+                            <!-- Account Number  -->
+                            <div class="form-group">
+                                <v-text-field label="Account Number" name="account_number" type="text"></v-text-field>
+                            </div>
+                            <!-- Account Type  -->
+                            <v-select
+                                label="Account Type"
+                                name="account_type"
+                                ref="edit_envelopes_ref"
+                                :items="accountTypesNames"
+                                v-model="authorizationFile.account_type"
+                            ></v-select>
+                            <!-- PO Number  -->
+                            <div class="form-group">
+                                <v-text-field label="PO Number" name="po_number" type="text"></v-text-field>
+                            </div>
+                            <!-- Status  -->
+
+                            <v-select
+                                label="Status"
+                                name="status"
+                                ref="edit_envelopes_ref"
+                                :items="statuses"
+                                v-model="authorizationFile.status"
+                            ></v-select>
+
+                            <!-- Expiry Date -->
+                            <v-menu
+                                v-model="expiry_date_modal"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="290px"
+                            >
+                                <template v-slot:activator="{  }">
+                                    <v-text-field
+                                        readonly
+                                        autocomplete="off"
+                                        v-model="authorizationFile.expiry_date"
+                                        label="Expiry Date (yyyy-mm-dd)"
+                                        prepend-icon="event"
+                                        name="expiry_date"
+                                        @click="expiry_date_modal=true;"
+                                    ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                    v-model="authorizationFile.expiry_date"
+
+                                    @input="expiry_date_modal = false;"
+                                ></v-date-picker>
+                            </v-menu>
+
+
+                            <v-row >
+                                <v-row class="row justify-center" >
+                                    <div>
+                                        <label for="image">
+                                            <input
+                                                type="file"
+                                                @change="onFileChange"
+                                                accept="image/png, image/jpeg, image/bmp, application/pdf"
+                                                id="image"
+                                                class="inputfile"
+                                                name="file_path"
+                                            />
+                                            <div
+                                                v-if="document_url && fileExtention=='pdf'"
+                                                class="upload_btn upload_info border border-info"
+                                            >
+                                                <v-icon color="blue darken-2">mdi-upload-outline</v-icon>
+                                                {{filename}}
+                                            </div>
+
+                                            <div v-else class="upload_btn upload_info border border-info ">
+                                                <v-icon color="blue darken-2">mdi-upload-outline</v-icon>UPLOAD AUTHORIZATION FILE
+                                            </div>
+                                        </label>
+                                    </div>
+                                </v-row>
+
+                            </v-row>
+                            <!-- Document image  -->
+                            <div v-if="document_url && fileExtention!='pdf'">
+                                <v-app-bar dark color="#1F7087" dense class="mt-12 mb-10 align-center">
+                                    <v-toolbar-title>Document File</v-toolbar-title>
+                                </v-app-bar>
+                                <div v-if="document_url" id="preview" class="col-12 ma-auto align-center">
+                                    <img
+                                        v-if="document_url"
+                                        :src="document_url"
+                                        class="shadow-lg p-3 mb-5 bg-white rounded"
+                                    />
+                                </div>
+                            </div>
+                            <!-- Document pdf  -->
+                            <div id="preview" class="ma-auto align-center"></div>
+
+                            <!-- submit btn -->
+                            <div class="" v-if="!pageIsLoading">
+                                <v-btn block color="primary" tile class="" @click="AddAuthorizationFile()">submit</v-btn>
+                                <v-btn
+                                    color="grey lighten-1"
+                                    dark
+                                    tile
+                                    block
+                                    class="my-4"
+                                    @click="$router.go(-1)"
+                                >cancel</v-btn>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </form>
+
     </div>
-  </div>
+
 </template>
 <script>
 import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";

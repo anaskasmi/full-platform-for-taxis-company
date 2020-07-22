@@ -1,78 +1,179 @@
 <template>
 
-    <div class="wrapper_box">
-        <NavbarDirector></NavbarDirector>
-        <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
 
-        <!-- header -->
-     <!-- header -->
-            <div class="wrapper_header mt-10">
 
-                <div
-                    class="title_header text-uppercase float-left" 
-                >   
-                    Weekly Taxi Shifts
+            <div class="wrapper_box">
+                <NavbarDirector></NavbarDirector>
+                <Drawer></Drawer>
+
+                <!-- header -->
+                <!-- header -->
+                <div class="wrapper_header mt-10">
+
+                    <div
+                        class="title_header text-uppercase float-left"
+                    >
+                        Weekly Taxi Shifts
+                    </div>
                 </div>
-            </div>
-            <div class="title_header text-uppercase float-left" >
+                <div class="title_header text-uppercase float-left" >
                     <v-btn color="grey" text tile  class="float-left" :to="backRoute"> <v-icon class="mr-2">keyboard_return</v-icon>Reports </v-btn>
-            </div>
+                </div>
 
 
                 <hr>
 
                 <div v-if="datePickerShow" >
-                        <div class="sentence">
-                            Pick a week !
-                        </div>
+                    <div class="sentence">
+                        Pick a week !
+                    </div>
                     <div v-if="datePickerShow">
-                            <v-alert 
-                                border="left"
-                                tile
-                                dense
-                                color="#grey lighten-5 "
-                                elevation="2"
-                                class="mt-12 font-weight-black"
-                                align="center"
-                                
-                            >
-                                {{startOfWeek(date)}} <v-icon class="mb-1" color="primary">keyboard_arrow_left</v-icon>  <v-icon class="mb-1" color="primary">keyboard_arrow_right</v-icon>{{endOfWeek(date)}}
-                            </v-alert>
+                        <v-alert
+                            border="left"
+                            tile
+                            dense
+                            color="#grey lighten-5 "
+                            elevation="2"
+                            class="mt-12 font-weight-black"
+                            align="center"
+
+                        >
+                            {{startOfWeek(date)}} <v-icon class="mb-1" color="primary">keyboard_arrow_left</v-icon>  <v-icon class="mb-1" color="primary">keyboard_arrow_right</v-icon>{{endOfWeek(date)}}
+                        </v-alert>
                     </div>
-                        <div>
-                                <v-date-picker
-                                v-model="date"
-                                full-width
-                                show-current='false'
-                                :landscape="$vuetify.breakpoint.smAndUp"
-                                class="mt-4"
-                                ></v-date-picker>
-                        </div>
-                        <v-btn class="my-2" block color="primary" @click="fetchItems()">
-                            Get repport
-                        </v-btn>
+                    <div>
+                        <v-date-picker
+                            v-model="date"
+                            full-width
+                            show-current='false'
+                            :landscape="$vuetify.breakpoint.smAndUp"
+                            class="mt-4"
+                        ></v-date-picker>
+                    </div>
+                    <v-btn class="my-2" block color="primary" @click="fetchItems()">
+                        Get repport
+                    </v-btn>
                 </div>
-                      <div v-if="noShiftsFound">
-                            <v-alert 
-                                border="left"
-                                tile
-                                dense
-                                type="warning"
-                                elevation="2"
-                                class="mt-0 font-weight-medium"
-                                align="center"
-                                
-                            >
-                                Sorry no shifts Found! try another Week!
-                            </v-alert>
-                    </div>
+                <div v-if="noShiftsFound">
+                    <v-alert
+                        border="left"
+                        tile
+                        dense
+                        type="warning"
+                        elevation="2"
+                        class="mt-0 font-weight-medium"
+                        align="center"
+
+                    >
+                        Sorry no shifts Found! try another Week!
+                    </v-alert>
+                </div>
                 <director_comments v-if="director_commentsShow" :director_comments="director_comments"></director_comments>
                 <specialShifts v-if="specialShiftsShow" :specialShifts="specialShifts"></specialShifts>
                 <shifts v-if="shiftsShow" :date="date"></shifts>
 
 
 
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDirector></NavbarDirector>
+            <div class="container px-4">
+
+                <div
+                    class=" text-uppercase text-center"
+                    style="font-size: 2em;color: rgb(124, 124, 124);"
+                >
+                    Weekly Taxi Shifts
+                </div>
+                    <hr>
+
+                    <div v-if="datePickerShow" >
+                        <div class="sentence text-center">
+                            Pick a week !
+                        </div>
+                        <v-alert
+
+                            tile
+                            dense
+                            color="#2A3B4D"
+                            elevation="2"
+                            class="mt-12 font-weight-light"
+                            align="center"
+                        >
+                            <div class=" text-center text-white">PS : To select a week, try to click on any Day from withing that week !
+                            </div>
+
+
+                        </v-alert>
+                        <div v-if="datePickerShow">
+                            <v-alert
+                                border="top"
+                                tile
+                                dense
+                                color="#grey lighten-5 "
+                                elevation="2"
+                                class="mt-12 font-weight-black"
+                                align="center"
+
+                            >
+                                <span class="row justify-content-center mb-3">
+                                    Week
+                                </span>
+                                <span class="row justify-content-center">
+                                                                    {{startOfWeek(date)}} <v-icon class="mb-1" color="primary">keyboard_arrow_left</v-icon>  <v-icon class="mb-1" color="primary">keyboard_arrow_right</v-icon>{{endOfWeek(date)}}
+
+                                </span>
+                            </v-alert>
+                        </div>
+                        <div>
+                            <v-date-picker
+                                v-model="date"
+                                full-width
+                                show-current='false'
+                                :landscape="$vuetify.breakpoint.smAndUp"
+                                class="mt-4"
+                            ></v-date-picker>
+                        </div>
+                        <v-btn class="my-2" block color="primary" @click="fetchItems()">
+                            Get repport
+                        </v-btn>
+                    </div>
+                    <div v-if="noShiftsFound">
+                        <v-alert
+                            border="left"
+                            tile
+                            dense
+                            type="warning"
+                            elevation="2"
+                            class="mt-0 font-weight-medium"
+                            align="center"
+
+                        >
+                            Sorry no shifts Found! try another Week!
+                        </v-alert>
+                    </div>
+                    <director_comments v-if="director_commentsShow" :director_comments="director_comments"></director_comments>
+                    <specialShifts v-if="specialShiftsShow" :specialShifts="specialShifts"></specialShifts>
+                    <shifts v-if="shiftsShow" :date="date"></shifts>
+
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </template>
 <script>
 
@@ -88,7 +189,7 @@ export default {
         this.datePickerShow= true;
 
     },
-    
+
     components:{
         NavbarDirector,
         director_comments,
@@ -109,7 +210,7 @@ export default {
                 dateTitleShow:false,
                 date: new Date().toISOString().substr(0, 10),
                 noShiftsFound : false,
- 
+
 
             };
     },

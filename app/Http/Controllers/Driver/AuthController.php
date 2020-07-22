@@ -108,7 +108,7 @@ class AuthController extends Controller
         }
         $validatedData = $request->validate([
             'oldPassword' => 'required',
-            'newPassword' => 'required|string|min:8|confirmed',
+            'newPassword' => 'required|string|min:6|confirmed',
         ]);
         //Change Password
         $user = Auth::user();

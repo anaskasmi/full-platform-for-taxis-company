@@ -8,16 +8,12 @@
 
                 <!-- header -->
                 <div class="wrapper_header mt-10">
-                    <div class="title_header">
-                        <v-btn color="grey" text tile class="float-left" :to="backRoute">
-                            <v-icon class="mr-2">keyboard_return</v-icon>
-                            Reports
-                        </v-btn>
+                    <div
+                        class="title_header text-uppercase"
+                    >
+                        Log Sheet
                     </div>
-                    <v-btn class="ma-2 float-right" tile outlined color="light-blue darken-4">
-                        <v-icon left>person</v-icon>
-                        {{name}}
-                    </v-btn>
+
                 </div>
                 <hr/>
                 <!-- <div class="sentence">
@@ -55,13 +51,15 @@
             <NavbarDriver></NavbarDriver>
             <div class="container px-4">
 
-                <!-- back button -->
-                <div class="row col-12">
-                    <v-btn color="grey" text tile class="float-left" :to="backRoute">
-                        <v-icon class="mr-2">keyboard_return</v-icon>
-                        Reports
-                    </v-btn>
+                <div
+                    class=" text-uppercase text-center"
+                    style="font-size: 2em;color: rgb(124, 124, 124);"
+                >
+                    Log Sheet
                 </div>
+
+
+                <hr/>
                 <div class="row col-12">
                     <v-btn class="ma-2 float-right block" tile outlined block color="light-blue darken-4">
                         <v-icon left>person</v-icon>
@@ -70,6 +68,20 @@
                 </div>
 
                 <hr/>
+                <v-alert
+
+                    tile
+                    dense
+                    color="#2A3B4D"
+                    elevation="2"
+                    class="mt-12 font-weight-light"
+                    align="center"
+                >
+                    <div class=" text-center text-white">PS :Swipe Left and Right to see all the available reports!
+                    </div>
+
+
+                </v-alert>
                 <!-- tabs -->
                 <v-tabs fixed-tabs background-color="light-blue darken-4" dark v-model="active_tab">
                     <v-tab @click="day" key="0">Daily Report</v-tab>

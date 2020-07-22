@@ -1,97 +1,213 @@
 <template>
-  <div class="wrapper_box">
-    <NavbarDispatcher></NavbarDispatcher>
-    <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div class="wrapper_box">
+                <NavbarDispatcher></NavbarDispatcher>
+                <Drawer></Drawer>
 
-    <!-- header -->
-    <div class="wrapper_header mt-10">
-      <div class="title_header text-uppercase">Special Shifts</div>
-      <v-btn
-        link
-        tile
-        class="ma-2 button_header"
-        outlined
-        color="success "
-        @click="addSpecialShift"
-      >
-        <v-icon left>mdi-pencil</v-icon>
-        <div>New SpecialShift</div>
-      </v-btn>
-    </div>
-    <hr />
-    <!-- search start -->
-    <div class="row">
-      <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
-        <form @submit.prevent="search(searchValue)">
-          <div class="input-group mb-4">
-            <div class="input-group-prepend">
-              <button type="submit" class="btn btn-dark">
-                <!-- <i class="fa fa-search"></i> -->
-                <v-icon dark small>search</v-icon>
-              </button>
+                <!-- header -->
+                <div class="wrapper_header mt-10">
+                    <div class="title_header text-uppercase">Special Shifts</div>
+                    <v-btn
+                        link
+                        tile
+                        class="ma-2 button_header"
+                        outlined
+                        color="success "
+                        @click="addSpecialShift"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New SpecialShift</div>
+                    </v-btn>
+                </div>
+                <hr />
+                <!-- search start -->
+                <div class="row">
+                    <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
+                        <form @submit.prevent="search(searchValue)">
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button type="submit" class="btn btn-dark">
+                                        <!-- <i class="fa fa-search"></i> -->
+                                        <v-icon dark small>search</v-icon>
+                                    </button>
+                                </div>
+                                <input
+                                    type="search"
+                                    name="searchValue"
+                                    v-model="searchValue"
+                                    placeholder="Search by name or badge ID"
+                                    aria-describedby="button-addon7"
+                                    class="form-control"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- search end -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Permit Number</th>
+                            <th scope="col">Shift Type</th>
+                            <th scope="col">Car</th>
+                            <th scope="col">Car covered</th>
+                            <th scope="col">Car covered by</th>
+                            <th scope="col">Sing In Time</th>
+                            <th scope="col">Created By</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(specialShift,i) in specialShifts" :key="i">
+                            <td>{{specialShift.FirstName}} {{specialShift.FirstName}}</td>
+                            <td>{{specialShift.PermitNumber}}</td>
+                            <td>{{specialShift.ShiftType}}</td>
+                            <!-- if open shift -->
+                            <td v-if="specialShift.ShiftType =='openshift'">{{specialShift.Car}}</td>
+                            <td v-if="specialShift.ShiftType =='openshift'">-</td>
+                            <td v-if="specialShift.ShiftType =='openshift'">-</td>
+                            <!-- not open shift -->
+                            <td v-if="specialShift.ShiftType !='openshift'">-</td>
+                            <td v-if="specialShift.ShiftType !='openshift'">{{specialShift.Car}}</td>
+                            <td v-if="specialShift.ShiftType !='openshift'">{{specialShift.CarCoveredBy}}</td>
+
+                            <td>{{specialShift.SingInTime}}</td>
+
+                            <!-- ifcomment by admin -->
+                            <td v-if="specialShift.dispatcher_id=='admin'" class="text-success">Admin</td>
+                            <!-- ifcomment not by admin -->
+                            <td v-if="specialShift.dispatcher_id!='admin'" >{{specialShift.dispatchersName}}</td>
+
+
+
+
+                            <td class="text-right">
+                                <v-icon color="info" class="mx-1" @click="showSpecialShift(specialShift)">description</v-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <v-pagination :total-visible="5" v-model="current_page" :length="last_page" @input="next"></v-pagination>
             </div>
-            <input
-              type="search"
-              name="searchValue"
-              v-model="searchValue"
-              placeholder="Search by name or badge ID"
-              aria-describedby="button-addon7"
-              class="form-control"
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDispatcher></NavbarDispatcher>
+            <Drawer></Drawer>
+            <div class="container px-4">
+                <div >
+
+
+                    <!-- header -->
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        Special Shifts
+                    </div>
+
+                        <v-btn
+                            link
+                            tile
+                            block
+                            class="my-4"
+                            outlined
+                            color="success "
+                            @click="addSpecialShift"
+                        >
+                            <v-icon left>mdi-pencil</v-icon>
+                            <div>New SpecialShift</div>
+                        </v-btn>
+                    <hr />
+                    <!-- search start -->
+                    <div class="row">
+                        <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
+                            <form @submit.prevent="search(searchValue)">
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <button type="submit" class="btn btn-dark">
+                                            <!-- <i class="fa fa-search"></i> -->
+                                            <v-icon dark small>search</v-icon>
+                                        </button>
+                                    </div>
+                                    <input
+                                        type="search"
+                                        name="searchValue"
+                                        v-model="searchValue"
+                                        placeholder="Search by name or badge ID"
+                                        aria-describedby="button-addon7"
+                                        class="form-control"
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- search end -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="align-middle fitCell">Name</th>
+                                <th scope="col" class="align-middle fitCell">Permit Number</th>
+                                <th scope="col" class="align-middle fitCell">Shift Type</th>
+                                <th scope="col" class="align-middle fitCell">Car</th>
+                                <th scope="col" class="align-middle fitCell">Car covered</th>
+                                <th scope="col" class="align-middle fitCell">Car covered by</th>
+                                <th scope="col" class="align-middle fitCell">Sing In Time</th>
+                                <th scope="col" class="align-middle fitCell">Created By</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(specialShift,i) in specialShifts" :key="i">
+                                <td class="align-middle fitCell">{{specialShift.FirstName}} {{specialShift.FirstName}}</td>
+                                <td class="align-middle fitCell">{{specialShift.PermitNumber}}</td>
+                                <td class="align-middle fitCell">{{specialShift.ShiftType}}</td>
+                                <!-- if open shift -->
+                                <td v-if="specialShift.ShiftType =='openshift'" class="align-middle fitCell">{{specialShift.Car}}</td>
+                                <td v-if="specialShift.ShiftType =='openshift'" class="align-middle fitCell">-</td>
+                                <td v-if="specialShift.ShiftType =='openshift'" class="align-middle fitCell">-</td>
+                                <!-- not open shift -->
+                                <td v-if="specialShift.ShiftType !='openshift'" class="align-middle fitCell">-</td>
+                                <td v-if="specialShift.ShiftType !='openshift'" class="align-middle fitCell">{{specialShift.Car}}</td>
+                                <td v-if="specialShift.ShiftType !='openshift'" class="align-middle fitCell">{{specialShift.CarCoveredBy}}</td>
+
+                                <td class="align-middle fitCell">{{specialShift.SingInTime}}</td>
+
+                                <!-- ifcomment by admin -->
+                                <td v-if="specialShift.dispatcher_id=='admin'" class="text-success align-middle fitCell">Admin</td>
+                                <!-- ifcomment not by admin -->
+                                <td v-if="specialShift.dispatcher_id!='admin'" >{{specialShift.dispatchersName}}</td>
+
+
+
+
+                                <td class="text-right align-middle fitCell">
+                                    <v-icon color="info" class="mx-1" @click="showSpecialShift(specialShift)">description</v-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <v-pagination :total-visible="5" v-model="current_page" :length="last_page" @input="next"></v-pagination>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!-- search end -->
-    <div class="table-responsive">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Permit Number</th>
-            <th scope="col">Shift Type</th>
-            <th scope="col">Car</th>
-            <th scope="col">Car covered</th>
-            <th scope="col">Car covered by</th>
-            <th scope="col">Sing In Time</th>
-            <th scope="col">Created By</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(specialShift,i) in specialShifts" :key="i">
-            <td>{{specialShift.FirstName}} {{specialShift.FirstName}}</td>
-            <td>{{specialShift.PermitNumber}}</td>
-            <td>{{specialShift.ShiftType}}</td>
-            <!-- if open shift -->
-            <td v-if="specialShift.ShiftType =='openshift'">{{specialShift.Car}}</td>
-            <td v-if="specialShift.ShiftType =='openshift'">-</td>
-            <td v-if="specialShift.ShiftType =='openshift'">-</td>
-            <!-- not open shift -->
-            <td v-if="specialShift.ShiftType !='openshift'">-</td>
-            <td v-if="specialShift.ShiftType !='openshift'">{{specialShift.Car}}</td>
-            <td v-if="specialShift.ShiftType !='openshift'">{{specialShift.CarCoveredBy}}</td>
 
-            <td>{{specialShift.SingInTime}}</td>
-
-                        <!-- ifcomment by admin -->
-                        <td v-if="specialShift.dispatcher_id=='admin'" class="text-success">Admin</td>
-                        <!-- ifcomment not by admin -->
-                        <td v-if="specialShift.dispatcher_id!='admin'" >{{specialShift.dispatchersName}}</td>
-
-
-
-
-            <td class="text-right">
-              <v-icon color="info" class="mx-1" @click="showSpecialShift(specialShift)">description</v-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <v-pagination :total-visible="5" v-model="current_page" :length="last_page" @input="next"></v-pagination>
-  </div>
 </template>
 <script>
 import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
@@ -228,5 +344,8 @@ a:hover {
 }
 .button_header {
   justify-self: end;
+}
+.fitCell{
+    max-width:100%;white-space:nowrap;
 }
 </style>

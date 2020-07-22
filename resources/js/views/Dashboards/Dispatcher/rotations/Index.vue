@@ -1,386 +1,794 @@
 <template>
-  <div class="wrapper_box">
-    <NavbarDispatcher></NavbarDispatcher>
-    <Drawer></Drawer>
-    <!-- start add dialog -->
-    <v-dialog v-model="addDialogIsOpen" max-width="800px" persistent>
-      <v-card v-if="addDialogIsOpen">
-        <v-container>
-          <v-row class="col-12 justify-content-around align-content-center mx-0 px-0 pt-10">
-            <div
-              class="text-uppercase font-weight-black mx-8"
-              style="font-size: 2em;
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+
+            <div class="wrapper_box">
+                <NavbarDispatcher></NavbarDispatcher>
+                <Drawer></Drawer>
+                <!-- start add dialog -->
+                <v-dialog v-model="addDialogIsOpen" max-width="800px" persistent>
+                    <v-card v-if="addDialogIsOpen">
+                        <v-container>
+                            <v-row class="col-12 justify-content-around align-content-center mx-0 px-0 pt-10">
+                                <div
+                                    class="text-uppercase font-weight-black mx-8"
+                                    style="font-size: 2em;
     color: #2196f3;"
-            >New Rotation</div>
-            <v-spacer></v-spacer>
-            <div class="float-right">
-              <v-btn text color="black" class="float-right" @click="closeAddDialog()">
-                <v-icon>close</v-icon>
-              </v-btn>
-            </div>
-          </v-row>
-        </v-container>
-        <v-card-text>
-          <v-container>
-            <v-container>
-              <!-- rotation type -->
-              <v-row class="mt-12">
-                <v-select
-                  autocomplete="false"
-                  label="Rotation Type"
-                  required
-                  v-model="addForm.rotation_category_id"
-                  :items="rotationsCategories"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row>
-              <!-- vehicle -->
-              <v-row>
-                <v-select
-                  autocomplete="false"
-                  label="Vehicle"
-                  required
-                  v-model="addForm.vehicle_id"
-                  :items="vehicles"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row>
-              <!-- city -->
-              <v-row>
-                <v-select
-                  autocomplete="false"
-                  label="City"
-                  required
-                  v-model="addForm.city_id"
-                  :items="cities"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row>
+                                >New Rotation</div>
+                                <v-spacer></v-spacer>
+                                <div class="float-right">
+                                    <v-btn text color="black" class="float-right" @click="closeAddDialog()">
+                                        <v-icon>close</v-icon>
+                                    </v-btn>
+                                </div>
+                            </v-row>
+                        </v-container>
+                        <v-card-text>
+                            <v-container>
+                                <v-container>
+                                    <!-- rotation type -->
+                                    <v-row class="mt-12">
+                                        <v-select
+                                            autocomplete="false"
+                                            label="Rotation Type"
+                                            required
+                                            v-model="addForm.rotation_category_id"
+                                            :items="rotationsCategories"
+                                            item-text="name"
+                                            item-value="id"
+                                        ></v-select>
+                                    </v-row>
+                                    <!-- vehicle -->
+                                    <v-row>
+                                        <v-select
+                                            autocomplete="false"
+                                            label="Vehicle"
+                                            required
+                                            v-model="addForm.vehicle_id"
+                                            :items="vehicles"
+                                            item-text="name"
+                                            item-value="id"
+                                        ></v-select>
+                                    </v-row>
+                                    <!-- city -->
+                                    <v-row>
+                                        <v-select
+                                            autocomplete="false"
+                                            label="City"
+                                            required
+                                            v-model="addForm.city_id"
+                                            :items="cities"
+                                            item-text="name"
+                                            item-value="id"
+                                        ></v-select>
+                                    </v-row>
 
-              <!-- type -->
-              <v-row>
-                <v-radio-group v-model="addForm.type" row>
-                  <v-radio label="One-way" value="One-way"></v-radio>
-                  <v-radio label="Return" value="Return"></v-radio>
-                </v-radio-group>
-              </v-row>
-              <!-- marks -->
-              <v-row>
-                <v-text-field autocomplete="false" label="Marks" required v-model="addForm.marks"></v-text-field>
-              </v-row>
-              <!-- job_id -->
-              <v-row>
-                <v-text-field autocomplete="false" label="Job ID" required v-model="addForm.job_id"></v-text-field>
-              </v-row>
-              <!-- badge_id -->
-              <v-row>
-                <v-text-field
-                  autocomplete="false"
-                  label="Badge ID"
-                  required
-                  v-model="addForm.badge_id"
-                ></v-text-field>
-              </v-row>
+                                    <!-- type -->
+                                    <v-row>
+                                        <v-radio-group v-model="addForm.type" row>
+                                            <v-radio label="One-way" value="One-way"></v-radio>
+                                            <v-radio label="Return" value="Return"></v-radio>
+                                        </v-radio-group>
+                                    </v-row>
+                                    <!-- marks -->
+                                    <v-row>
+                                        <v-text-field autocomplete="false" label="Marks" required v-model="addForm.marks"></v-text-field>
+                                    </v-row>
+                                    <!-- job_id -->
+                                    <v-row>
+                                        <v-text-field autocomplete="false" label="Job ID" required v-model="addForm.job_id"></v-text-field>
+                                    </v-row>
+                                    <!-- badge_id -->
+                                    <v-row>
+                                        <v-text-field
+                                            autocomplete="false"
+                                            label="Badge ID"
+                                            required
+                                            v-model="addForm.badge_id"
+                                        ></v-text-field>
+                                    </v-row>
 
-              <!-- date -->
-              <v-row>
-                <v-col class="mx-0 px-0" cols="12">
-                  <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :return-value.sync="addForm.date"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="addForm.date"
-                        label="Date"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="addForm.date" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                      <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-col>
-              </v-row>
-              <!-- note -->
-              <v-row>
-                <v-textarea
-                  class
-                  outlined
-                  shaped
-                  label="Leave a Note Here .."
-                  type="textarea"
-                  v-model="addForm.note"
-                ></v-textarea>
-              </v-row>
-              <!-- Comment  -->
+                                    <!-- date -->
+                                    <v-row>
+                                        <v-col class="mx-0 px-0" cols="12">
+                                            <v-menu
+                                                ref="menu"
+                                                v-model="menu"
+                                                :close-on-content-click="false"
+                                                :return-value.sync="addForm.date"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="290px"
+                                            >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        v-model="addForm.date"
+                                                        label="Date"
+                                                        prepend-icon="event"
+                                                        readonly
+                                                        v-on="on"
+                                                    ></v-text-field>
+                                                </template>
+                                                <v-date-picker v-model="addForm.date" no-title scrollable>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                                    <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">OK</v-btn>
+                                                </v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                    </v-row>
+                                    <!-- note -->
+                                    <v-row>
+                                        <v-textarea
+                                            class
+                                            outlined
+                                            shaped
+                                            label="Leave a Note Here .."
+                                            type="textarea"
+                                            v-model="addForm.note"
+                                        ></v-textarea>
+                                    </v-row>
+                                    <!-- Comment  -->
 
-              <v-row>
-                <v-btn color="info" class="mt-2" tile block @click="addRotation()">Add</v-btn>
-              </v-row>
-            </v-container>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <!-- end add dialog -->
+                                    <v-row>
+                                        <v-btn color="info" class="mt-2" tile block @click="addRotation()">Add</v-btn>
+                                    </v-row>
+                                </v-container>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+                <!-- end add dialog -->
 
-    <!-- start edit dialog -->
-    <v-dialog v-model="editDialogIsOpen" max-width="800px" persistent>
-      <v-card v-if="editDialogIsOpen">
-        <v-container>
-          <v-row class="col-12 justify-content-around align-content-center mx-0 px-0 pt-10">
-            <div
-              class="text-uppercase font-weight-black mx-8"
-              style="font-size: 2em;
+                <!-- start edit dialog -->
+                <v-dialog v-model="editDialogIsOpen" max-width="800px" persistent>
+                    <v-card v-if="editDialogIsOpen">
+                        <v-container>
+                            <v-row class="col-12 justify-content-around align-content-center mx-0 px-0 pt-10">
+                                <div
+                                    class="text-uppercase font-weight-black mx-8"
+                                    style="font-size: 2em;
     color: #2196f3;"
-            >Edit Rotation</div>
-            <v-spacer></v-spacer>
-            <div class="float-right">
-              <v-btn text color="black" class="float-right" @click="closeEditDialog()">
-                <v-icon>close</v-icon>
-              </v-btn>
+                                >Edit Rotation</div>
+                                <v-spacer></v-spacer>
+                                <div class="float-right">
+                                    <v-btn text color="black" class="float-right" @click="closeEditDialog()">
+                                        <v-icon>close</v-icon>
+                                    </v-btn>
+                                </div>
+                            </v-row>
+                        </v-container>
+                        <v-card-text>
+                            <v-container>
+                                <v-container>
+                                    <!-- rotation category -->
+                                    <!-- <v-row class="mt-12">
+                                      <v-select
+                                        autocomplete="false"
+                                        label="Rotation Type"
+                                        required
+                                        v-model="editForm.rotation_category_id"
+                                        :items="rotationsCategories"
+                                        item-text="name"
+                                        item-value="id"
+                                      ></v-select>
+                                    </v-row> -->
+                                    <!-- vehicle -->
+                                    <!-- <v-row>
+                                      <v-select
+                                        autocomplete="false"
+                                        label="Vehicle"
+                                        required
+                                        v-model="editForm.vehicle_id"
+                                        :items="vehicles"
+                                        item-text="name"
+                                        item-value="id"
+                                      ></v-select>
+                                    </v-row> -->
+                                    <!-- city -->
+                                    <v-row>
+                                        <v-select
+                                            autocomplete="false"
+                                            label="City"
+                                            required
+                                            v-model="editForm.city_id"
+                                            :items="cities"
+                                            item-text="name"
+                                            item-value="id"
+                                        ></v-select>
+                                    </v-row>
+
+                                    <!-- type -->
+                                    <v-row>
+                                        <v-radio-group v-model="editForm.type" row>
+                                            <v-radio label="One-way" value="One-way"></v-radio>
+                                            <v-radio label="Return" value="Return"></v-radio>
+                                        </v-radio-group>
+                                    </v-row>
+                                    <!-- marks -->
+                                    <!-- <v-row>
+                                      <v-text-field autocomplete="false" label="Marks" required v-model="editForm.marks"></v-text-field>
+                                    </v-row> -->
+                                    <!-- job_id -->
+                                    <v-row>
+                                        <v-text-field
+                                            autocomplete="false"
+                                            label="Job ID"
+                                            required
+                                            v-model="editForm.job_id"
+                                        ></v-text-field>
+                                    </v-row>
+                                    <!-- badge_id -->
+                                    <v-row>
+                                        <v-text-field
+                                            autocomplete="false"
+                                            label="Badge ID"
+                                            required
+                                            v-model="editForm.badge_id"
+                                        ></v-text-field>
+                                    </v-row>
+
+                                    <!-- date -->
+                                    <v-row>
+                                        <v-col class="mx-0 px-0" cols="12">
+                                            <v-menu
+                                                ref="menu"
+                                                v-model="menu"
+                                                :close-on-content-click="false"
+                                                :return-value.sync="editForm.date"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="290px"
+                                            >
+                                                <template v-slot:activator="{ on }">
+                                                    <v-text-field
+                                                        v-model="editForm.date"
+                                                        label="Date"
+                                                        prepend-icon="event"
+                                                        readonly
+                                                        v-on="on"
+                                                    ></v-text-field>
+                                                </template>
+                                                <v-date-picker v-model="editForm.date" no-title scrollable>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                                    <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">OK</v-btn>
+                                                </v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                    </v-row>
+                                    <!-- note -->
+                                    <v-row>
+                                        <v-textarea
+                                            class
+                                            outlined
+                                            shaped
+                                            label="Leave a Note Here .."
+                                            type="textarea"
+                                            v-model="editForm.note"
+                                        ></v-textarea>
+                                    </v-row>
+                                    <!-- Comment  -->
+
+                                    <v-row>
+                                        <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update</v-btn>
+                                    </v-row>
+                                </v-container>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+                <!-- end edit dialog -->
+
+                <!-- header -->
+                <div class="col-12">
+                    <v-btn color="grey" text tile class="float-left" :to="rotationsManagerRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                    </v-btn>
+                </div>
+                <div class="wrapper_header mt-10">
+                    <div class="title_header text-uppercase">Rotations</div>
+                    <v-btn
+                        link
+                        tile
+                        class="ma-2 button_header"
+                        outlined
+                        color="success "
+                        @click="openAddDialog()"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New Rotation</div>
+                    </v-btn>
+                </div>
+                <hr />
+                <!-- progress -->
+                <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                <!-- table -->
+                <div class="table-responsive" v-if="!isLoading">
+                    <table class="table table-hover" style="table-layout:fixed">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
+                            <th scope="col"></th>
+                            <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
+                            <th scope="col" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
+                            <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation type</th>
+                            <th scope="col" @click="sort('city')" style="cursor:ns-resize	">City</th>
+                            <th scope="col" @click="sort('type')" style="cursor:ns-resize	">Type</th>
+                            <th scope="col" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
+                            <th scope="col" @click="sort('date')" style="cursor:ns-resize	">Date</th>
+                            <th scope="col" @click="sort('note')">Note</th>
+                            <th scope="col"></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr v-for="(rotation,i) in sortedRows" :key="i">
+                            <td>
+                                <img
+                                    v-if="rotation.driverImageUrl"
+                                    :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
+                                    :alt="rotation.driver"
+                                    class="w-100"
+                                    style="cursor:pointer; "
+                                    @click="showDriver(rotation.badge_id)"
+                                />
+                                <img
+                                    v-else
+                                    :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
+                                    :alt="rotation.driver"
+                                    class="w-100"
+                                    style="cursor:pointer;"
+                                    @click="showDriver(rotation.badge_id)"
+                                />
+                            </td>
+
+                            <td
+                                colspan="2"
+                                class="align-middle"
+                                @click="showDriver(rotation.badge_id)"
+                                style="cursor:pointer; color:#1e3799;"
+                            >
+                                <v-tooltip bottom v-if="rotation.driver">
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn outlined v-on="on">{{rotation.driver}}</v-btn>
+                                    </template>
+                                    <span>See Driver's Information</span>
+                                </v-tooltip>
+                                <v-tooltip bottom v-else>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn outlined v-on="on">{{rotation.badge_id}}</v-btn>
+                                    </template>
+                                    <span>This Driver doesnt exist try another badge ID!</span>
+                                </v-tooltip>
+                            </td>
+                            <td class="text-uppercase align-middle" style="color:#01a3a4">{{rotation.vehicle}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.job_id}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.city}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.type}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.marks}}</td>
+                            <td class="align-middle" style="color:#3c6382;">{{rotation.date}}</td>
+                            <td colspan="2" class="font-italic align-middle" style="color:grey;">{{rotation.note}}</td>
+                            <td class="text-right align-middle">
+                                <v-icon color="green" class="mx-1" @click="openEditDialog(rotation)">edit</v-icon>
+                                <v-icon color="red" class="mx-1" @click="deleteRotation(rotation)">delete</v-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
+                    </div>
+                </div>
             </div>
-          </v-row>
-        </v-container>
-        <v-card-text>
-          <v-container>
-            <v-container>
-              <!-- rotation category -->
-              <!-- <v-row class="mt-12">
-                <v-select
-                  autocomplete="false"
-                  label="Rotation Type"
-                  required
-                  v-model="editForm.rotation_category_id"
-                  :items="rotationsCategories"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row> -->
-              <!-- vehicle -->
-              <!-- <v-row>
-                <v-select
-                  autocomplete="false"
-                  label="Vehicle"
-                  required
-                  v-model="editForm.vehicle_id"
-                  :items="vehicles"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row> -->
-              <!-- city -->
-              <v-row>
-                <v-select
-                  autocomplete="false"
-                  label="City"
-                  required
-                  v-model="editForm.city_id"
-                  :items="cities"
-                  item-text="name"
-                  item-value="id"
-                ></v-select>
-              </v-row>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
 
-              <!-- type -->
-              <v-row>
-                <v-radio-group v-model="editForm.type" row>
-                  <v-radio label="One-way" value="One-way"></v-radio>
-                  <v-radio label="Return" value="Return"></v-radio>
-                </v-radio-group>
-              </v-row>
-              <!-- marks -->
-              <!-- <v-row>
-                <v-text-field autocomplete="false" label="Marks" required v-model="editForm.marks"></v-text-field>
-              </v-row> -->
-              <!-- job_id -->
-              <v-row>
-                <v-text-field
-                  autocomplete="false"
-                  label="Job ID"
-                  required
-                  v-model="editForm.job_id"
-                ></v-text-field>
-              </v-row>
-              <!-- badge_id -->
-              <v-row>
-                <v-text-field
-                  autocomplete="false"
-                  label="Badge ID"
-                  required
-                  v-model="editForm.badge_id"
-                ></v-text-field>
-              </v-row>
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDispatcher></NavbarDispatcher>
+            <div class="container px-4">
+                <div class="">
+                    <!-- start add dialog -->
+                    <v-dialog v-model="addDialogIsOpen" max-width="800px" persistent>
+                        <v-card v-if="addDialogIsOpen">
+                            <v-container>
+                                <v-btn text color="black" block  @click="closeAddDialog()">
+                                    <v-icon>close</v-icon>
+                                </v-btn>
+                                <v-row class="col-12 justify-content-around align-content-center mx-0 px-0">
+                                    <div
+                                        class="text-uppercase font-weight-black mx-8"
+                                        style="font-size: 2em;
+    color: #2196f3;"
+                                    >New Rotation</div>
 
-              <!-- date -->
-              <v-row>
-                <v-col class="mx-0 px-0" cols="12">
-                  <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :return-value.sync="editForm.date"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="editForm.date"
-                        label="Date"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="editForm.date" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                      <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-col>
-              </v-row>
-              <!-- note -->
-              <v-row>
-                <v-textarea
-                  class
-                  outlined
-                  shaped
-                  label="Leave a Note Here .."
-                  type="textarea"
-                  v-model="editForm.note"
-                ></v-textarea>
-              </v-row>
-              <!-- Comment  -->
+                                </v-row>
+                            </v-container>
+                            <v-card-text>
+                                <v-container>
+                                    <v-container>
+                                        <!-- rotation type -->
+                                        <v-row class="mt-12">
+                                            <v-select
+                                                autocomplete="false"
+                                                label="Rotation Type"
+                                                required
+                                                v-model="addForm.rotation_category_id"
+                                                :items="rotationsCategories"
+                                                item-text="name"
+                                                item-value="id"
+                                            ></v-select>
+                                        </v-row>
+                                        <!-- vehicle -->
+                                        <v-row>
+                                            <v-select
+                                                autocomplete="false"
+                                                label="Vehicle"
+                                                required
+                                                v-model="addForm.vehicle_id"
+                                                :items="vehicles"
+                                                item-text="name"
+                                                item-value="id"
+                                            ></v-select>
+                                        </v-row>
+                                        <!-- city -->
+                                        <v-row>
+                                            <v-select
+                                                autocomplete="false"
+                                                label="City"
+                                                required
+                                                v-model="addForm.city_id"
+                                                :items="cities"
+                                                item-text="name"
+                                                item-value="id"
+                                            ></v-select>
+                                        </v-row>
 
-              <v-row>
-                <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update</v-btn>
-              </v-row>
-            </v-container>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <!-- end edit dialog -->
+                                        <!-- type -->
+                                        <v-row>
+                                            <v-radio-group v-model="addForm.type" row>
+                                                <v-radio label="One-way" value="One-way"></v-radio>
+                                                <v-radio label="Return" value="Return"></v-radio>
+                                            </v-radio-group>
+                                        </v-row>
+                                        <!-- marks -->
+                                        <v-row>
+                                            <v-text-field autocomplete="false" label="Marks" required v-model="addForm.marks"></v-text-field>
+                                        </v-row>
+                                        <!-- job_id -->
+                                        <v-row>
+                                            <v-text-field autocomplete="false" label="Job ID" required v-model="addForm.job_id"></v-text-field>
+                                        </v-row>
+                                        <!-- badge_id -->
+                                        <v-row>
+                                            <v-text-field
+                                                autocomplete="false"
+                                                label="Badge ID"
+                                                required
+                                                v-model="addForm.badge_id"
+                                            ></v-text-field>
+                                        </v-row>
 
-    <!-- header -->
-    <div class="col-12">
-      <v-btn color="grey" text tile class="float-left" :to="rotationsManagerRoute">
-        <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
-      </v-btn>
+                                        <!-- date -->
+                                        <v-row>
+                                            <v-col class="mx-0 px-0" cols="12">
+                                                <v-menu
+                                                    ref="menu"
+                                                    v-model="menu"
+                                                    :close-on-content-click="false"
+                                                    :return-value.sync="addForm.date"
+                                                    transition="scale-transition"
+                                                    offset-y
+                                                    min-width="290px"
+                                                >
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-text-field
+                                                            v-model="addForm.date"
+                                                            label="Date"
+                                                            prepend-icon="event"
+                                                            readonly
+                                                            v-on="on"
+                                                        ></v-text-field>
+                                                    </template>
+                                                    <v-date-picker v-model="addForm.date" no-title scrollable>
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                                        <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-menu>
+                                            </v-col>
+                                        </v-row>
+                                        <!-- note -->
+                                        <v-row>
+                                            <v-textarea
+                                                class
+                                                outlined
+                                                shaped
+                                                label="Leave a Note Here .."
+                                                type="textarea"
+                                                v-model="addForm.note"
+                                            ></v-textarea>
+                                        </v-row>
+                                        <!-- Comment  -->
+
+                                        <v-row>
+                                            <v-btn color="info" class="mt-2" tile block @click="addRotation()">Add</v-btn>
+                                        </v-row>
+                                        <v-row>
+                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeAddDialog()">cancel</v-btn>
+                                        </v-row>
+
+                                    </v-container>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                    <!-- end add dialog -->
+
+                    <!-- start edit dialog -->
+                    <v-dialog v-model="editDialogIsOpen" max-width="800px" persistent>
+                        <v-card v-if="editDialogIsOpen">
+                            <v-container>
+                                <v-btn text color="black" class="" block @click="closeEditDialog()">
+                                    <v-icon>close</v-icon>
+                                </v-btn>
+                                <v-row class="col-12 justify-content-around align-content-center mx-0 px-0">
+                                    <div
+                                        class="text-uppercase font-weight-black mx-8"
+                                        style="font-size: 2em;
+    color: #2196f3;"
+                                    >Edit Rotation</div>
+                                </v-row>
+                            </v-container>
+                            <v-card-text>
+                                <v-container>
+                                    <v-container>
+                                        <!-- rotation category -->
+                                        <!-- <v-row class="mt-12">
+                                          <v-select
+                                            autocomplete="false"
+                                            label="Rotation Type"
+                                            required
+                                            v-model="editForm.rotation_category_id"
+                                            :items="rotationsCategories"
+                                            item-text="name"
+                                            item-value="id"
+                                          ></v-select>
+                                        </v-row> -->
+                                        <!-- vehicle -->
+                                        <!-- <v-row>
+                                          <v-select
+                                            autocomplete="false"
+                                            label="Vehicle"
+                                            required
+                                            v-model="editForm.vehicle_id"
+                                            :items="vehicles"
+                                            item-text="name"
+                                            item-value="id"
+                                          ></v-select>
+                                        </v-row> -->
+                                        <!-- city -->
+                                        <v-row>
+                                            <v-select
+                                                autocomplete="false"
+                                                label="City"
+                                                required
+                                                v-model="editForm.city_id"
+                                                :items="cities"
+                                                item-text="name"
+                                                item-value="id"
+                                            ></v-select>
+                                        </v-row>
+
+                                        <!-- type -->
+                                        <v-row>
+                                            <v-radio-group v-model="editForm.type" row>
+                                                <v-radio label="One-way" value="One-way"></v-radio>
+                                                <v-radio label="Return" value="Return"></v-radio>
+                                            </v-radio-group>
+                                        </v-row>
+                                        <!-- marks -->
+                                        <!-- <v-row>
+                                          <v-text-field autocomplete="false" label="Marks" required v-model="editForm.marks"></v-text-field>
+                                        </v-row> -->
+                                        <!-- job_id -->
+                                        <v-row>
+                                            <v-text-field
+                                                autocomplete="false"
+                                                label="Job ID"
+                                                required
+                                                v-model="editForm.job_id"
+                                            ></v-text-field>
+                                        </v-row>
+                                        <!-- badge_id -->
+                                        <v-row>
+                                            <v-text-field
+                                                autocomplete="false"
+                                                label="Badge ID"
+                                                required
+                                                v-model="editForm.badge_id"
+                                            ></v-text-field>
+                                        </v-row>
+
+                                        <!-- date -->
+                                        <v-row>
+                                            <v-col class="mx-0 px-0" cols="12">
+                                                <v-menu
+                                                    ref="menu"
+                                                    v-model="menu"
+                                                    :close-on-content-click="false"
+                                                    :return-value.sync="editForm.date"
+                                                    transition="scale-transition"
+                                                    offset-y
+                                                    min-width="290px"
+                                                >
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-text-field
+                                                            v-model="editForm.date"
+                                                            label="Date"
+                                                            prepend-icon="event"
+                                                            readonly
+                                                            v-on="on"
+                                                        ></v-text-field>
+                                                    </template>
+                                                    <v-date-picker v-model="editForm.date" no-title scrollable>
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                                        <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-menu>
+                                            </v-col>
+                                        </v-row>
+                                        <!-- note -->
+                                        <v-row>
+                                            <v-textarea
+                                                class
+                                                outlined
+                                                shaped
+                                                label="Leave a Note Here .."
+                                                type="textarea"
+                                                v-model="editForm.note"
+                                            ></v-textarea>
+                                        </v-row>
+                                        <!-- Comment  -->
+
+                                        <v-row>
+                                            <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update</v-btn>
+                                        </v-row>
+                                        <v-row>
+                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeEditDialog()">Cancel</v-btn>
+                                        </v-row>
+                                    </v-container>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                    <!-- end edit dialog -->
+
+                    <!-- header -->
+                    <div class="">
+                        <v-btn color="grey" text tile class="" block :to="rotationsManagerRoute">
+                            <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                        </v-btn>
+                    </div>
+                    <hr>
+
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        Rotations
+                    </div>
+
+                    <v-btn
+                        block
+                        link
+                        tile
+                        class="my-4"
+                        outlined
+                        color="success "
+                        @click="openAddDialog()"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New Rotation</div>
+                    </v-btn>
+                    <hr />
+                    <!-- progress -->
+                    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                    <!-- table -->
+                    <div class="table-responsive" v-if="!isLoading">
+                        <table class="table table-hover" >
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="align-middle fitCell"></th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
+                                <th scope="col" class="align-middle fitCell" ></th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation type</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('city')" style="cursor:ns-resize	">City</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('type')" style="cursor:ns-resize	">Type</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('date')" style="cursor:ns-resize	">Date</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('note')">Note</th>
+                                <th scope="col"></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr v-for="(rotation,i) in sortedRows" :key="i">
+                                <td >
+                                    <img
+                                        v-if="rotation.driverImageUrl"
+                                        :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
+                                        :alt="rotation.driver"
+                                        class=""
+                                        style="cursor:pointer; width: 100px "
+                                        @click="showDriver(rotation.badge_id)"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
+                                        :alt="rotation.driver"
+                                        class=""
+                                        style="cursor:pointer;width: 100px"
+                                        @click="showDriver(rotation.badge_id)"
+                                    />
+                                </td>
+
+                                <td
+                                    colspan="2"
+                                    class="align-middle fitCell"
+                                    @click="showDriver(rotation.badge_id)"
+                                    style="cursor:pointer; color:#1e3799;"
+                                >
+                                    <v-tooltip bottom v-if="rotation.driver">
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn outlined v-on="on">{{rotation.driver}}</v-btn>
+                                        </template>
+                                        <span>See Driver's Information</span>
+                                    </v-tooltip>
+                                    <v-tooltip bottom v-else>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn outlined v-on="on">{{rotation.badge_id}}</v-btn>
+                                        </template>
+                                        <span>This Driver doesnt exist try another badge ID!</span>
+                                    </v-tooltip>
+                                </td>
+                                <td class="text-uppercase align-middle fitCell" style="color:#01a3a4">{{rotation.vehicle}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.job_id}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.city}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.type}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.marks}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.date}}</td>
+                                <td colspan="2" class="font-italic align-middle fitCell" style="color:grey;">{{rotation.note}}</td>
+                                <td class="text-right align-middle">
+                                    <v-icon color="green" class="ma-2" @click="openEditDialog(rotation)">edit</v-icon>
+                                    <v-icon color="red" class="ma-2" @click="deleteRotation(rotation)">delete</v-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="wrapper_header mt-10">
-      <div class="title_header text-uppercase">Rotations</div>
-      <v-btn
-        link
-        tile
-        class="ma-2 button_header"
-        outlined
-        color="success "
-        @click="openAddDialog()"
-      >
-        <v-icon left>mdi-pencil</v-icon>
-        <div>New Rotation</div>
-      </v-btn>
-    </div>
-    <hr />
-    <!-- progress -->
-    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
-    <!-- table -->
-    <div class="table-responsive" v-if="!isLoading">
-      <table class="table table-hover" style="table-layout:fixed">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
-            <th scope="col"></th>
-            <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
-            <th scope="col" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
-            <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation type</th>
-            <th scope="col" @click="sort('city')" style="cursor:ns-resize	">City</th>
-            <th scope="col" @click="sort('type')" style="cursor:ns-resize	">Type</th>
-            <th scope="col" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
-            <th scope="col" @click="sort('date')" style="cursor:ns-resize	">Date</th>
-            <th scope="col" @click="sort('note')">Note</th>
-            <th scope="col"></th>
-            <th></th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr v-for="(rotation,i) in sortedRows" :key="i">
-            <td>
-              <img
-                v-if="rotation.driverImageUrl"
-                :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
-                :alt="rotation.driver"
-                class="w-100"
-                style="cursor:pointer; "
-                @click="showDriver(rotation.badge_id)"
-              />
-              <img
-                v-else
-                :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
-                :alt="rotation.driver"
-                class="w-100"
-                style="cursor:pointer;"
-                @click="showDriver(rotation.badge_id)"
-              />
-            </td>
-
-            <td
-              colspan="2"
-              class="align-middle"
-              @click="showDriver(rotation.badge_id)"
-              style="cursor:pointer; color:#1e3799;"
-            >
-              <v-tooltip bottom v-if="rotation.driver">
-                <template v-slot:activator="{ on }">
-                  <v-btn outlined v-on="on">{{rotation.driver}}</v-btn>
-                </template>
-                <span>See Driver's Information</span>
-              </v-tooltip>
-              <v-tooltip bottom v-else>
-                <template v-slot:activator="{ on }">
-                  <v-btn outlined v-on="on">{{rotation.badge_id}}</v-btn>
-                </template>
-                <span>This Driver doesnt exist try another badge ID!</span>
-              </v-tooltip>
-            </td>
-            <td class="text-uppercase align-middle" style="color:#01a3a4">{{rotation.vehicle}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.job_id}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.city}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.type}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.marks}}</td>
-            <td class="align-middle" style="color:#3c6382;">{{rotation.date}}</td>
-            <td colspan="2" class="font-italic align-middle" style="color:grey;">{{rotation.note}}</td>
-            <td class="text-right align-middle">
-              <v-icon color="green" class="mx-1" @click="openEditDialog(rotation)">edit</v-icon>
-              <v-icon color="red" class="mx-1" @click="deleteRotation(rotation)">delete</v-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="text-center">
-        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
@@ -525,7 +933,7 @@ export default {
       this.fetchCities();
       this.fetchRotationsCategories();
       this.fetchRotations();
-      
+
     },
     openAddDialog() {
       this.addDialogIsOpen = true;
@@ -672,4 +1080,12 @@ a:hover {
 .button_header {
   justify-self: end;
 }
+
+.fitCell{
+    max-width:100%;white-space:nowrap;
+}
+
+
+
+
 </style>

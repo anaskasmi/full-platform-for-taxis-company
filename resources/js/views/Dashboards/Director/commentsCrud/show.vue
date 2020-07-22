@@ -1,47 +1,106 @@
 <template>
-  <div class>
-    <NavbarDirector></NavbarDirector>
-    <Drawer></Drawer>
-<div>
-    <v-btn color="grey" text tile class="float-left" :to="commentsRoute">
-      <v-icon class="mr-2">keyboard_return</v-icon>special Shifts
-    </v-btn>
-    <v-btn color="success" outlined class="float-right mx-4" :to="commentsRoute_edit">
-      <v-icon class="mr-2">edit</v-icon>edit
-    </v-btn>
-    <v-btn color="red " outlined class="float-right" @click="deleteComment(comment.id)">
-      <v-icon class="mr-2">delete</v-icon>delete
-    </v-btn>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div class>
+                <NavbarDirector></NavbarDirector>
+                <Drawer></Drawer>
+                <div>
+                    <v-btn color="grey" text tile class="float-left" :to="commentsRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>special Shifts
+                    </v-btn>
+                    <v-btn color="success" outlined class="float-right mx-4" :to="commentsRoute_edit">
+                        <v-icon class="mr-2">edit</v-icon>edit
+                    </v-btn>
+                    <v-btn color="red " outlined class="float-right" @click="deleteComment(comment.id)">
+                        <v-icon class="mr-2">delete</v-icon>delete
+                    </v-btn>
+                </div>
+                <br>
+                <br>
+                <hr />
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <td style="width: 30%;">ID</td>
+                            <td>{{comment.id}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Comment</td>
+                            <td>{{comment.comment}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Date</td>
+                            <td>{{comment.date}}</td>
+                        </tr>
+                        <tr>
+                            <td>Created at</td>
+                            <td>{{comment.created_at}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDirector></NavbarDirector>
+            <div class="container px-4">
+                <div class>
+
+                    <div class="text-center">
+                        <v-btn color="grey" text tile class="" :to="commentsRoute">
+                            <v-icon class="mr-2">keyboard_return</v-icon>Comments
+                        </v-btn>
+                        <v-btn color="success" outlined class="my-4" block  :to="commentsRoute_edit">
+                            <v-icon class="mr-2">edit</v-icon>edit
+                        </v-btn>
+                        <v-btn color="red " outlined class=" my-4" block @click="deleteComment(comment.id)">
+                            <v-icon class="mr-2">delete</v-icon>delete
+                        </v-btn>
+                    </div>
+                    <br>
+                    <hr />
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                            <tr class="fitCell">
+                                <td  >ID</td>
+                                <td>{{comment.id}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Comment</td>
+                                <td class="text-justify">{{comment.comment}}</td>
+                            </tr>
+
+                            <tr class="fitCell">
+                                <td>Date</td>
+                                <td>{{comment.date}}</td>
+                            </tr>
+                            <tr class="fitCell">
+                                <td>Created at</td>
+                                <td>{{comment.created_at}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <br>
-    <br>
-    <hr />
 
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <tbody>
-          <tr>
-            <td style="width: 30%;">ID</td>
-            <td>{{comment.id}}</td>
-          </tr>
-
-          <tr>
-            <td>Comment</td>
-            <td>{{comment.comment}}</td>
-          </tr>
-
-          <tr>
-            <td>Date</td>
-            <td>{{comment.date}}</td>
-          </tr>
-          <tr>
-            <td>Created at</td>
-            <td>{{comment.created_at}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 </template>
 <script>
 import NavbarDirector from "@/js/components/navbars/Director.vue";
@@ -166,5 +225,12 @@ a:hover {
 }
 .button_header {
   justify-self: end;
+}
+.text-justify {
+    text-align: justify;
+}
+
+.fitCell{
+    max-width:100%;white-space:nowrap;
 }
 </style>

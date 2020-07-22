@@ -1,85 +1,184 @@
 <template>
-  <div>
-    <NavbarDriver></NavbarDriver>
-    <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div>
+                <NavbarDriver></NavbarDriver>
+                <Drawer></Drawer>
 
-    <v-btn color="grey" text tile class="float-left" :to="lastRoute">
-      <v-icon class="mr-2">keyboard_return</v-icon>Back to months
-    </v-btn>
-        <br>
-    <br>
-    <hr>
-    <div>
-      <v-alert
-        border="left"
-        tile
-        dense
-        dark
-        color="primary "
-        elevation="2"
-        class="mt-12"
-        align="center"
-      >
-        <v-icon class="mb-1" color="primary">description</v-icon>
-        {{monthName}} {{year}} Shifts
-      </v-alert>
+                <v-btn color="grey" text tile class="float-left" :to="lastRoute">
+                    <v-icon class="mr-2">keyboard_return</v-icon>Back to months
+                </v-btn>
+                <br>
+                <br>
+                <hr>
+                <div>
+                    <v-alert
+                        border="left"
+                        tile
+                        dense
+                        dark
+                        color="primary "
+                        elevation="2"
+                        class="mt-12"
+                        align="center"
+                    >
+                        <v-icon class="mb-1" color="primary">description</v-icon>
+                        {{monthName}} {{year}} Shifts
+                    </v-alert>
+                </div>
+                <!-- progress bar -->
+                <v-progress-linear
+                    v-if="isLoading"
+                    indeterminate
+                    color="cyan"
+                ></v-progress-linear>
+                <!-- table -->
+                <div class="table-responsive" v-if="!isLoading">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Taxi Number</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Fare</th>
+                            <th scope="col">Tip</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr v-for="(shift,i) in shifts" :key="i">
+                            <td>{{shift.vehicle_id}}</td>
+                            <td>{{shift.shift_start_time}}</td>
+                            <td>{{shift.shift_end_time}}</td>
+                            <td>$ {{shift.shiftFare}}</td>
+                            <td>$ {{shift.shiftTip}}</td>
+                            <td>$ {{shift.shiftTotal}}</td>
+
+                            <td @click="showShift(shift.driver_shift_id)">
+                                <v-icon class="pa-0 ma-0" style="cursor: pointer;" color="primary">description</v-icon>
+                            </td>
+                            <!-- is total row 1 -->
+                        </tr>
+                        <tr>
+                            <td class="table-primary text-uppercase" colspan="3">TOTALS</td>
+                            <td class="table-primary">${{totals.allShiftsFare}}</td>
+                            <td class="table-primary">${{totals.allShiftsTip}}</td>
+                            <td class="table-primary">${{totals.allShiftsTotal}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- alert -->
+                <v-alert
+                    v-if="noShiftsFound"
+                    border="left"
+                    tile
+                    type="warning"
+                    dense
+                    dark
+                    elevation="2"
+                    class="mb-12"
+                    align="center"
+                >Sorry, No shifts Found For this Month!</v-alert>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDriver></NavbarDriver>
+
+            <div class="container px-4">
+                <div>
+
+
+                    <v-btn color="grey" text tile class="float-left" :to="lastRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>Back to months
+                    </v-btn>
+                    <br>
+                    <br>
+                    <hr>
+                    <div>
+                        <v-alert
+                            border="left"
+                            tile
+                            dense
+                            dark
+                            color="primary "
+                            elevation="2"
+                            class="mt-12"
+                            align="center"
+                        >
+                            <v-icon class="mb-1" color="primary">description</v-icon>
+                            {{monthName}} {{year}} Shifts
+                        </v-alert>
+                    </div>
+                    <!-- progress bar -->
+                    <v-progress-linear
+                        v-if="isLoading"
+                        indeterminate
+                        color="cyan"
+                    ></v-progress-linear>
+                    <!-- table -->
+                    <div class="table-responsive" v-if="!isLoading">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Taxi Number</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Fare</th>
+                                <th scope="col">Tip</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr v-for="(shift,i) in shifts" :key="i">
+                                <td class="fitCell">{{shift.vehicle_id}}</td>
+                                <td class="fitCell">{{shift.shift_start_time}}</td>
+                                <td class="fitCell">{{shift.shift_end_time}}</td>
+                                <td class="fitCell">$ {{shift.shiftFare}}</td>
+                                <td class="fitCell">$ {{shift.shiftTip}}</td>
+                                <td class="fitCell">$ {{shift.shiftTotal}}</td>
+
+                                <td @click="showShift(shift.driver_shift_id)">
+                                    <v-icon class="pa-0 ma-0" style="cursor: pointer;" color="primary">description</v-icon>
+                                </td>
+                                <!-- is total row 1 -->
+                            </tr>
+                            <tr>
+                                <td  class="table-primary text-uppercase fitCell" colspan="3">TOTALS</td>
+                                <td class="table-primary fitCell  " >${{totals.allShiftsFare}}</td>
+                                <td class="table-primary fitCell">${{totals.allShiftsTip}}</td>
+                                <td class="table-primary fitCell">${{totals.allShiftsTotal}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- alert -->
+                    <v-alert
+                        v-if="noShiftsFound"
+                        border="left"
+                        tile
+                        type="warning"
+                        dense
+                        dark
+                        elevation="2"
+                        class="mb-12"
+                        align="center"
+                    >Sorry, No shifts Found For this Month!</v-alert>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!-- progress bar -->
-       <v-progress-linear
-       v-if="isLoading"
-      indeterminate
-      color="cyan"
-    ></v-progress-linear>
-  <!-- table -->
-    <div class="table-responsive" v-if="!isLoading">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Taxi Number</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">Fare</th>
-            <th scope="col">Tip</th>
-            <th scope="col">Total</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr v-for="(shift,i) in shifts" :key="i">
-            <td>{{shift.vehicle_id}}</td>
-            <td>{{shift.shift_start_time}}</td>
-            <td>{{shift.shift_end_time}}</td>
-            <td>$ {{shift.shiftFare}}</td>
-            <td>$ {{shift.shiftTip}}</td>
-            <td>$ {{shift.shiftTotal}}</td>
-
-            <td @click="showShift(shift.driver_shift_id)">
-              <v-icon class="pa-0 ma-0" style="cursor: pointer;" color="primary">description</v-icon>
-            </td>
-            <!-- is total row 1 -->
-          </tr>
-          <tr>
-            <td class="table-primary text-uppercase" colspan="3">TOTALS</td>
-            <td class="table-primary">${{totals.allShiftsFare}}</td>
-            <td class="table-primary">${{totals.allShiftsTip}}</td>
-            <td class="table-primary">${{totals.allShiftsTotal}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- alert -->
-    <v-alert
-      v-if="noShiftsFound"
-      border="left"
-      tile
-      type="warning"
-      dense
-      dark
-      elevation="2"
-      class="mb-12"
-      align="center"
-    >Sorry, No shifts Found For this Month!</v-alert>
-  </div>
 </template>
 <script>
 import NavbarDriver from "@/js/components/navbars/Driver.vue";
@@ -265,5 +364,8 @@ a:hover {
   justify-self: center;
   font-size: 3em;
   justify-self: center;
+}
+.fitCell{
+    max-width:100%;white-space:nowrap;
 }
 </style>

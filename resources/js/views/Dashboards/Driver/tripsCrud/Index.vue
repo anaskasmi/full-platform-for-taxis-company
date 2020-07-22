@@ -183,8 +183,11 @@
         </div>
 
 
-        <!-------------------------------Mobile Version------------------------------->
-        <div v-if="$mq == 'mobile'" class="text-center mx-auto">
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->        <div v-if="$mq == 'mobile'" class="text-center mx-auto">
             <NavbarDriver></NavbarDriver>
             <!-- header -->
             <div class="mt-10 text-center ">
@@ -320,11 +323,11 @@
                     </thead>
                     <tbody>
                     <tr v-for="trip in trips" v-bind:key="trip.trip_id" >
-                        <td class="align-middle">{{trip.trip_id}}</td>
-                        <td class="align-middle">{{trip.job_id}}</td>
-                        <td class="align-middle">{{trip.date}}</td>
-                        <td class="align-middle">{{trip.vehicle}}</td>
-                        <td class="text-right align-middle">
+                        <td class="align-middle fitCell">{{trip.trip_id}}</td>
+                        <td class="align-middle fitCell">{{trip.job_id}}</td>
+                        <td class="align-middle fitCell">{{trip.date}}</td>
+                        <td class="align-middle fitCell">{{trip.vehicle}}</td>
+                        <td class="text-right align-middle fitCell">
                             <v-icon
                                 color="success"
                                 class="ma-4"
@@ -588,5 +591,8 @@
 
         display: flex;
         align-items: center;
+    }
+    .fitCell{
+        max-width:100%;white-space:nowrap;
     }
 </style>

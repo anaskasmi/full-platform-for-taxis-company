@@ -12,9 +12,9 @@
 
             <v-alert dense
                 outlined
-                type="warning" 
+                type="warning"
                 border="left"
-                v-for="error in validationErrors" 
+                v-for="error in validationErrors"
                 v-bind:key="error">
                    {{error}}
             </v-alert>
@@ -30,48 +30,48 @@
         <v-text-field :rules="rules" name="FirstName" v-model="driver.FirstName" label="First Name"></v-text-field>
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules" name="LastName"  v-model="driver.LastName" label="Last Name"></v-text-field>
      </div>
-     
+
      <div class="form-group">
         <v-text-field :rules="rules" name="PermitNumber" v-model="driver.PermitNumber" label="permit Number"></v-text-field>
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules"  name="LicenseNumber" v-model="driver.LicenseNumber" label="License Number"></v-text-field>
 
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules" v-model="driver.HomePhone" name="HomePhone" label="Home Phone"></v-text-field>
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules" v-model="driver.TAXI_HOST" name="TAXI_HOST" label="TAXI HOST"></v-text-field>
 
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules" v-model="driver.ADDRESS" name="ADDRESS" label="ADDRESS"></v-text-field>
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules"  v-model="driver.email" name="email" label="Email"></v-text-field>
      </div>
 
-    
+
      <div class="form-group">
         <v-text-field :rules="rules"  name="DRIVER_STATUS"  v-model="driver.DRIVER_STATUS" label="DRIVER STATUS"></v-text-field>
      </div>
 
-     
+
      <div class="form-group">
         <v-text-field :rules="rules"   name="LICENSE_CLASS"  v-model="driver.LICENSE_CLASS" label="LICENSE CLASS"></v-text-field>
     </div>
@@ -168,7 +168,7 @@
 
 
 
-    <!-- License Expiry -->     
+    <!-- License Expiry -->
     <v-col cols="12" class="pa-0">
       <v-dialog
         ref="LicenseExpiry"
@@ -238,7 +238,7 @@
     </div>
 
 
-        
+
      <div class="form-group">
         <!-- <h6><label for="LICENSE_PATH">License file</label></h6> -->
         <v-file-input
@@ -249,7 +249,7 @@
         ></v-file-input>
      </div>
 
-    
+
      <div class="form-group">
          <!-- <h6><label for="SP_FILE_PATH">SP file</label></h6> -->
             <v-file-input
@@ -326,7 +326,7 @@
                 :type="showPassword ? 'text' : 'password'"
                 name="password"
                 label="Password"
-                hint="At least 8 characters"
+                hint="At least 6 characters"
                 counter
                 @click:append="showPassword = !showPassword"
             >
@@ -341,11 +341,11 @@
             >
             </v-text-field>
 
-            
+
         </div>
      </transition>
      <!-- @else
-         
+
      @endif -->
      <!-- submit btn -->
        <div class="row col-12 mt-4 ">
@@ -400,7 +400,7 @@ export default {
             password:'',
             password_confirmation:'',
             }
-            
+
 
         }
     },
@@ -414,9 +414,9 @@ export default {
             var formData = new FormData(form);
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_admin;
 axios.post(this.BASE_URL()+'/api/admin/driver',formData)
-            .then(response => { 
+            .then(response => {
                 this.$router.push({name:'AdminDashboard_drivers_show',params:{id:response.data.data.PermitNumber}})
-                
+
             })
             .catch(error => {
                 this.inputErrors = error.response.data.errors;
@@ -424,7 +424,7 @@ axios.post(this.BASE_URL()+'/api/admin/driver',formData)
                  $('html, body').animate({scrollTop:0},'200');
 
             });
-            
+
         },
 
     },
@@ -434,7 +434,7 @@ axios.post(this.BASE_URL()+'/api/admin/driver',formData)
                     errors = errors.flat();
                     return errors;
                 }
-            
+
     }
 }
 </script>

@@ -1,36 +1,80 @@
 <template>
-  <div class="wrapper_box">
-    <NavbarDriver></NavbarDriver>
-    <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div class="wrapper_box">
+                <NavbarDriver></NavbarDriver>
+                <Drawer></Drawer>
 
-    <!-- header -->
-    <div class="mt-8 col-12">
-      <div class="title_header text-uppercase col-6 mb-10">Rotations Categories</div>
-    </div>
-    <hr />
+                <!-- header -->
+                <div class="mt-8 col-12">
+                    <div class="title_header text-uppercase col-6 mb-10">Rotations Categories</div>
+                </div>
+                <hr />
 
-    <div class="sentence">Pick a Category !</div>
-    <!-- progress -->
-    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
-    <!-- table -->
-    <div class="table-responsive" v-if="!isLoading">
-      <table class="table">
-        
-        <!-- <thead class="thead-dark">
-          <tr>
-            <th scope="col" class="text-center text-uppercase">Rotations categories</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <tr v-for="(rotationsCategory,i) in rotationsCategories" :key="i">
-            <td @click="openRotationsCategory(rotationsCategory)">
-              <v-btn color="info" block outlined tile>{{rotationsCategory.name}}</v-btn>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <div class="sentence">Pick a Category !</div>
+                <!-- progress -->
+                <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                <!-- table -->
+                <div class="table-responsive" v-if="!isLoading">
+                    <table class="table">
+
+                        <!-- <thead class="thead-dark">
+                          <tr>
+                            <th scope="col" class="text-center text-uppercase">Rotations categories</th>
+                          </tr>
+                        </thead> -->
+                        <tbody>
+                        <tr v-for="(rotationsCategory,i) in rotationsCategories" :key="i">
+                            <td @click="openRotationsCategory(rotationsCategory)">
+                                <v-btn color="info" block outlined tile>{{rotationsCategory.name}}</v-btn>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+                <NavbarDriver></NavbarDriver>
+            <div class="container px-4">
+                <div class="">
+                    <!-- header -->
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        Rotations Categories
+                    </div>
+                    <hr />
+
+                    <div class="sentence text-center">Pick a Category !</div>
+                    <!-- progress -->
+                    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                    <!-- table -->
+                    <div class="table-responsive mt-4" v-if="!isLoading">
+
+                        <table class="table">
+                            <tbody>
+                            <tr v-for="(rotationsCategory,i) in rotationsCategories" :key="i">
+                                <td @click="openRotationsCategory(rotationsCategory)">
+                                    <v-btn color="info" block outlined tile>{{rotationsCategory.name}}</v-btn>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
+
 </template>
 <script>
 import NavbarDriver from "@/js/components/navbars/Driver.vue";

@@ -1,64 +1,68 @@
 <template>
 
-    <div class="wrapper_box">
-        <NavbarDirector></NavbarDirector>
-        <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div class="wrapper_box">
+                <NavbarDirector></NavbarDirector>
+                <Drawer></Drawer>
 
-        <!-- header -->
-            <div class="wrapper_header mt-10">
+                <!-- header -->
+                <div class="wrapper_header mt-10">
 
-                <div
-                    class="title_header text-uppercase" 
-                >   
-                    Comments
+                    <div
+                        class="title_header text-uppercase"
+                    >
+                        Comments
+                    </div>
+                    <v-btn
+                        link
+                        tile
+                        class="ma-2 button_header"
+                        outlined
+                        color="success "
+                        @click="addComment"
+
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>
+                            New Comment
+                        </div>
+                    </v-btn>
                 </div>
-                <v-btn 
-                    link
-                    tile                    
-                    class="ma-2 button_header" 
-                    outlined 
-                    color="success "
-                    @click="addComment"
-                        
-                >
-                    <v-icon left>mdi-pencil</v-icon> 
-                    <div>
-                    New Comment
-                    </div> 
-                </v-btn>
-        </div>
                 <hr>
                 <!-- search start -->
                 <div class="row">
-                        <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
-                                
-                                <form @submit.prevent='search(searchValue)'>
-                                    <div class="input-group mb-4">
-                                        <div class="input-group-prepend">
-                                                <button  type="submit" class="btn btn-dark"  >
-                                                    <!-- <i class="fa fa-search"></i> -->
-                                                    <v-icon dark small>search</v-icon>
-                                                </button>
-                                        </div>
-                                        <input type="search" name ="searchValue" v-model="searchValue"   placeholder="Search by comment content or date" aria-describedby="button-addon7" class="form-control">
-                                    </div>                
-                                </form>
-                        </div>
+                    <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
+
+                        <form @submit.prevent='search(searchValue)'>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button type="submit" class="btn btn-dark">
+                                        <!-- <i class="fa fa-search"></i> -->
+                                        <v-icon dark small>search</v-icon>
+                                    </button>
+                                </div>
+                                <input type="search" name="searchValue" v-model="searchValue"
+                                       placeholder="Search by comment content or date" aria-describedby="button-addon7"
+                                       class="form-control">
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- search end -->
 
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                    <thead class="thead-dark">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
                         <tr class="row col-12">
                             <th scope="col" class="col-md-9 col-sm-5 ">Comment</th>
                             <th scope="col" class="col-md-1 col-sm-3">Date</th>
                             <th class="text-center col-md-2 col-sm-4" scope="col"></th>
                         </tr>
-                    </thead>
-            <tbody>
-                    <tr v-for="comment in comments" v-bind:key="comment.id" class="row col-12" >
+                        </thead>
+                        <tbody>
+                        <tr v-for="comment in comments" v-bind:key="comment.id" class="row col-12">
                             <td class="col-md-9 col-sm-5">{{comment.comment}}</td>
                             <td class="col-md-1 col-sm-3">{{comment.date}}</td>
                             <td class="text-right col-md-2 col-sm-4">
@@ -69,28 +73,28 @@
                                 >
                                     edit
                                 </v-icon>
-                                
+
                                 <v-icon
-                                    color="red lighten-1" 
+                                    color="red lighten-1"
                                     class="mx-1"
                                     @click="deleteComment(comment.id)"
                                 >
                                     delete
                                 </v-icon>
                                 <v-icon
-                                    color="info" 
+                                    color="info"
                                     class="mx-1"
-                                     @click="showComment(comment)"
+                                    @click="showComment(comment)"
                                 >
                                     person
                                 </v-icon>
 
                             </td>
-                        </tr>    
-            
-            </tbody>
-            </table>
-                        <v-alert 
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <v-alert
                         v-if="noCommentfound"
                         border="left"
                         tile
@@ -100,200 +104,334 @@
                         elevation="2"
                         class="mb-12"
                         align="center"
-                        >
+                    >
                         Sorry, No Comment Found !
+                    </v-alert>
+                </div>
+
+                <v-pagination
+                    :total-visible="5"
+                    v-model="current_page"
+                    :length="last_page"
+                    @input="next"
+                >
+                </v-pagination>
+
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDirector></NavbarDirector>
+
+            <div class="container px-4">
+                <div class="wrapper_box">
+
+
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        COMMENTS
+                    </div>
+                    <v-btn
+                        link
+                        tile
+                        block
+                        class=""
+                        outlined
+                        color="success "
+                        @click="addComment"
+
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>
+                            New Comment
+                        </div>
+                    </v-btn>
+                    <hr>
+                    <!-- search start -->
+                    <div class="row">
+                        <div class="col-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
+
+                            <form @submit.prevent='search(searchValue)'>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <button type="submit" class="btn btn-dark">
+                                            <!-- <i class="fa fa-search"></i> -->
+                                            <v-icon dark small>search</v-icon>
+                                        </button>
+                                    </div>
+                                    <input type="search" name="searchValue" v-model="searchValue"
+                                           placeholder="Search by comment content or date"
+                                           aria-describedby="button-addon7" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- search end -->
+
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                            <tr class="fitCell">
+                                <th scope="col" class="col-md-9 col-sm-5 ">Comment</th>
+                                <th scope="col" class="col-md-1 col-sm-3">Date</th>
+                                <th class="text-center col-md-2 col-sm-4" scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="comment in comments" v-bind:key="comment.id" class="align-middle ">
+                                <td class="col-md-9 col-sm-5 text-justify" >{{comment.comment}}</td>
+                                <td class="col-md-1 col-sm-3 fitCell">{{comment.date}}</td>
+                                <td class="">
+                                    <v-icon
+                                        color="success"
+                                        class="ma-4"
+                                        @click="editComment(comment)"
+                                    >
+                                        edit
+                                    </v-icon>
+
+                                    <v-icon
+                                        color="red lighten-1"
+                                        class="ma-4"
+                                        @click="deleteComment(comment.id)"
+                                    >
+                                        delete
+                                    </v-icon>
+                                    <v-icon
+                                        color="info"
+                                        class="ma-4 "
+                                        @click="showComment(comment)"
+                                    >
+                                        person
+                                    </v-icon>
+
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <v-alert
+                            v-if="noCommentfound"
+                            border="left"
+                            tile
+                            type="warning"
+                            dense
+                            dark
+                            elevation="2"
+                            class="mb-12"
+                            align="center"
+                        >
+                            Sorry, No Comment Found !
                         </v-alert>
+                    </div>
+
+                    <v-pagination
+                        :total-visible="5"
+                        v-model="current_page"
+                        :length="last_page"
+                        @input="next"
+                    >
+                    </v-pagination>
+
+                </div>
+            </div>
         </div>
 
-        <v-pagination 
-            :total-visible="5"
-            v-model="current_page"
-            :length="last_page"
-             @input="next"
-            >
-        </v-pagination>
-        
     </div>
+
 </template>
 <script>
 
-import NavbarDirector from '@/js/components/navbars/Director.vue';
-import Drawer from '@/js/components/drawers/Director.vue';
+    import NavbarDirector from '@/js/components/navbars/Director.vue';
+    import Drawer from '@/js/components/drawers/Director.vue';
 
-export default {
-    beforeMount() {
-        this.fetchItems();
-    },
-    components:{
-        NavbarDirector,
-        Drawer,
-    },
-     data() {
-            return {
-            comments: [],
-            current_page:1,
-            last_page :1,
-            noCommentfound : false,
-            searchValue:'',
-            };
-  },
-  methods: {
-      BASE_URL()
-      {
-            return this.$store.state.BASE_URL;
-      },
-    search(searchValue)
-    {
-        if(searchValue == '')
-        {
+    export default {
+        beforeMount() {
             this.fetchItems();
-            this.noCommentfound = false;
-            return ;
-            
-        }
-        let vm = this;
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_director;
-axios.get(this.BASE_URL()+'/api/director/comments/search?searchValue='+searchValue)
-            .then(res => {
-                console.log(res.data);
-                    if(res.data.data.length==0)
-                    {
-                        this.noCommentfound = true;
-                        this.comments = {};
-                    }
-                    else{
-                        console.log("comment found meta =>");
-                        console.log(res.data.meta);
-                        this.noCommentfound = false;
-                        this.comments = res.data.data;
-                    }
+        },
+        components: {
+            NavbarDirector,
+            Drawer,
+        },
+        data() {
+            return {
+                comments: [],
+                current_page: 1,
+                last_page: 1,
+                noCommentfound: false,
+                searchValue: '',
+            };
+        },
+        methods: {
+            BASE_URL() {
+                return this.$store.state.BASE_URL;
+            },
+            search(searchValue) {
+                if (searchValue == '') {
+                    this.fetchItems();
+                    this.noCommentfound = false;
+                    return;
+
+                }
+                let vm = this;
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token_director;
+                axios.get(this.BASE_URL() + '/api/director/comments/search?searchValue=' + searchValue)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.data.length == 0) {
+                            this.noCommentfound = true;
+                            this.comments = {};
+                        } else {
+                            console.log("comment found meta =>");
+                            console.log(res.data.meta);
+                            this.noCommentfound = false;
+                            this.comments = res.data.data;
+                        }
                         vm.makePagination(res.data.meta, res.data.links);
-            })
-            .catch(error => {
-                console.log('search errors : ');
-                console.log(error);
-                this.inputErrors = error.response.data.errors;
-                 $('html, body').animate({scrollTop:0},'200');
-            });
-    },
-    fetchItems(page_url) {
-      let vm = this;
-      page_url = page_url || this.BASE_URL()+'/api/director/comments';
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_director;
-axios.get(page_url)
-        .then(res => {
-            this.comments = res.data.data;
-            vm.makePagination(res.data.meta, res.data.links);
+                    })
+                    .catch(error => {
+                        console.log('search errors : ');
+                        console.log(error);
+                        this.inputErrors = error.response.data.errors;
+                        $('html, body').animate({scrollTop: 0}, '200');
+                    });
+            },
+            fetchItems(page_url) {
+                let vm = this;
+                page_url = page_url || this.BASE_URL() + '/api/director/comments';
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token_director;
+                axios.get(page_url)
+                    .then(res => {
+                        this.comments = res.data.data;
+                        vm.makePagination(res.data.meta, res.data.links);
 
-        })
-    .catch(error => {
-      console.log(error);
-    })
-    },
-
-
-    makePagination(meta, links) {
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            },
 
 
-      this.last_page = meta.last_page;
-      this.current_page = meta.current_page;
-
-    },
+            makePagination(meta, links) {
 
 
+                this.last_page = meta.last_page;
+                this.current_page = meta.current_page;
 
-    next (page) {
-        this.fetchItems(this.BASE_URL()+'/api/director/comments?page='+page);
-    },
+            },
 
 
+            next(page) {
+                this.fetchItems(this.BASE_URL() + '/api/director/comments?page=' + page);
+            },
 
-    deleteComment(id){
-            this.$swal.fire({
-                title: 'Are you sure?',
-                text: "Comment of ID "+id+" will be deleted !",
-                type: 'question',
-                animation:false,
-                focusConfirm:false,
-                padding:"2rem",
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#424242',
-                confirmButtonText: 'Yes, delete it!'
+
+            deleteComment(id) {
+                this.$swal.fire({
+                    title: 'Are you sure?',
+                    text: "Comment of ID " + id + " will be deleted !",
+                    type: 'question',
+                    animation: false,
+                    focusConfirm: false,
+                    padding: "2rem",
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#424242',
+                    confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
-                if (result.value) {
-        
-                    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_director;
-axios.delete(this.BASE_URL()+'/api/director/comment/'+id)
+                    if (result.value) {
+
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.state.token_director;
+                        axios.delete(this.BASE_URL() + '/api/director/comment/' + id)
                             .then(data => {
                                 console.log(data);
                                 this.fetchItems();
                             })
                             .catch(err => console.log(err));
-                            this.$swal.fire(
+                        this.$swal.fire(
                             'Deleted!',
                             'Comment has been deleted.',
                             'success'
-                                )
-                        }
-                    })
-    },
+                        )
+                    }
+                })
+            },
 
 
-
-    addComment() {
-        this.$router.push({name:"DirectorDashboard_comments_add"})
-    },
-
+            addComment() {
+                this.$router.push({name: "DirectorDashboard_comments_add"})
+            },
 
 
-    showComment:function(comment){
-                this.$router.push({name:"DirectorDashboard_comments_show",params:{id:comment.id}})
-    },
+            showComment: function (comment) {
+                this.$router.push({name: "DirectorDashboard_comments_show", params: {id: comment.id}})
+            },
 
 
-    editComment(comment){
+            editComment(comment) {
 
-            this.$router.push({name:"DirectorDashboard_comments_edit",params:{id:comment.id}})
-            
-    },
-  }
-}
+                this.$router.push({name: "DirectorDashboard_comments_edit", params: {id: comment.id}})
+
+            },
+        }
+    }
 </script>
 <style scoped>
-    .wrapper_box{
+    .wrapper_box {
         display: grid;
         grid-gap: 2em;
-        grid-auto-rows: minmax(10px,auto);
+        grid-auto-rows: minmax(10px, auto);
     }
-    .search_box{
+
+    .search_box {
         background-color: rgb(255, 51, 61);
     }
-    .table_box{
+
+    .table_box {
         background-color: rgb(65, 35, 150);
     }
-    .pagination_box{
+
+    .pagination_box {
         background-color: rgb(255, 153, 0);
     }
-    a, a:hover{
+
+    a, a:hover {
         text-decoration: none;
     }
-       .wrapper_header{
+
+    .wrapper_header {
         display: grid;
         grid-template-columns: 10fr 2fr;
-        grid-auto-rows: minmax(50px,auto);
+        grid-auto-rows: minmax(50px, auto);
         align-items: center;
         /* background-color: rgb(255, 153, 0); */
 
     }
-    .title_header{
+
+    .title_header {
         justify-self: start;
         font-family: 'roboto';
         font-size: 3em;
-        color:rgb(124, 124, 124);
+        color: rgb(124, 124, 124);
 
     }
-    .button_header{
+
+    .button_header {
         justify-self: end;
+    }
+    .fitCell{
+        max-width:100%;white-space:nowrap;
+    }
+    .text-justify {
+        text-align: justify;
     }
 </style>

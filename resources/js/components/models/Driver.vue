@@ -33,7 +33,7 @@
               :type="showPassword ? 'text' : 'password'"
               name="input-10-1"
               label="Password"
-              hint="At least 8 characters"
+              hint="At least 6 characters"
               counter
               @click:append="showPassword = !showPassword"
             ></v-text-field>
@@ -69,7 +69,7 @@ export default {
       },
       passwordRules: {
         required: v => !!v || "Password is required",
-        min: v => v.length >= 8 || "Min 8 characters"
+        min: v => v.length >= 6 || "Min 6 characters"
       },
       checkbox: false
     };

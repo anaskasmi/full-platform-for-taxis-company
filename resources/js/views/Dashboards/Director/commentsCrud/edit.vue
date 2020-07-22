@@ -1,56 +1,125 @@
 <template>
-  <div class>
-    <NavbarDirector></NavbarDirector>
-    <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
+            <div class>
+                <NavbarDirector></NavbarDirector>
+                <Drawer></Drawer>
 
-    <!-- back button -->
-    <div class="row col-12">
-      <v-btn color="grey" text tile class="float-left" :to="commentsRoute">
-        <v-icon class="mr-2">keyboard_return</v-icon>Comments
-      </v-btn>
+                <!-- back button -->
+                <div class="row col-12">
+                    <v-btn color="grey" text tile class="float-left" :to="commentsRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>Comments
+                    </v-btn>
+                </div>
+                <hr />
+                <!-- comment box -->
+                <v-col cols="12" class="pa-0 ma-0 pt-10">
+                    <v-textarea
+                        v-model="comment.comment"
+                        label="My Comment"
+                        prepend-inner-icon="edit"
+                        color="light-blue darken-4"
+                        shaped
+                        clearable
+                        auto-grow
+                        outlined
+                        rows="16"
+                        row-height="15"
+                    ></v-textarea>
+                </v-col>
+                <!-- date -->
+                <v-col cols="12" class="pl-0">
+                    <v-dialog
+                        ref="dialog"
+                        v-model="modal"
+                        :return-value.sync="comment.date"
+                        persistent
+                        width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field v-model="comment.date" label="Date" prepend-icon="event" readonly v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="comment.date">
+                            <v-spacer></v-spacer>
+                            <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                            <v-btn text color="primary" @click="$refs.dialog.save(comment.date)">OK</v-btn>
+                        </v-date-picker>
+                    </v-dialog>
+                </v-col>
+
+                <!-- buttons -->
+                <v-col cols="12" class="pa-0 ma-0">
+                    <v-btn color="primary" tile block class="mb-1" @click="submitComment()">submit</v-btn>
+                    <v-btn block color="grey lighten-1" dark tile class @click="$router.go(-1)">cancel</v-btn>
+                </v-col>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDirector></NavbarDirector>
+
+            <div class="container px-4">
+                <div class>
+
+                    <!-- back button -->
+                    <div class="text-center my-4">
+                        <v-btn color="grey" text tile class="" @click="$router.go(-1)">
+                            <v-icon class="mr-2">keyboard_return</v-icon>Back
+                        </v-btn>
+                    </div>
+                    <hr />
+                    <!-- comment box -->
+                    <v-col cols="12" class="pa-0 ma-0 pt-10">
+                        <v-textarea
+                            v-model="comment.comment"
+                            label="My Comment"
+                            prepend-inner-icon="edit"
+                            color="light-blue darken-4"
+                            shaped
+                            clearable
+                            auto-grow
+                            outlined
+                            rows="16"
+                            row-height="15"
+                        ></v-textarea>
+                    </v-col>
+                    <!-- date -->
+                    <v-col cols="12" class="pl-0">
+                        <v-dialog
+                            ref="dialog"
+                            v-model="modal"
+                            :return-value.sync="comment.date"
+                            persistent
+                            width="290px"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field v-model="comment.date" label="Date" prepend-icon="event" readonly v-on="on"></v-text-field>
+                            </template>
+                            <v-date-picker v-model="comment.date">
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                                <v-btn text color="primary" @click="$refs.dialog.save(comment.date)">OK</v-btn>
+                            </v-date-picker>
+                        </v-dialog>
+                    </v-col>
+
+                    <!-- buttons -->
+                    <v-col cols="12" class="pa-0 ma-0">
+                        <v-btn color="primary" tile block class="mb-1" @click="submitComment()">submit</v-btn>
+                        <v-btn block color="grey lighten-1" dark tile class @click="$router.go(-1)">cancel</v-btn>
+                    </v-col>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <hr />
-    <!-- comment box -->
-    <v-col cols="12" class="pa-0 ma-0 pt-10">
-      <v-textarea
-        v-model="comment.comment"
-        label="My Comment"
-        prepend-inner-icon="edit"
-        color="light-blue darken-4"
-        shaped
-        clearable
-        auto-grow
-        outlined
-        rows="16"
-        row-height="15"
-      ></v-textarea>
-    </v-col>
-    <!-- date -->
-    <v-col cols="12" class="pl-0">
-      <v-dialog
-        ref="dialog"
-        v-model="modal"
-        :return-value.sync="comment.date"
-        persistent
-        width="290px"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field v-model="comment.date" label="Date" prepend-icon="event" readonly v-on="on"></v-text-field>
-        </template>
-        <v-date-picker v-model="comment.date">
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.dialog.save(comment.date)">OK</v-btn>
-        </v-date-picker>
-      </v-dialog>
-    </v-col>
 
-    <!-- buttons -->
-    <v-col cols="12" class="pa-0 ma-0">
-      <v-btn color="primary" tile block class="mb-1" @click="submitComment()">submit</v-btn>
-      <v-btn block color="grey lighten-1" dark tile class @click="$router.go(-1)">cancel</v-btn>
-    </v-col>
-  </div>
 </template>
 <script>
 import NavbarDirector from "@/js/components/navbars/Director.vue";
@@ -74,6 +143,7 @@ export default {
       modal: false,
       id: ""
     };
+
   },
 
   methods: {

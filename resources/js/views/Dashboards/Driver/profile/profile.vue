@@ -1,22 +1,59 @@
 <template>
-  <div >
-    <NavbarDriver  ></NavbarDriver>
-    <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
 
-    <div v-if="loading" class="text-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+            <div >
+                <NavbarDriver  ></NavbarDriver>
+                <Drawer></Drawer>
+
+                <div v-if="loading" class="text-center">
+                    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                </div>
+                <div v-if="!loading" class="text-center">
+                    <v-avatar size="130">
+                        <img class="shadow-sm" :src="image" />
+                    </v-avatar>
+                    <div class="title text-uppercase text-center my-4">{{name}}</div>
+                    <v-col class="text-center pa-0 ma-0" cols="12">
+                        <v-btn rounded small class="title text-uppercase text-center mb-6 mt-2" color="info">Driver</v-btn>
+                    </v-col>
+                    <v-btn class="title text-uppercase text-center my-4" color="primary" tile outlined>{{email}}</v-btn>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDriver  ></NavbarDriver>
+            <div class="container px-4 ">
+
+                <div class="pt-4">
+
+
+                    <div v-if="loading" class="text-center">
+                        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                    </div>
+                    <div v-if="!loading" class="text-center">
+                        <v-avatar size="130">
+                            <img class="shadow-sm" :src="image" />
+                        </v-avatar>
+                        <div class="title text-uppercase text-center my-4">{{name}}</div>
+                        <v-col class="text-center pa-0 ma-0" cols="12">
+                            <v-btn rounded small class="title text-uppercase text-center mb-6 mt-2" color="info">Driver</v-btn>
+                        </v-col>
+                        <v-btn class="title text-uppercase text-center my-4" color="primary" tile outlined>{{email}}</v-btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div v-if="!loading" class="text-center">
-      <v-avatar size="130">
-        <img class="shadow-sm" :src="image" />
-      </v-avatar>
-      <div class="title text-uppercase text-center my-4">{{name}}</div>
-      <v-col class="text-center pa-0 ma-0" cols="12">
-        <v-btn rounded small class="title text-uppercase text-center mb-6 mt-2" color="info">Driver</v-btn>
-      </v-col>
-      <v-btn class="title text-uppercase text-center my-4" color="primary" tile outlined>{{email}}</v-btn>
-    </div>
-  </div>
+
 </template>
 
 <script>

@@ -150,10 +150,10 @@
         data: () => ({
             model: null,
             cards: [
-                {title: 'Admin', src: "/img/admin-flat.png", flex: 3, link: "/adminDashboard"},
                 {title: 'Driver', src: "/img/driver-flat.png", flex: 3, link: "/driverDashboard/profile"},
-                {title: 'Director', src: "/img/director-flat.png", flex: 3, link: "/directorDashboard"},
-                {title: 'Dispatcher', src: "/img/dispatcher-flat.png", flex: 3, link: "/dispatcherDashboard"},
+                {title: 'Admin', src: "/img/admin-flat.png", flex: 3, link: "/adminDashboard"},
+                {title: 'Director', src: "/img/director-flat.png", flex: 3, link: "/directorDashboard/profile"},
+                {title: 'Dispatcher', src: "/img/dispatcher-flat.png", flex: 3, link: "/dispatcherDashboard/profile"},
             ],
         }),
         computed: {
