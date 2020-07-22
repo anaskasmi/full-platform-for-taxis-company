@@ -425,62 +425,62 @@
                                 <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('type')">Type</th>
                                 <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('number')">Number</th>
                                 <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('totalMarks')">Total Marks</th>
-                                <th></th>
+                                <th ></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="(vehicle,i) in sortedRows" :key="i">
                                 <th
                                     v-if="minVehicleMarksAndNumber.id == vehicle.id"
-                                    class="text-uppercase table-primary"
+                                    class="text-uppercase table-primary align-middle fitCell"
                                 >{{vehicle.type}}-{{vehicle.number}}
                                 </th>
-                                <th v-else class="text-uppercase">{{vehicle.type}}-{{vehicle.number}}</th>
+                                <th v-else class="text-uppercase middle fitCell">{{vehicle.type}}-{{vehicle.number}}</th>
                                 <th
                                     v-if="minVehicleMarksAndNumber.id == vehicle.id"
-                                    class="text-uppercase table-primary"
+                                    class="text-uppercase table-primary align-middle fitCell"
                                 >{{vehicle.type}}
                                 </th>
-                                <th v-else>{{vehicle.type}}</th>
+                                <th v-else class="middle fitCell">{{vehicle.type}}</th>
                                 <th
                                     v-if="minVehicleMarksAndNumber.id == vehicle.id"
-                                    class="text-uppercase table-primary"
+                                    class="text-uppercase table-primary align-middle fitCell"
                                 >{{vehicle.number}}
                                 </th>
-                                <th v-else>{{vehicle.number}}</th>
+                                <th v-else class="middle fitCell">{{vehicle.number}}</th>
                                 <th
                                     v-if="minVehicleMarksAndNumber.id == vehicle.id"
-                                    class="text-uppercase table-primary"
+                                    class="text-uppercase table-primary align-middle fitCell"
                                 >{{vehicle.totalMarks}}
                                 </th>
-                                <th v-else>{{vehicle.totalMarks}}</th>
-                                <td class="text-right table-primary" v-if="minVehicleMarksAndNumber.id == vehicle.id">
+                                <th v-else class="middle fitCell">{{vehicle.totalMarks}}</th>
+                                <td class="align-middle fitCell table-primary  " v-if="minVehicleMarksAndNumber.id == vehicle.id">
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
                                             <v-btn text class="ma-0 pa-0" v-on="on"
                                                    @click="openVehicleHistory(vehicle)">
-                                                <v-icon color="info" class="mx-1">mdi-file-document</v-icon>
+                                                <v-icon color="info" class="ma-2">mdi-file-document</v-icon>
                                             </v-btn>
                                         </template>
                                         <span>Click To Go To This Vehicle's History</span>
                                     </v-tooltip>
 
-                                    <v-icon color="green" class="mx-1" @click="openEditDialog(vehicle)">edit</v-icon>
-                                    <v-icon color="red" class="mx-1" @click="deleteVehicle(vehicle)">delete</v-icon>
+                                    <v-icon color="green" class="ma-2" @click="openEditDialog(vehicle)">edit</v-icon>
+                                    <v-icon color="red" class="ma-2" @click="deleteVehicle(vehicle)">delete</v-icon>
                                 </td>
-                                <td v-else class="text-right">
+                                <td v-else class="align-middle fitCell">
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
                                             <v-btn text class="ma-0 pa-0" v-on="on"
                                                    @click="openVehicleHistory(vehicle)">
-                                                <v-icon color="info" class="mx-1">mdi-file-document</v-icon>
+                                                <v-icon color="info" class="ma-2">mdi-file-document</v-icon>
                                             </v-btn>
                                         </template>
                                         <span>Click To Go To This Vehicle's History</span>
                                     </v-tooltip>
 
-                                    <v-icon color="green" class="mx-1" @click="openEditDialog(vehicle)">edit</v-icon>
-                                    <v-icon color="red" class="mx-1" @click="deleteVehicle(vehicle)">delete</v-icon>
+                                    <v-icon color="green" class="ma-2" @click="openEditDialog(vehicle)">edit</v-icon>
+                                    <v-icon color="red" class="ma-2" @click="deleteVehicle(vehicle)">delete</v-icon>
                                 </td>
                             </tr>
                             </tbody>

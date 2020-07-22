@@ -103,7 +103,7 @@
         data() {
             return {
                 items: [
-                    {title: 'My profil', link: {name: 'DispatcherDashboard_profile'}},
+                    {title: 'My profile', link: {name: 'DispatcherDashboard_profile'}},
                     {title: 'Driver List', link: {name: 'DispatcherDashboard_drivers'}},
                     {title: 'Special Shifts', link: {name: 'DispatcherDashboard_specialShifts'}},
                     {title: 'My Special Shift', link: {name: 'DispatcherDashboard_mySpecialShifts'}},
@@ -112,7 +112,7 @@
                     {title: 'Rotations Manager', link: {name: 'DispatcherDashboard_rotationsManager'}},
                 ],
                 mobileItems: [
-                    {title: 'My profil', link: {name: 'DispatcherDashboard_profile'}},
+                    {title: 'profile', link: {name: 'DispatcherDashboard_profile'}},
                     {title: 'Driver List', link: {name: 'DispatcherDashboard_drivers'}},
                     {title: 'Special Shifts', link: {name: 'DispatcherDashboard_specialShifts'}},
                     {title: 'My Special Shift', link: {name: 'DispatcherDashboard_mySpecialShifts'}},
