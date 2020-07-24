@@ -12,12 +12,13 @@ use App\RotationsCategory;
 use App\Trip;
 use App\Vehicle;
 use Illuminate\Http\Request;
-
+use Response;
 class RotationsController extends Controller
 {
     //list all the rotations
     public function rotations()
     {
+        $arrayData = [];
         $rotations = Rotation::
             select(
             'id',
@@ -554,14 +555,57 @@ class RotationsController extends Controller
             'badge_id' => 'required|numeric',
             'date' => 'required',
             'note' => 'nullable',
-
+            'marks' =>'required|numeric'
         ]);
+        $driver = Driver::where('PermitNumber', $data["badge_id"])->first();
+        if(!$driver)
+        {
+            return Response::json(array(
+                'code'      =>  401,
+                'message'   =>  "No Driver Found with Badge Id ".$data["badge_id"]
+            ), 400);
+        }
 
         try {
-            Rotation::
-                whereId($id)
-                ->update($data);
-            $rotation = Rotation::whereId($id)->get();
+
+
+
+            $rotation = Rotation::whereId($id)->first();
+
+            $rotation->city_id = $data["city_id"];
+            $rotation->type = $data["type"];
+            $rotation->job_id = $data["job_id"];
+            $rotation->badge_id = $data["badge_id"];
+            $rotation->date = $data["date"];
+            $rotation->date = $data["date"];
+            $rotation->note = $data["note"];
+            //updating marks on the rotation and on marks table
+            if($rotation->marks != $data['marks'])
+            {
+                //check if marks row exist
+                $markRowToUpdate =
+                    Marks::
+                    where('vehicle_id', $rotation->vehicle_id)
+                        ->where('rotation_category_id', $rotation->rotation_category_id)
+                        ->first();
+                //if exist update it
+                if ($markRowToUpdate) {
+                    //if marks value different than null
+                    if ($markRowToUpdate->marks) {
+                        //remove the old value and add the new one
+                        $markRowToUpdate->marks = $markRowToUpdate->marks - $rotation->marks +  $data['marks'];
+                    }
+                    //if marks value was empty
+                    else {
+                        $markRowToUpdate->marks = $data['marks'];
+                    }
+                    //update
+                    $markRowToUpdate->save();
+                }
+                $rotation->marks=$data['marks'];
+            }
+            $rotation->save();
+
         } catch (\Illuminate\Database\QueryException $e) {
             return $e;
         }
@@ -586,6 +630,14 @@ class RotationsController extends Controller
             'rotation_category_id' => 'required|numeric',
             'note' => 'nullable',
         ]);
+        $driver = Driver::where('PermitNumber', $data["badge_id"])->first();
+        if(!$driver)
+        {
+            return Response::json(array(
+                'code'      =>  401,
+                'message'   =>  "No Driver Found with Badge Id ".$data["badge_id"]
+            ), 400);
+        }
         //create rotation
         $rotation = Rotation::create($data);
 
@@ -593,7 +645,9 @@ class RotationsController extends Controller
         //get rotation category because we need the name
         $rotationsCategory = RotationsCategory::whereId($rotation->rotation_category_id)->firstOrFail();
         //check if marks row exist
-        $markRowToUpdate = Marks::where('vehicle_id', $rotation->vehicle_id)
+        $markRowToUpdate =
+            Marks::
+            where('vehicle_id', $rotation->vehicle_id)
             ->where('rotation_category_id', $rotation->rotation_category_id)
             ->first();
         //if exist update it

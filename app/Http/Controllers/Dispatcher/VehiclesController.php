@@ -22,8 +22,8 @@ class VehiclesController extends Controller
             'type'
 
         )
-            ->orderBy('created_at', 'desc')
-            ->get();
+->orderBy('type')
+    ->get();
 
         //get all rotation types
         $rotationsCategories = RotationsCategory::
@@ -34,9 +34,9 @@ class VehiclesController extends Controller
             ->get();
         //add to each vehicles its own marks
         foreach ($vehicles as $vehicle) {
-           
+
             $marksByCategory = array();
-            
+
             foreach ($rotationsCategories as $rotationsCategory) {
                 //check if there is a mark row
                 $markRowExiste = Marks::where('vehicle_id', $vehicle->id)
@@ -80,7 +80,7 @@ class VehiclesController extends Controller
     //update an existing Vehicle
     public function update(Request $request, $id)
     {
-        
+
         $data = request()->validate([
             'number' => 'required|numeric',
             'type' => 'required',
@@ -110,7 +110,7 @@ class VehiclesController extends Controller
                 ->where('rotation_category_id', $rotationsCategory->id)
                 ->first();
             //if not create one
-           
+
 
             if (!$markRowExiste) {
                 $marksRow = new Marks;

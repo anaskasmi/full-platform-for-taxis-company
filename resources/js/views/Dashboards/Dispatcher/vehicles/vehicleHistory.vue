@@ -32,7 +32,7 @@
                                             autocomplete="false"
                                             label="Rotation Type"
                                             required
-                                            v-model="addForm.rotation_type_id"
+                                            v-model="addForm.rotation_category_id"
                                             :items="rotationsCategories"
                                             item-text="name"
                                             item-value="id"
@@ -211,9 +211,10 @@
                                         </v-radio-group>
                                     </v-row>
                                     <!-- marks -->
-                                    <!-- <v-row>
-                                      <v-text-field autocomplete="false" label="Marks" required v-model="editForm.marks"></v-text-field>
-                                    </v-row>-->
+                                    <v-row>
+                                        <v-text-field autocomplete="false" label="Marks" required
+                                                      v-model="editForm.marks"></v-text-field>
+                                    </v-row>
                                     <!-- job_id -->
                                     <v-row>
                                         <v-text-field
@@ -278,7 +279,9 @@
                                     <!-- Comment  -->
 
                                     <v-row>
-                                        <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update
+                                        <v-btn  v-if="!buttonLoading" color="info" class="mt-2" tile block @click="editRotation()">Update
+                                        </v-btn>
+                                        <v-btn v-if="buttonLoading" color="info" class="mt-2" tile block>Updating ...
                                         </v-btn>
                                     </v-row>
                                 </v-container>
@@ -543,7 +546,8 @@
                                             </v-btn>
                                         </v-row>
                                         <v-row>
-                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeAddDialog()">Cancel
+                                            <v-btn color="grey text-white" class="mt-2" tile block
+                                                   @click="closeAddDialog()">Cancel
                                             </v-btn>
                                         </v-row>
                                     </v-container>
@@ -687,7 +691,8 @@
                                         </v-row>
                                         <v-row>
 
-                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeEditDialog()">
+                                            <v-btn color="grey text-white" class="mt-2" tile block
+                                                   @click="closeEditDialog()">
                                                 Cancel
                                             </v-btn>
                                         </v-row>
@@ -870,6 +875,7 @@
         },
         data() {
             return {
+                buttonLoading: false,
                 cities: [],
                 vehicles: [],
                 currentVehicleName: "",
@@ -910,6 +916,8 @@
                 }
                 this.currentSort = s;
             },
+
+
             fetchVehicles() {
                 let url = this.BASE_URL() + "/api/dispatcher/vehicles";
                 axios.defaults.headers.common["Authorization"] =
@@ -919,9 +927,11 @@
                     .get(url)
                     .then(res => {
                         this.vehicles = res.data;
+                        // this.vehicles.sort( this.compare );
                         this.vehicles.forEach(vehicle => {
                             vehicle.name = vehicle.type + " " + vehicle.number;
                         });
+
                     })
                     .catch(error => {
                         this.$swal(
@@ -1038,6 +1048,7 @@
                     });
             },
             editRotation() {
+                this.buttonLoading = true;
                 let url =
                     this.BASE_URL() + "/api/dispatcher/rotation/" + this.editForm.id;
 
@@ -1055,9 +1066,13 @@
                         });
                         this.fetchItems();
                         this.closeEditDialog();
+                        this.buttonLoading = false;
+
                     })
                     .catch(error => {
                         this.$swal("Try again", error.response.data.errors, "warning");
+                        this.buttonLoading = false;
+
                     });
             },
             deleteRotation(rotation) {

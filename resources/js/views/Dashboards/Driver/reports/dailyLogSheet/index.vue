@@ -24,9 +24,9 @@
                 <v-tabs fixed-tabs background-color="light-blue darken-4" dark v-model="active_tab">
                     <v-tab @click="day" key="0">Daily Report</v-tab>
 
-                    <v-tab @click="currentMonth" key="1">Current Month</v-tab>
+<!--                    <v-tab @click="currentMonth" key="1">Current Month</v-tab>-->
 
-                    <v-tab @click="pastMonth" key="2">Past Month</v-tab>
+<!--                    <v-tab @click="pastMonth" key="2">Past Month</v-tab>-->
 
                     <v-tab @click="currentYear" key="3">Current year</v-tab>
 
@@ -69,7 +69,6 @@
 
                 <hr/>
                 <v-alert
-
                     tile
                     dense
                     color="#2A3B4D"
@@ -79,16 +78,13 @@
                 >
                     <div class=" text-center text-white">PS :Swipe Left and Right to see all the available reports!
                     </div>
-
-
                 </v-alert>
                 <!-- tabs -->
                 <v-tabs fixed-tabs background-color="light-blue darken-4" dark v-model="active_tab">
                     <v-tab @click="day" key="0">Daily Report</v-tab>
+<!--                    <v-tab @click="currentMonth" key="1">Current Month</v-tab>-->
 
-                    <v-tab @click="currentMonth" key="1">Current Month</v-tab>
-
-                    <v-tab @click="pastMonth" key="2">Past Month</v-tab>
+<!--                    <v-tab @click="pastMonth" key="2">Past Month</v-tab>-->
 
                     <v-tab @click="currentYear" key="3">Current year</v-tab>
 

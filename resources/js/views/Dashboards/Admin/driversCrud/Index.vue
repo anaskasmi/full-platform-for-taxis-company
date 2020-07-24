@@ -1,56 +1,59 @@
 <template>
 
-    <div class="wrapper_box">
-        <NavbarAdmin></NavbarAdmin>
-        <Drawer></Drawer>
+    <div class="ma-0 pa-0">
+        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
 
-        <!-- header -->
-            <div class="wrapper_header mt-10">
+            <div class="wrapper_box">
+                <NavbarAdmin></NavbarAdmin>
+                <Drawer></Drawer>
 
-                <div
-                    class="title_header text-uppercase" 
-                >   
-                    Drivers
-                </div>
-                <v-btn 
-                    link
-                    tile                    
-                    class="ma-2 button_header" 
-                    outlined 
-                    color="success "
-                    @click="addDriver"
-                        
-                >
-                    <v-icon left>mdi-pencil</v-icon> 
-                    <div>
-                    New Driver
-                    </div> 
-                </v-btn>
-        </div>
-                <hr>
-<!-- search start -->
-<div class="row">
-        <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
-                
-                <form @submit.prevent='search(searchValue)'>
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                                <button id="button-addon7" type="submit" class="btn btn-dark">
-                                    <!-- <i class="fa fa-search"></i> -->
-                                    <v-icon dark small>search</v-icon>
-                                </button>
+                <!-- header -->
+                <div class="wrapper_header mt-10">
+
+                    <div
+                        class="title_header text-uppercase"
+                    >
+                        Drivers
+                    </div>
+                    <v-btn
+                        link
+                        tile
+                        class="ma-2 button_header"
+                        outlined
+                        color="success "
+                        @click="addDriver"
+
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>
+                            New Driver
                         </div>
-                        <input type="search" name ="searchValue" v-model="searchValue" placeholder="Search by name" aria-describedby="button-addon7" class="form-control">
-                    </div>                
-                </form>
-        </div>
-</div>
-<!-- search end -->
+                    </v-btn>
+                </div>
+                <hr>
+                <!-- search start -->
+                <div class="row">
+                    <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
 
-        <!-- table -->
-        <div class="table-responsive">
-            <table class="table table-hover">
-                    <thead class="thead-dark">
+                        <form @submit.prevent='search(searchValue)'>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon7" type="submit" class="btn btn-dark">
+                                        <!-- <i class="fa fa-search"></i> -->
+                                        <v-icon dark small>search</v-icon>
+                                    </button>
+                                </div>
+                                <input type="search" name ="searchValue" v-model="searchValue" placeholder="Search by name" aria-describedby="button-addon7" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- search end -->
+
+                <!-- table -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
                         <tr class="">
                             <th scope="col">Name</th>
                             <th scope="col">First Name</th>
@@ -62,10 +65,10 @@
                             <th scope="col">Abstract Expiry</th>
                             <th scope="col"></th>
                         </tr>
-                    </thead>
-            <tbody>
-                        
-                    <tr v-for="driver in drivers" v-bind:key="driver.PermitNumber" class="">
+                        </thead>
+                        <tbody>
+
+                        <tr v-for="driver in drivers" v-bind:key="driver.PermitNumber" class="">
                             <td>{{driver.Name}}</td>
                             <td>{{driver.FirstName}}</td>
                             <td>{{driver.LastName}}</td>
@@ -82,28 +85,28 @@
                                 >
                                     edit
                                 </v-icon>
-                                
+
                                 <v-icon
-                                    color="red lighten-1" 
+                                    color="red lighten-1"
                                     class="mx-1"
                                     @click="deleteDriver(driver.PermitNumber,driver.Name)"
                                 >
                                     delete
                                 </v-icon>
                                 <v-icon
-                                    color="info" 
+                                    color="info"
                                     class="mx-1"
-                                     @click="showDriver(driver)"
+                                    @click="showDriver(driver)"
                                 >
                                     person
                                 </v-icon>
 
                             </td>
-                        </tr>    
-            
-            </tbody>
-            </table>
-                        <v-alert 
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <v-alert
                         v-if="noDriverfound"
                         border="left"
                         tile
@@ -113,20 +116,166 @@
                         elevation="2"
                         class="mb-12"
                         align="center"
-                        >
+                    >
                         Sorry, No driver Found !
+                    </v-alert>
+                </div>
+
+                <v-pagination
+                    :total-visible="5"
+                    v-model="current_page"
+                    :length="last_page"
+                    @input="next"
+                >
+                </v-pagination>
+
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarAdmin></NavbarAdmin>
+
+            <div class="container px-4">
+
+                <div class="">
+
+                    <!-- header -->
+                    <div
+                        class=" text-uppercase text-center"
+                        style="font-size: 2em;color: rgb(124, 124, 124);"
+                    >
+                        Drivers
+                    </div>
+
+
+
+                    <v-btn
+                            link
+                            tile
+                            block
+                            class="my-4"
+                            outlined
+                            color="success "
+                            @click="addDriver"
+
+                        >
+                            <v-icon left>mdi-pencil</v-icon>
+                            <div>
+                                New Driver
+                            </div>
+                        </v-btn>
+                    <hr>
+                    <!-- search start -->
+                    <div class="row">
+                        <div class="col-md-12 md-form active-cyan-2 mb-3" style="margin-bottom: -15px !important;">
+
+                            <form @submit.prevent='search(searchValue)'>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <button id="button-addon7" type="submit" class="btn btn-dark">
+                                            <!-- <i class="fa fa-search"></i> -->
+                                            <v-icon dark small>search</v-icon>
+                                        </button>
+                                    </div>
+                                    <input type="search" name ="searchValue" v-model="searchValue" placeholder="Search by name or id" aria-describedby="button-addon7" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- search end -->
+
+                    <!-- table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                            <tr class="">
+                                <th scope="col" class="fitCell align-middle">Name</th>
+                                <th scope="col" class="fitCell align-middle">First Name</th>
+                                <th scope="col" class="fitCell align-middle">Last Name</th>
+                                <th scope="col" class="fitCell align-middle">Permit Number</th>
+                                <th scope="col" class="fitCell align-middle">License Number</th>
+                                <th scope="col" class="fitCell align-middle">License Expiry</th>
+                                <th scope="col" class="fitCell align-middle">Permit Expiry</th>
+                                <th scope="col" class="fitCell align-middle">Abstract Expiry</th>
+                                <th scope="col" class="fitCell align-middle"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr v-for="driver in drivers" v-bind:key="driver.PermitNumber" class="">
+                                <td class="fitCell align-middle">{{driver.Name}}</td>
+                                <td class="fitCell align-middle">{{driver.FirstName}}</td>
+                                <td class="fitCell align-middle">{{driver.LastName}}</td>
+                                <td class="fitCell align-middle">{{driver.PermitNumber}}</td>
+                                <td class="fitCell align-middle">{{driver.LicenseNumber}}</td>
+                                <td class="fitCell align-middle">{{driver.LicenseExpiry}}</td>
+                                <td class="fitCell align-middle">{{driver.PermitExpiry}}</td>
+                                <td class="fitCell align-middle">{{driver.AbstractExpiry}}</td>
+                                <td class="fitCell align-middle">
+                                    <v-icon
+                                        color="success"
+                                        class="ma-2"
+                                        @click="editDriver(driver)"
+                                    >
+                                        edit
+                                    </v-icon>
+
+                                    <v-icon
+                                        color="red lighten-1"
+                                        class="ma-2"
+                                        @click="deleteDriver(driver.PermitNumber,driver.Name)"
+                                    >
+                                        delete
+                                    </v-icon>
+                                    <v-icon
+                                        color="info"
+                                        class="ma-2"
+                                        @click="showDriver(driver)"
+                                    >
+                                        person
+                                    </v-icon>
+
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <v-alert
+                            v-if="noDriverfound"
+                            border="left"
+                            tile
+                            type="warning"
+                            dense
+                            dark
+                            elevation="2"
+                            class="mb-12"
+                            align="center"
+                        >
+                            Sorry, No driver Found !
                         </v-alert>
+                    </div>
+
+                    <v-pagination
+                        :total-visible="5"
+                        v-model="current_page"
+                        :length="last_page"
+                        @input="next"
+                    >
+                    </v-pagination>
+
+                </div>
+            </div>
         </div>
 
-        <v-pagination 
-            :total-visible="5"
-            v-model="current_page"
-            :length="last_page"
-             @input="next"
-            >
-        </v-pagination>
-        
     </div>
+
+
 </template>
 <script>
 
@@ -165,7 +314,7 @@ export default {
                 this.fetchItems();
                 this.noDriverfound = false;
                 return ;
-                
+
             }
             let vm = this;
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_admin;
@@ -248,7 +397,7 @@ axios.get(page_url)
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.value) {
-        
+
                     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.$store.state.token_admin;
 axios.delete(this.BASE_URL()+'/api/admin/driver/'+id)
                             .then(data => {
@@ -280,7 +429,7 @@ axios.delete(this.BASE_URL()+'/api/admin/driver/'+id)
     editDriver(driver){
 
             this.$router.push({name:"AdminDashboard_drivers_edit",params:{id:driver.PermitNumber}})
-            
+
     },
   }
 }
@@ -321,4 +470,9 @@ axios.delete(this.BASE_URL()+'/api/admin/driver/'+id)
     .button_header{
         justify-self: end;
     }
+    .fitCell{
+        max-width:100%;white-space:nowrap;
+    }
+
+
 </style>

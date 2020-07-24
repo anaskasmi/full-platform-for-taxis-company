@@ -14,7 +14,8 @@
                                     class="text-uppercase font-weight-black mx-8"
                                     style="font-size: 2em;
     color: #2196f3;"
-                                >New Rotation</div>
+                                >New Rotation
+                                </div>
                                 <v-spacer></v-spacer>
                                 <div class="float-right">
                                     <v-btn text color="black" class="float-right" @click="closeAddDialog()">
@@ -72,11 +73,13 @@
                                     </v-row>
                                     <!-- marks -->
                                     <v-row>
-                                        <v-text-field autocomplete="false" label="Marks" required v-model="addForm.marks"></v-text-field>
+                                        <v-text-field autocomplete="false" label="Marks" required
+                                                      v-model="addForm.marks"></v-text-field>
                                     </v-row>
                                     <!-- job_id -->
                                     <v-row>
-                                        <v-text-field autocomplete="false" label="Job ID" required v-model="addForm.job_id"></v-text-field>
+                                        <v-text-field autocomplete="false" label="Job ID" required
+                                                      v-model="addForm.job_id"></v-text-field>
                                     </v-row>
                                     <!-- badge_id -->
                                     <v-row>
@@ -112,7 +115,9 @@
                                                 <v-date-picker v-model="addForm.date" no-title scrollable>
                                                     <v-spacer></v-spacer>
                                                     <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                    <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">OK</v-btn>
+                                                    <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">
+                                                        OK
+                                                    </v-btn>
                                                 </v-date-picker>
                                             </v-menu>
                                         </v-col>
@@ -149,7 +154,8 @@
                                     class="text-uppercase font-weight-black mx-8"
                                     style="font-size: 2em;
     color: #2196f3;"
-                                >Edit Rotation</div>
+                                >Edit Rotation
+                                </div>
                                 <v-spacer></v-spacer>
                                 <div class="float-right">
                                     <v-btn text color="black" class="float-right" @click="closeEditDialog()">
@@ -161,31 +167,6 @@
                         <v-card-text>
                             <v-container>
                                 <v-container>
-                                    <!-- rotation category -->
-                                    <!-- <v-row class="mt-12">
-                                      <v-select
-                                        autocomplete="false"
-                                        label="Rotation Type"
-                                        required
-                                        v-model="editForm.rotation_category_id"
-                                        :items="rotationsCategories"
-                                        item-text="name"
-                                        item-value="id"
-                                      ></v-select>
-                                    </v-row> -->
-                                    <!-- vehicle -->
-                                    <!-- <v-row>
-                                      <v-select
-                                        autocomplete="false"
-                                        label="Vehicle"
-                                        required
-                                        v-model="editForm.vehicle_id"
-                                        :items="vehicles"
-                                        item-text="name"
-                                        item-value="id"
-                                      ></v-select>
-                                    </v-row> -->
-                                    <!-- city -->
                                     <v-row>
                                         <v-select
                                             autocomplete="false"
@@ -206,9 +187,10 @@
                                         </v-radio-group>
                                     </v-row>
                                     <!-- marks -->
-                                    <!-- <v-row>
-                                      <v-text-field autocomplete="false" label="Marks" required v-model="editForm.marks"></v-text-field>
-                                    </v-row> -->
+                                    <v-row>
+                                        <v-text-field autocomplete="false" label="Marks" required
+                                                      v-model="editForm.marks"></v-text-field>
+                                    </v-row>
                                     <!-- job_id -->
                                     <v-row>
                                         <v-text-field
@@ -252,7 +234,9 @@
                                                 <v-date-picker v-model="editForm.date" no-title scrollable>
                                                     <v-spacer></v-spacer>
                                                     <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                    <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">OK</v-btn>
+                                                    <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">
+                                                        OK
+                                                    </v-btn>
                                                 </v-date-picker>
                                             </v-menu>
                                         </v-col>
@@ -271,7 +255,10 @@
                                     <!-- Comment  -->
 
                                     <v-row>
-                                        <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update</v-btn>
+                                        <v-btn v-if="!buttonLoading" color="info" class="mt-2" tile block @click="editRotation()">Update
+                                        </v-btn>
+                                        <v-btn v-if="buttonLoading" color="info" class="mt-2" tile block>Updating ...
+                                        </v-btn>
                                     </v-row>
                                 </v-container>
                             </v-container>
@@ -283,7 +270,8 @@
                 <!-- header -->
                 <div class="col-12">
                     <v-btn color="grey" text tile class="float-left" :to="rotationsManagerRoute">
-                        <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                        <v-icon class="mr-2">keyboard_return</v-icon>
+                        Rotations Manager
                     </v-btn>
                 </div>
                 <div class="wrapper_header mt-10">
@@ -300,7 +288,7 @@
                         <div>New Rotation</div>
                     </v-btn>
                 </div>
-                <hr />
+                <hr/>
                 <!-- progress -->
                 <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
                 <!-- table -->
@@ -313,7 +301,9 @@
                             <th scope="col"></th>
                             <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
                             <th scope="col" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
-                            <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation type</th>
+                            <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation
+                                type
+                            </th>
                             <th scope="col" @click="sort('city')" style="cursor:ns-resize	">City</th>
                             <th scope="col" @click="sort('type')" style="cursor:ns-resize	">Type</th>
                             <th scope="col" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
@@ -400,7 +390,7 @@
                     <v-dialog v-model="addDialogIsOpen" max-width="800px" persistent>
                         <v-card v-if="addDialogIsOpen">
                             <v-container>
-                                <v-btn text color="black" block  @click="closeAddDialog()">
+                                <v-btn text color="black" block @click="closeAddDialog()">
                                     <v-icon>close</v-icon>
                                 </v-btn>
                                 <v-row class="col-12 justify-content-around align-content-center mx-0 px-0">
@@ -408,7 +398,8 @@
                                         class="text-uppercase font-weight-black mx-8"
                                         style="font-size: 2em;
     color: #2196f3;"
-                                    >New Rotation</div>
+                                    >New Rotation
+                                    </div>
 
                                 </v-row>
                             </v-container>
@@ -461,11 +452,13 @@
                                         </v-row>
                                         <!-- marks -->
                                         <v-row>
-                                            <v-text-field autocomplete="false" label="Marks" required v-model="addForm.marks"></v-text-field>
+                                            <v-text-field autocomplete="false" label="Marks" required
+                                                          v-model="addForm.marks"></v-text-field>
                                         </v-row>
                                         <!-- job_id -->
                                         <v-row>
-                                            <v-text-field autocomplete="false" label="Job ID" required v-model="addForm.job_id"></v-text-field>
+                                            <v-text-field autocomplete="false" label="Job ID" required
+                                                          v-model="addForm.job_id"></v-text-field>
                                         </v-row>
                                         <!-- badge_id -->
                                         <v-row>
@@ -501,7 +494,9 @@
                                                     <v-date-picker v-model="addForm.date" no-title scrollable>
                                                         <v-spacer></v-spacer>
                                                         <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(addForm.date)">OK</v-btn>
+                                                        <v-btn text color="primary"
+                                                               @click="$refs.menu.save(addForm.date)">OK
+                                                        </v-btn>
                                                     </v-date-picker>
                                                 </v-menu>
                                             </v-col>
@@ -520,10 +515,13 @@
                                         <!-- Comment  -->
 
                                         <v-row>
-                                            <v-btn color="info" class="mt-2" tile block @click="addRotation()">Add</v-btn>
+                                            <v-btn color="info" class="mt-2" tile block @click="addRotation()">Add
+                                            </v-btn>
                                         </v-row>
                                         <v-row>
-                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeAddDialog()">cancel</v-btn>
+                                            <v-btn color="grey text-white" class="mt-2" tile block
+                                                   @click="closeAddDialog()">cancel
+                                            </v-btn>
                                         </v-row>
 
                                     </v-container>
@@ -545,7 +543,8 @@
                                         class="text-uppercase font-weight-black mx-8"
                                         style="font-size: 2em;
     color: #2196f3;"
-                                    >Edit Rotation</div>
+                                    >Edit Rotation
+                                    </div>
                                 </v-row>
                             </v-container>
                             <v-card-text>
@@ -642,7 +641,9 @@
                                                     <v-date-picker v-model="editForm.date" no-title scrollable>
                                                         <v-spacer></v-spacer>
                                                         <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(editForm.date)">OK</v-btn>
+                                                        <v-btn text color="primary"
+                                                               @click="$refs.menu.save(editForm.date)">OK
+                                                        </v-btn>
                                                     </v-date-picker>
                                                 </v-menu>
                                             </v-col>
@@ -661,10 +662,13 @@
                                         <!-- Comment  -->
 
                                         <v-row>
-                                            <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update</v-btn>
+                                            <v-btn color="info" class="mt-2" tile block @click="editRotation()">Update
+                                            </v-btn>
                                         </v-row>
                                         <v-row>
-                                            <v-btn color="grey text-white" class="mt-2" tile block @click="closeEditDialog()">Cancel</v-btn>
+                                            <v-btn color="grey text-white" class="mt-2" tile block
+                                                   @click="closeEditDialog()">Cancel
+                                            </v-btn>
                                         </v-row>
                                     </v-container>
                                 </v-container>
@@ -676,7 +680,8 @@
                     <!-- header -->
                     <div class="">
                         <v-btn color="grey" text tile class="" block :to="rotationsManagerRoute">
-                            <v-icon class="mr-2">keyboard_return</v-icon>Rotations Manager
+                            <v-icon class="mr-2">keyboard_return</v-icon>
+                            Rotations Manager
                         </v-btn>
                     </div>
                     <hr>
@@ -700,24 +705,40 @@
                         <v-icon left>mdi-pencil</v-icon>
                         <div>New Rotation</div>
                     </v-btn>
-                    <hr />
+                    <hr/>
                     <!-- progress -->
                     <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
                     <!-- table -->
                     <div class="table-responsive" v-if="!isLoading">
-                        <table class="table table-hover" >
+                        <table class="table table-hover">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col" class="align-middle fitCell"></th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
-                                <th scope="col" class="align-middle fitCell" ></th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation type</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('city')" style="cursor:ns-resize	">City</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('type')" style="cursor:ns-resize	">Type</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
-                                <th scope="col" class="align-middle fitCell" @click="sort('date')" style="cursor:ns-resize	">Date</th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('driver')"
+                                    style="cursor:ns-resize	">Driver
+                                </th>
+                                <th scope="col" class="align-middle fitCell"></th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('vehicle')"
+                                    style="cursor:ns-resize	">Vehicle
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('job_id')"
+                                    style="cursor:ns-resize	">Job ID
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('rotationsCategory')"
+                                    style="cursor:ns-resize	">Rotation type
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('city')"
+                                    style="cursor:ns-resize	">City
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('type')"
+                                    style="cursor:ns-resize	">Type
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('marks')"
+                                    style="cursor:ns-resize	">Marks
+                                </th>
+                                <th scope="col" class="align-middle fitCell" @click="sort('date')"
+                                    style="cursor:ns-resize	">Date
+                                </th>
                                 <th scope="col" class="align-middle fitCell" @click="sort('note')">Note</th>
                                 <th scope="col"></th>
                                 <th></th>
@@ -726,7 +747,7 @@
 
                             <tbody>
                             <tr v-for="(rotation,i) in sortedRows" :key="i">
-                                <td >
+                                <td>
                                     <img
                                         v-if="rotation.driverImageUrl"
                                         :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
@@ -764,14 +785,19 @@
                                         <span>This Driver doesnt exist try another badge ID!</span>
                                     </v-tooltip>
                                 </td>
-                                <td class="text-uppercase align-middle fitCell" style="color:#01a3a4">{{rotation.vehicle}}</td>
+                                <td class="text-uppercase align-middle fitCell" style="color:#01a3a4">
+                                    {{rotation.vehicle}}
+                                </td>
                                 <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.job_id}}</td>
-                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
+                                <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.rotationsCategory}}
+                                </td>
                                 <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.city}}</td>
                                 <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.type}}</td>
                                 <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.marks}}</td>
                                 <td class="align-middle fitCell" style="color:#3c6382;">{{rotation.date}}</td>
-                                <td colspan="2" class="font-italic align-middle fitCell" style="color:grey;">{{rotation.note}}</td>
+                                <td colspan="2" class="font-italic align-middle fitCell" style="color:grey;">
+                                    {{rotation.note}}
+                                </td>
                                 <td class="text-right align-middle">
                                     <v-icon color="green" class="ma-2" @click="openEditDialog(rotation)">edit</v-icon>
                                     <v-icon color="red" class="ma-2" @click="deleteRotation(rotation)">delete</v-icon>
@@ -791,301 +817,331 @@
 
 </template>
 <script>
-import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
-import Drawer from "@/js/components/drawers/Dispatcher.vue";
+    import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
+    import Drawer from "@/js/components/drawers/Dispatcher.vue";
 
-export default {
-  beforeMount() {
-    this.fetchItems();
-  },
-  components: {
-    NavbarDispatcher,
-    Drawer
-  },
-  computed: {
-    sortedRows: function() {
-      return this.rotations
-        .sort((a, b) => {
-          let modifier = 1;
-          if (this.currentSortDir === "desc") modifier = -1;
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-          return 0;
-        })
-        .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.pageSize;
-          let end = this.currentPage * this.pageSize;
-          if (index >= start && index < end) return true;
-        });
-    },
-    nb_pages()
-    {
-      return Math.round( this.rotations.length / this.pageSize );
-    }
-  },
-  data() {
-    return {
-      cities: [],
-      vehicles: [],
-      rotationsCategories: [],
-      rotations: [],
-      noCityfound: false,
-      addDialogIsOpen: false,
-      editDialogIsOpen: false,
-      editedId: "",
-      addForm: {},
-      editForm: {},
-      cityName_editForm: "",
-      cityMarks_editForm: "",
-      isLoading: true,
-      rotationsManagerRoute: { name: "DispatcherDashboard_rotationsManager" },
-      menu: false,
-      currentSortDir: "",
-      pageSize: 10,
-      currentPage: 1
-    };
-  },
-  methods: {
-    BASE_URL() {
-      return this.$store.state.BASE_URL;
-    },
-    nextPage: function() {
-      if (this.currentPage * this.pageSize < this.rotations.length)
-        this.currentPage++;
-    },
-    prevPage: function() {
-      if (this.currentPage > 1) this.currentPage--;
-    },
-    sort: function(s) {
-      //if s == current sort, reverse
-      if (s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
-      }
-      this.currentSort = s;
-    },
-    fetchVehicles() {
-      let url = this.BASE_URL() + "/api/dispatcher/vehicles";
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
+    export default {
+        beforeMount() {
+            this.fetchItems();
+        },
+        components: {
+            NavbarDispatcher,
+            Drawer
+        },
+        computed: {
+            sortedRows: function () {
+                return this.rotations
+                    .sort((a, b) => {
+                        let modifier = 1;
+                        if (this.currentSortDir === "desc") modifier = -1;
+                        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                        return 0;
+                    })
+                    .filter((row, index) => {
+                        let start = (this.currentPage - 1) * this.pageSize;
+                        let end = this.currentPage * this.pageSize;
+                        if (index >= start && index < end) return true;
+                    });
+            },
+            nb_pages() {
+                return Math.round(this.rotations.length / this.pageSize);
+            }
+        },
+        data() {
+            return {
+                buttonLoading: false,
+                cities: [],
+                vehicles: [],
+                rotationsCategories: [],
+                rotations: [],
+                noCityfound: false,
+                addDialogIsOpen: false,
+                editDialogIsOpen: false,
+                editedId: "",
+                addForm: {},
+                editForm: {},
+                cityName_editForm: "",
+                cityMarks_editForm: "",
+                isLoading: true,
+                rotationsManagerRoute: {name: "DispatcherDashboard_rotationsManager"},
+                menu: false,
+                currentSortDir: "",
+                pageSize: 10,
+                currentPage: 1
+            };
+        },
+        methods: {
+            BASE_URL() {
+                return this.$store.state.BASE_URL;
+            },
+            nextPage: function () {
+                if (this.currentPage * this.pageSize < this.rotations.length)
+                    this.currentPage++;
+            },
+            prevPage: function () {
+                if (this.currentPage > 1) this.currentPage--;
+            },
+            sort: function (s) {
+                //if s == current sort, reverse
+                if (s === this.currentSort) {
+                    this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+                }
+                this.currentSort = s;
+            },
+            compare( a, b ) {
+                if ( parseInt(a.number, 10) < parseInt(b.number, 10) ) {
+                    return -1;
+                }
+                if (parseInt(a.number, 10) > parseInt(b.number, 10) ){
+                    return 1;
+                }
+                return 0;
+            },
+            fetchVehicles() {
+                let url = this.BASE_URL() + "/api/dispatcher/vehicles";
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
 
-      axios
-        .get(url)
-        .then(res => {
-          this.vehicles = res.data;
-          this.vehicles.forEach(vehicle => {
-            vehicle.name = vehicle.type + " " + vehicle.number;
-          });
-        })
-        .catch(error => {
-          this.$swal(
-            "Error in fetching Vehicles",
-            error.response.data.errors,
-            "warning"
-          );
-        });
-    },
-    fetchCities() {
-      let url = this.BASE_URL() + "/api/dispatcher/cities";
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
-      axios
-        .get(url)
-        .then(res => {
-          this.cities = res.data.data;
-        })
-        .catch(error => {
-          this.$swal(
-            "Error in fetching Cities",
-            error.response.data.errors,
-            "warning"
-          );
-        });
-    },
-    fetchRotationsCategories() {
-      let url = this.BASE_URL() + "/api/dispatcher/rotationsCategories";
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
-      axios
-        .get(url)
-        .then(res => {
-          this.rotationsCategories = res.data.data;
-        })
-        .catch(error => {
-          this.$swal("Try again", error.response.data.errors, "warning");
-        });
-    },
-    fetchRotations() {
-      let url = this.BASE_URL() + "/api/dispatcher/rotations";
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
-      axios
-        .get(url)
-        .then(res => {
-          this.rotations = res.data;
-          this.isLoading = false;
-        })
-        .catch(error => {
-          this.$swal("Try again", error.response.data.errors, "warning");
-        });
-    },
-    fetchItems() {
-      this.fetchVehicles();
-      this.fetchCities();
-      this.fetchRotationsCategories();
-      this.fetchRotations();
+                axios
+                    .get(url)
+                    .then(res => {
+                        this.vehicles = res.data;
+                        this.vehicles.sort( this.compare );
+                        this.vehicles.forEach(vehicle => {
+                            vehicle.name = vehicle.type + " " + vehicle.number;
+                        });
+                    })
+                    .catch(error => {
+                        this.$swal(
+                            "Error in fetching Vehicles",
+                            error.response.data.errors,
+                            "warning"
+                        );
+                    });
+            },
+            fetchCities() {
+                let url = this.BASE_URL() + "/api/dispatcher/cities";
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .get(url)
+                    .then(res => {
+                        this.cities = res.data.data;
+                    })
+                    .catch(error => {
+                        this.$swal(
+                            "Error in fetching Cities",
+                            error.response.data.errors,
+                            "warning"
+                        );
+                    });
+            },
+            fetchRotationsCategories() {
+                let url = this.BASE_URL() + "/api/dispatcher/rotationsCategories";
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .get(url)
+                    .then(res => {
+                        this.rotationsCategories = res.data.data;
+                    })
+                    .catch(error => {
+                        this.$swal("Try again", error.response.data.errors, "warning");
+                    });
+            },
+            fetchRotations() {
+                let url = this.BASE_URL() + "/api/dispatcher/rotations";
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .get(url)
+                    .then(res => {
+                        this.rotations = res.data;
+                        this.isLoading = false;
+                    })
+                    .catch(error => {
+                        this.$swal("Try again", error.response.data.errors, "warning");
+                    });
+            },
+            fetchItems() {
+                this.fetchVehicles();
+                this.fetchCities();
+                this.fetchRotationsCategories();
+                this.fetchRotations();
 
-    },
-    openAddDialog() {
-      this.addDialogIsOpen = true;
-    },
-    closeAddDialog() {
-      this.addDialogIsOpen = false;
-      Object.keys(this.addForm).forEach(key => (this.addForm[key] = null));
-    },
-    openEditDialog(rotation) {
-      this.editForm = Object.assign({}, rotation);
-      this.editDialogIsOpen = true;
-    },
-    closeEditDialog() {
-      this.editDialogIsOpen = false;
-    },
-    addRotation() {
-      let url = this.BASE_URL() + "/api/dispatcher/rotation";
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
-      axios
-        .post(url, this.addForm)
-        .then(res => {
-          this.$swal({
-            title: "Success",
-            text: "Rotation added successfully!",
-            type: "success",
-            timer: 2000
-          });
-          this.fetchItems();
-          this.closeAddDialog();
-        })
-        .catch(error => {
-          this.pageIsLoading = false;
-          let output = "<br><br>";
-          for (let property in error.response.data.errors) {
-            output +=
-              '<p align="left">' +
-              "*" +
-              error.response.data.errors[property] +
-              "</p>";
-          }
+            },
+            openAddDialog() {
+                this.addDialogIsOpen = true;
+            },
+            closeAddDialog() {
+                this.addDialogIsOpen = false;
+                Object.keys(this.addForm).forEach(key => (this.addForm[key] = null));
+            },
+            openEditDialog(rotation) {
+                this.editForm = Object.assign({}, rotation);
+                this.editDialogIsOpen = true;
+            },
+            closeEditDialog() {
+                this.editDialogIsOpen = false;
+            },
+            addRotation() {
+                let url = this.BASE_URL() + "/api/dispatcher/rotation";
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .post(url, this.addForm)
+                    .then(res => {
+                        this.$swal({
+                            title: "Success",
+                            text: "Rotation added successfully!",
+                            type: "success",
+                            timer: 2000
+                        });
+                        this.fetchItems();
+                        this.closeAddDialog();
+                    })
+                    .catch(error => {
+                        this.pageIsLoading = false;
+                        let output = "<br><br>";
+                        for (let property in error.response.data.errors) {
+                            output +=
+                                '<p align="left">' +
+                                "*" +
+                                error.response.data.errors[property] +
+                                "</p>";
+                        }
 
-          this.$swal(error.response.data.message, output, "warning");
-        });
-    },
-    editRotation() {
-      let url =
-        this.BASE_URL() + "/api/dispatcher/rotation/" + this.editForm.id;
+                        this.$swal(error.response.data.message, output, "warning");
+                    });
+            },
+            editRotation() {
+                this.buttonLoading = true;
+                let url =
+                    this.BASE_URL() + "/api/dispatcher/rotation/" + this.editForm.id;
 
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + this.$store.state.token_dispatcher;
-      this.editForm._method = "put";
-      axios
-        .post(url, this.editForm)
-        .then(res => {
-          this.$swal({
-            title: "Success",
-            text: "Rotation Updated successfully!",
-            type: "success",
-            timer: 2000
-          });
-          this.fetchItems();
-          this.closeEditDialog();
-        })
-        .catch(error => {
-          this.$swal("Try again", error.response.data.errors, "warning");
-        });
-    },
-    deleteRotation(rotation) {
-      this.$swal
-        .fire({
-          text: "Are You Sure You Want To Delete This Rotation?",
-          type: "question",
-          animation: true,
-          focusConfirm: false,
-          padding: "2rem",
-          showCancelButton: true,
-          confirmButtonText: "Yes"
-        })
-        .then(res => {
-          if (res.value) {
-            let url =
-              this.BASE_URL() + "/api/dispatcher/rotation/" + rotation.id;
-            axios.defaults.headers.common["Authorization"] =
-              "Bearer " + this.$store.state.token_dispatcher;
-            axios
-              .delete(url)
-              .then(res => {
-                this.fetchItems();
-                this.$swal({
-                  title: "Success",
-                  text: "Rotation Deleted successfully!",
-                  type: "success",
-                  timer: 2000
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                this.editForm._method = "put";
+                axios
+                    .post(url, this.editForm)
+                    .then(res => {
+                        this.$swal({
+                            title: "Success",
+                            text: "Rotation Updated successfully!",
+                            type: "success",
+                            timer: 2000
+                        });
+                        this.fetchItems();
+                        this.closeEditDialog();
+                        this.buttonLoading=false;
+                    })
+                    .catch(error => {
+                        this.pageIsLoading = false;
+                        let output = "<br><br>";
+                        for (let property in error.response.data.errors) {
+                            output +=
+                                '<p align="left">' +
+                                "*" +
+                                error.response.data.errors[property] +
+                                "</p>";
+                        }
+
+                        this.$swal(error.response.data.message, output, "warning");
+                        this.buttonLoading=false;
+
+                    });
+            },
+            deleteRotation(rotation) {
+                this.$swal
+                    .fire({
+                        text: "Are You Sure You Want To Delete This Rotation?",
+                        type: "question",
+                        animation: true,
+                        focusConfirm: false,
+                        padding: "2rem",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes"
+                    })
+                    .then(res => {
+                        if (res.value) {
+                            let url =
+                                this.BASE_URL() + "/api/dispatcher/rotation/" + rotation.id;
+                            axios.defaults.headers.common["Authorization"] =
+                                "Bearer " + this.$store.state.token_dispatcher;
+                            axios
+                                .delete(url)
+                                .then(res => {
+                                    this.fetchItems();
+                                    this.$swal({
+                                        title: "Success",
+                                        text: "Rotation Deleted successfully!",
+                                        type: "success",
+                                        timer: 2000
+                                    });
+                                })
+                                .catch(error => {
+                                    this.$swal("Try again", error.response.data.errors, "warning");
+                                });
+                        }
+                    });
+            },
+            showDriver: function (badge_id) {
+                this.$router.push({
+                    name: "DispatcherDashboard_drivers_show",
+                    params: {id: badge_id}
                 });
-              })
-              .catch(error => {
-                this.$swal("Try again", error.response.data.errors, "warning");
-              });
-          }
-        });
-    },
-    showDriver: function(badge_id) {
-      this.$router.push({
-        name: "DispatcherDashboard_drivers_show",
-        params: { id: badge_id }
-      });
-    }
-  }
-};
+            }
+        }
+    };
 </script>
 <style scoped>
-.wrapper_box {
-  display: grid;
-  grid-gap: 2em;
-  grid-auto-rows: minmax(10px, auto);
-}
-.search_box {
-  background-color: rgb(255, 51, 61);
-}
-.table_box {
-  background-color: rgb(65, 35, 150);
-}
-.pagination_box {
-  background-color: rgb(255, 153, 0);
-}
-a,
-a:hover {
-  text-decoration: none;
-}
-.wrapper_header {
-  display: grid;
-  grid-template-columns: 10fr 4fr;
-  grid-auto-rows: minmax(50px, auto);
-  align-items: center;
-  /* background-color: rgb(255, 153, 0); */
-}
-.title_header {
-  justify-self: start;
-  font-family: "roboto";
-  font-size: 3em;
-  color: rgb(124, 124, 124);
-}
-.button_header {
-  justify-self: end;
-}
+    .wrapper_box {
+        display: grid;
+        grid-gap: 2em;
+        grid-auto-rows: minmax(10px, auto);
+    }
 
-.fitCell{
-    max-width:100%;white-space:nowrap;
-}
+    .search_box {
+        background-color: rgb(255, 51, 61);
+    }
 
+    .table_box {
+        background-color: rgb(65, 35, 150);
+    }
 
+    .pagination_box {
+        background-color: rgb(255, 153, 0);
+    }
+
+    a,
+    a:hover {
+        text-decoration: none;
+    }
+
+    .wrapper_header {
+        display: grid;
+        grid-template-columns: 10fr 4fr;
+        grid-auto-rows: minmax(50px, auto);
+        align-items: center;
+        /* background-color: rgb(255, 153, 0); */
+    }
+
+    .title_header {
+        justify-self: start;
+        font-family: "roboto";
+        font-size: 3em;
+        color: rgb(124, 124, 124);
+    }
+
+    .button_header {
+        justify-self: end;
+    }
+
+    .fitCell {
+        max-width: 100%;
+        white-space: nowrap;
+    }
 
 
 </style>

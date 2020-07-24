@@ -36,14 +36,14 @@
             <!-- nav -->
             <NavbarDispatcher></NavbarDispatcher>
 
-            <div class="container px-4">
+            <div class="container px-4 ">
 
                 <div>
 
                     <div v-if="loading" class="text-center">
                         <v-progress-circular indeterminate color="primary"></v-progress-circular>
                     </div>
-                    <div v-if="!loading" class="text-center">
+                    <div v-if="!loading" class="text-center ">
                         <v-avatar size="130">
                             <img class="shadow-sm" :src="image" />
                         </v-avatar>

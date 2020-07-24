@@ -151,7 +151,7 @@
             model: null,
             cards: [
                 {title: 'Driver', src: "/img/driver-flat.png", flex: 3, link: "/driverDashboard/profile"},
-                {title: 'Admin', src: "/img/admin-flat.png", flex: 3, link: "/adminDashboard"},
+                {title: 'Admin', src: "/img/admin-flat.png", flex: 3, link: "/adminDashboard/profile"},
                 {title: 'Director', src: "/img/director-flat.png", flex: 3, link: "/directorDashboard/profile"},
                 {title: 'Dispatcher', src: "/img/dispatcher-flat.png", flex: 3, link: "/dispatcherDashboard/profile"},
             ],

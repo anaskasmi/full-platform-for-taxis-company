@@ -85,15 +85,15 @@
                                             v-on:keyup.enter="editVehicle()"
                                         ></v-text-field>
                                     </v-row>
-                                    <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index" class>
-                                        <v-text-field
-                                            autocomplete="false"
-                                            class
-                                            :label="rotationsCategory.name+ ' total marks'"
-                                            required
-                                            v-model="editForm.marksByCategory[rotationsCategory.id]"
-                                        ></v-text-field>
-                                    </v-row>
+<!--                                    <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index" class>-->
+<!--                                        <v-text-field-->
+<!--                                            autocomplete="false"-->
+<!--                                            class-->
+<!--                                            :label="rotationsCategory.name+ ' total marks'"-->
+<!--                                            required-->
+<!--                                            v-model="editForm.marksByCategory[rotationsCategory.id]"-->
+<!--                                        ></v-text-field>-->
+<!--                                    </v-row>-->
                                     <v-row>
                                         <v-btn color="info" class="mt-2" tile block @click="editVehicle()">UPDATE
                                         </v-btn>
@@ -164,7 +164,7 @@
                 <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
                 <!-- table -->
                 <div class="table-responsive" v-if="!isLoading">
-                    <table class="table table-hover" style="table-layout:fixed">
+                    <table class="table table-hover table-striped " style="table-layout:fixed">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Name</th>
@@ -309,16 +309,16 @@
                                                 v-on:keyup.enter="editVehicle()"
                                             ></v-text-field>
                                         </v-row>
-                                        <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index"
-                                               class>
-                                            <v-text-field
-                                                autocomplete="false"
-                                                class
-                                                :label="rotationsCategory.name+ ' total marks'"
-                                                required
-                                                v-model="editForm.marksByCategory[rotationsCategory.id]"
-                                            ></v-text-field>
-                                        </v-row>
+<!--                                        <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index"-->
+<!--                                               class>-->
+<!--                                            <v-text-field-->
+<!--                                                autocomplete="false"-->
+<!--                                                class-->
+<!--                                                :label="rotationsCategory.name+ ' total marks'"-->
+<!--                                                required-->
+<!--                                                v-model="editForm.marksByCategory[rotationsCategory.id]"-->
+<!--                                            ></v-text-field>-->
+<!--                                        </v-row>-->
                                         <v-row>
                                             <v-btn color="info" class="mt-2" tile block @click="editVehicle()">UPDATE
                                             </v-btn>
@@ -483,6 +483,15 @@
             BASE_URL() {
                 return this.$store.state.BASE_URL;
             },
+            compare( a, b ) {
+                if ( parseInt(a.number, 10) < parseInt(b.number, 10) ) {
+                    return -1;
+                }
+                if (parseInt(a.number, 10) > parseInt(b.number, 10) ){
+                    return 1;
+                }
+                return 0;
+            },
             fetchItems() {
                 let url = this.BASE_URL() + "/api/dispatcher/vehicles";
                 axios.defaults.headers.common["Authorization"] =
@@ -492,6 +501,7 @@
                     .get(url)
                     .then(res => {
                         this.vehicles = res.data;
+                        this.vehicles.sort( this.compare );
                         this.fetchRotationsCategories();
                         this.isLoading = false;
                         if (!this.vehicles) {
