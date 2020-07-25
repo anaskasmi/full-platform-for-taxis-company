@@ -161,7 +161,7 @@ class RotationsController extends Controller
             'note'
         )
             ->where("rotation_category_id", $id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('marks', 'desc')
             ->get();
         // return RotationResource::collection($rotations);
         foreach ($rotations as $rotation) {

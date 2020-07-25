@@ -255,7 +255,8 @@
                                     <!-- Comment  -->
 
                                     <v-row>
-                                        <v-btn v-if="!buttonLoading" color="info" class="mt-2" tile block @click="editRotation()">Update
+                                        <v-btn v-if="!buttonLoading" color="info" class="mt-2" tile block
+                                               @click="editRotation()">Update
                                         </v-btn>
                                         <v-btn v-if="buttonLoading" color="info" class="mt-2" tile block>Updating ...
                                         </v-btn>
@@ -291,6 +292,20 @@
                 <hr/>
                 <!-- progress -->
                 <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+
+                <div class="sentence">
+                    Pick a category !
+                </div>
+                <!--SELECT SEARCH-->
+                <v-select-search @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
+                          :options="rotationsCategories" label="name"
+                          style="font-size: 1.3em !important; color: #1d68a7">
+                    <template #selected-option="{ id,name }" class="">
+                        <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
+                    </template>
+                </v-select-search>
+
+
                 <!-- table -->
                 <div class="table-responsive" v-if="!isLoading">
                     <table class="table table-hover" style="table-layout:fixed">
@@ -708,6 +723,22 @@
                     <hr/>
                     <!-- progress -->
                     <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+
+                    <!--SELECT-->
+
+                    <div class="py-4">
+                        <div class="font-weight-bold text-center pb-2">
+                            Pick a category !
+                        </div>
+                        <v-select @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
+                                  :options="rotationsCategories" label="name"
+                                  style="">
+                            <template #selected-option="{ id,name }">
+                                <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
+                            </template>
+                        </v-select>
+                    </div>
+
                     <!-- table -->
                     <div class="table-responsive" v-if="!isLoading">
                         <table class="table table-hover">
@@ -823,6 +854,7 @@
     export default {
         beforeMount() {
             this.fetchItems();
+
         },
         components: {
             NavbarDispatcher,
@@ -868,10 +900,13 @@
                 menu: false,
                 currentSortDir: "",
                 pageSize: 10,
-                currentPage: 1
+                currentPage: 1,
+                currentRotationCategory: null,
+
             };
         },
         methods: {
+
             BASE_URL() {
                 return this.$store.state.BASE_URL;
             },
@@ -889,11 +924,11 @@
                 }
                 this.currentSort = s;
             },
-            compare( a, b ) {
-                if ( parseInt(a.number, 10) < parseInt(b.number, 10) ) {
+            compare(a, b) {
+                if (parseInt(a.number, 10) < parseInt(b.number, 10)) {
                     return -1;
                 }
-                if (parseInt(a.number, 10) > parseInt(b.number, 10) ){
+                if (parseInt(a.number, 10) > parseInt(b.number, 10)) {
                     return 1;
                 }
                 return 0;
@@ -907,7 +942,7 @@
                     .get(url)
                     .then(res => {
                         this.vehicles = res.data;
-                        this.vehicles.sort( this.compare );
+                        this.vehicles.sort(this.compare);
                         this.vehicles.forEach(vehicle => {
                             vehicle.name = vehicle.type + " " + vehicle.number;
                         });
@@ -951,6 +986,8 @@
                     });
             },
             fetchRotations() {
+                this.isLoading = true;
+
                 let url = this.BASE_URL() + "/api/dispatcher/rotations";
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + this.$store.state.token_dispatcher;
@@ -962,6 +999,32 @@
                     })
                     .catch(error => {
                         this.$swal("Try again", error.response.data.errors, "warning");
+                        this.isLoading = false;
+
+                    });
+            },
+            getRotationsForSelectedCategory() {
+                this.isLoading = true;
+                let url;
+                if (this.currentRotationCategory != null && this.currentRotationCategory.id != null) {
+                    url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/" + this.currentRotationCategory.id;
+                } else {
+                    url = this.BASE_URL() + "/api/dispatcher/rotations";
+
+                }
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .get(url)
+                    .then(res => {
+                        this.rotations = res.data;
+
+                        this.isLoading = false;
+                    })
+                    .catch(error => {
+                        this.$swal("Something wrong happened!", error.response.data.errors, "warning");
+                        this.isLoading = false;
+
                     });
             },
             fetchItems() {
@@ -969,6 +1032,7 @@
                 this.fetchCities();
                 this.fetchRotationsCategories();
                 this.fetchRotations();
+
 
             },
             openAddDialog() {
@@ -1034,10 +1098,9 @@
                         });
                         this.fetchItems();
                         this.closeEditDialog();
-                        this.buttonLoading=false;
+                        this.buttonLoading = false;
                     })
                     .catch(error => {
-                        this.pageIsLoading = false;
                         let output = "<br><br>";
                         for (let property in error.response.data.errors) {
                             output +=
@@ -1048,8 +1111,6 @@
                         }
 
                         this.$swal(error.response.data.message, output, "warning");
-                        this.buttonLoading=false;
-
                     });
             },
             deleteRotation(rotation) {
@@ -1142,6 +1203,11 @@
         max-width: 100%;
         white-space: nowrap;
     }
-
+    .sentence {
+        margin-top: 2em;
+        font-family: "Quicksand", sans-serif;
+        justify-self: center;
+        font-size: 2.5em;
+    }
 
 </style>

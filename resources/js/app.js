@@ -10,6 +10,8 @@ import Routes from '@/js/routes.js';
 import App from '@/js/views/App.vue';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import VueSweetalert2 from 'vue-sweetalert2';
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
 
 //moment js
@@ -30,6 +32,11 @@ Vue.use(VueMq, {
         desktop: Infinity,
     }
 })
+
+//vue select
+
+Vue.component('v-select-search', vSelect)
+
 const app = new Vue({
     mode: 'production',
 
