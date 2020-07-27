@@ -165,13 +165,13 @@
                                         v-if="rotation.driverImageUrl"
                                         :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
                                         :alt="rotation.driver"
-                                        class="w-100"
+                                        style="width: 100px"
                                     />
                                     <img
                                         v-else
                                         :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
                                         :alt="rotation.driver"
-                                        class="w-100"
+                                        style="width: 100px"
                                     />
                                 </td>
 

@@ -209,7 +209,7 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('/deleteTripsOfMonth', 'TaxiCaller@deleteTripsOfMonth')->name('TaxiCaller.deleteTripsOfMonth');
         Route::get('/parse', 'TaxiCaller@parseCSVtoJson');
 
-  
+
     });
 
 });
@@ -267,7 +267,7 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         Route::get('rotationsByVehicle/{id}', 'RotationsController@rotationsByVehicle')->name('rotation.rotationsByVehicle');
         Route::get('rotationsByVehicleAndCategory/{category_id}/{vehicle_id}', 'RotationsController@rotationsByVehicleAndCategory')->name('rotation.rotationsByVehicleAndCategory');
         //vehicles
-        Route::get('vehicles', 'VehiclesController@vehicles')->name('vehicles.vehicles');         
+        Route::get('vehicles', 'VehiclesController@vehicles')->name('vehicles.vehicles');
         //rotationsCategories
         Route::get('rotationsCategories', 'RotationsCategoriesController@rotationsCategories')->name('RotationsCategorys.RotationsCategorys');
 
@@ -279,7 +279,7 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         // Route::get('voiceMessage/{trip_id}', 'TripsController@show')->name('trips.show');
         // Route::PATCH('voiceMessage/{trip_id}', 'TripsController@update')->name('trips.update');
         // Route::delete('voiceMessage/{trip_id}', 'TripsController@destroy')->name('trips.delete');
-     
+
     });
 
 });
@@ -350,7 +350,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::post('accountType', 'accountTypesController@store')->name('accountTypes.store');
         Route::put('accountType/{id}', 'accountTypesController@update')->name('accountTypes.update');
         Route::delete('accountType/{id}', 'accountTypesController@destroy')->name('accountTypes.delete');
-        
+
         //authorization Files
         //CRUD
         Route::get('authorizationFiles', 'authorizationFilesController@authorizationFiles')->name('authorizationFiles.authorizationFiles');
@@ -360,7 +360,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::delete('authorizationFile/{id}', 'authorizationFilesController@destroy')->name('authorizationFiles.delete');
         //Search
         Route::get('authorizationFiles/search', 'authorizationFilesController@search')->name('authorizationFiles.search');
-        
+
         //rotationsCategories
         //CRUD
         Route::get('rotationsCategories', 'RotationsCategoriesController@rotationsCategories')->name('RotationsCategorys.RotationsCategorys');
@@ -378,6 +378,9 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::get('rotationsCategory/{id}', 'RotationsController@rotationsByCategory')->name('rotation.rotationsCategory');
         Route::get('rotationsByVehicle/{id}', 'RotationsController@rotationsByVehicle')->name('rotation.rotationsByVehicle');
         Route::get('rotationsByVehicleAndCategory/{category_id}/{vehicle_id}', 'RotationsController@rotationsByVehicleAndCategory')->name('rotation.rotationsByVehicleAndCategory');
+        //Search
+        Route::get('rotations/search', 'RotationsController@search')->name('rotations.search');
+
         //cities
         //CRUD
         Route::get('cities', 'CitiesController@cities')->name('cities.cities');

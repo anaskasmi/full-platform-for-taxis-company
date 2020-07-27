@@ -292,100 +292,260 @@
                 <hr/>
                 <!-- progress -->
                 <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                <!--End Progress-->
 
-                <div class="sentence">
-                    Pick a category !
-                </div>
-                <!--SELECT SEARCH-->
-                <v-select-search @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
-                          :options="rotationsCategories" label="name"
-                          style="font-size: 1.3em !important; color: #1d68a7">
-                    <template #selected-option="{ id,name }" class="">
-                        <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
-                    </template>
-                </v-select-search>
+                <!--Start Content-->
+                <div v-if="!isLoading">
+                    <div>
 
 
-                <!-- table -->
-                <div class="table-responsive" v-if="!isLoading">
-                    <table class="table table-hover" style="table-layout:fixed">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
-                            <th scope="col"></th>
-                            <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
-                            <th scope="col" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
-                            <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation
-                                type
-                            </th>
-                            <th scope="col" @click="sort('city')" style="cursor:ns-resize	">City</th>
-                            <th scope="col" @click="sort('type')" style="cursor:ns-resize	">Type</th>
-                            <th scope="col" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
-                            <th scope="col" @click="sort('date')" style="cursor:ns-resize	">Date</th>
-                            <th scope="col" @click="sort('note')">Note</th>
-                            <th scope="col"></th>
-                            <th></th>
-                        </tr>
-                        </thead>
+                        <!-- search start -->
+                        <!-- {{-- collapse button --}} -->
+                        <v-btn block outlined tile class="my-4" color="info"
+                               @click="showSearchOption = !showSearchOption">
+                            <v-icon color="info darken-1" class="mx-3">arrow_drop_down</v-icon>
+                            Search options
+                        </v-btn>
+                        <!-- {{-- end collapse button --}} -->
 
-                        <tbody>
-                        <tr v-for="(rotation,i) in sortedRows" :key="i">
-                            <td>
-                                <img
-                                    v-if="rotation.driverImageUrl"
-                                    :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
-                                    :alt="rotation.driver"
-                                    class="w-100"
-                                    style="cursor:pointer; "
+                        <transition mode="out-in">
+                            <div class="" v-if="showSearchOption">
+                                <div class="row col-12 justify-content-around">
+                                    <!-- {{-- search by Date --}} -->
+                                    <div class=" col-6">
+                                        <div class="card bg-light">
+                                            <div class="card-header">Search by Date</div>
+                                            <div class="card-body text-center">
+                                                <div class="input-group mb-4">
+                                                    <input
+                                                        type="date"
+                                                        v-model="searchByDate"
+                                                        max="3000-12-31"
+                                                        min="1000-01-01"
+                                                        class="form-control"
+                                                    />
+                                                    <!-- {{-- search button --}} -->
+                                                    <div class="input-group-prepend">
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-dark"
+                                                            @click.prevent="search(searchByDate,'searchByDate')"
+                                                        >
+                                                            <v-icon dark small>search</v-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- {{-- end search by Date --}} -->
+
+                                    <!-- {{-- search by Job ID --}} -->
+                                    <div class="col-6">
+
+                                        <div class="card bg-light">
+                                            <div class="card-header">Search by Job ID</div>
+                                            <div class="card-body text-center">
+                                                <form>
+                                                    <div class="input-group mb-4">
+                                                        <!-- {{-- search box --}} -->
+                                                        <input
+                                                            type="number"
+                                                            v-model="searchByJobId"
+                                                            placeholder="Search by Job ID"
+                                                            aria-describedby="button-addon7"
+                                                            class="form-control"
+                                                        />
+
+                                                        <!-- {{-- search button --}} -->
+                                                        <div class="input-group-prepend">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-dark"
+                                                                @click.prevent="search(searchByJobId,'searchByJobId')"
+                                                            >
+                                                                <v-icon dark small>search</v-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- {{-- end search by Job ID --}} -->
+                                </div>
+                                <!-- {{-- search by Badge ID --}} -->
+                                <div class="row col-12 justify-content-around">
+                                    <div class="col-6">
+
+                                        <div class="card bg-light">
+                                            <div class="card-header">Search by Badge ID</div>
+                                            <div class="card-body text-center">
+                                                <form>
+                                                    <div class="input-group mb-4">
+                                                        <!-- {{-- search box --}} -->
+                                                        <input
+                                                            type="number"
+                                                            v-model="searchByBadgeId"
+                                                            placeholder="Search by Badge ID"
+                                                            aria-describedby="button-addon7"
+                                                            class="form-control"
+                                                        />
+
+                                                        <!-- {{-- search button --}} -->
+                                                        <div class="input-group-prepend">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-dark"
+                                                                @click.prevent="search(searchByBadgeId,'searchByBadgeId')"
+                                                            >
+                                                                <v-icon dark small>search</v-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- {{-- end search by Badge Id --}} -->
+
+                                    <!-- {{-- search by Vehicle Number--}} -->
+                                    <div class="col-6">
+
+                                        <div class="card bg-light">
+                                            <div class="card-header">Search by Vehicle Number</div>
+                                            <div class="card-body text-center">
+                                                <form>
+                                                    <div class="input-group mb-4">
+                                                        <!-- {{-- search box --}} -->
+                                                        <input
+                                                            type="number"
+                                                            v-model="searchByVehicleNumber"
+                                                            placeholder="Search by Vehicle Number"
+                                                            aria-describedby="button-addon7"
+                                                            class="form-control"
+                                                        />
+
+                                                        <!-- {{-- search button --}} -->
+                                                        <div class="input-group-prepend">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-dark"
+                                                                @click.prevent="search(searchByVehicleNumber,'searchByVehicleNumber')"
+                                                            >
+                                                                <v-icon dark small>search</v-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- {{-- end search by Vehicle Number --}} -->
+                                </div>
+                            </div>
+                        </transition>
+
+                        <!-- search end -->
+                        <!--SELECT SEARCH-->
+                        <div class="sentence text-center mb-6">
+                            Pick a category !
+                        </div>
+                        <v-select-search @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
+                                         :options="rotationsCategories" label="name"
+                                         style="font-size: 1.3em !important; color: #1d68a7"
+                                         class="shadow my-4">
+                            <template #selected-option="{ id,name }" class="">
+                                <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
+                            </template>
+                        </v-select-search>
+                    </div>
+                    <!--End SELECT-->
+
+                    <!-- table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="table-layout:fixed">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
+                                <th scope="col"></th>
+                                <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Vehicle</th>
+                                <th scope="col" @click="sort('job_id')" style="cursor:ns-resize	">Job ID</th>
+                                <th scope="col" @click="sort('rotationsCategory')" style="cursor:ns-resize	">Rotation
+                                    type
+                                </th>
+                                <th scope="col" @click="sort('city')" style="cursor:ns-resize	">City</th>
+                                <th scope="col" @click="sort('type')" style="cursor:ns-resize	">Type</th>
+                                <th scope="col" @click="sort('marks')" style="cursor:ns-resize	">Marks</th>
+                                <th scope="col" @click="sort('date')" style="cursor:ns-resize	">Date</th>
+                                <th scope="col" @click="sort('note')">Note</th>
+                                <th scope="col"></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr v-for="(rotation,i) in sortedRows" :key="i">
+                                <td>
+                                    <img
+                                        v-if="rotation.driverImageUrl"
+                                        :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
+                                        :alt="rotation.driver"
+                                        class="w-100"
+                                        style="cursor:pointer; "
+                                        @click="showDriver(rotation.badge_id)"
+                                    />
+                                    <img
+                                        v-else
+                                        :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
+                                        :alt="rotation.driver"
+                                        class="w-100"
+                                        style="cursor:pointer;"
+                                        @click="showDriver(rotation.badge_id)"
+                                    />
+                                </td>
+
+                                <td
+                                    colspan="2"
+                                    class="align-middle"
                                     @click="showDriver(rotation.badge_id)"
-                                />
-                                <img
-                                    v-else
-                                    :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
-                                    :alt="rotation.driver"
-                                    class="w-100"
-                                    style="cursor:pointer;"
-                                    @click="showDriver(rotation.badge_id)"
-                                />
-                            </td>
-
-                            <td
-                                colspan="2"
-                                class="align-middle"
-                                @click="showDriver(rotation.badge_id)"
-                                style="cursor:pointer; color:#1e3799;"
-                            >
-                                <v-tooltip bottom v-if="rotation.driver">
-                                    <template v-slot:activator="{ on }">
-                                        <v-btn outlined v-on="on">{{rotation.driver}}</v-btn>
-                                    </template>
-                                    <span>See Driver's Information</span>
-                                </v-tooltip>
-                                <v-tooltip bottom v-else>
-                                    <template v-slot:activator="{ on }">
-                                        <v-btn outlined v-on="on">{{rotation.badge_id}}</v-btn>
-                                    </template>
-                                    <span>This Driver doesnt exist try another badge ID!</span>
-                                </v-tooltip>
-                            </td>
-                            <td class="text-uppercase align-middle" style="color:#01a3a4">{{rotation.vehicle}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.job_id}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.city}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.type}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.marks}}</td>
-                            <td class="align-middle" style="color:#3c6382;">{{rotation.date}}</td>
-                            <td colspan="2" class="font-italic align-middle" style="color:grey;">{{rotation.note}}</td>
-                            <td class="text-right align-middle">
-                                <v-icon color="green" class="mx-1" @click="openEditDialog(rotation)">edit</v-icon>
-                                <v-icon color="red" class="mx-1" @click="deleteRotation(rotation)">delete</v-icon>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="text-center">
-                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
+                                    style="cursor:pointer; color:#1e3799;"
+                                >
+                                    <v-tooltip bottom v-if="rotation.driver">
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn outlined v-on="on">{{rotation.driver}}</v-btn>
+                                        </template>
+                                        <span>See Driver's Information</span>
+                                    </v-tooltip>
+                                    <v-tooltip bottom v-else>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn outlined v-on="on">{{rotation.badge_id}}</v-btn>
+                                        </template>
+                                        <span>This Driver doesnt exist try another badge ID!</span>
+                                    </v-tooltip>
+                                </td>
+                                <td class="text-uppercase align-middle" style="color:#01a3a4">{{rotation.vehicle}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.job_id}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.rotationsCategory}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.city}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.type}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.marks}}</td>
+                                <td class="align-middle" style="color:#3c6382;">{{rotation.date}}</td>
+                                <td colspan="2" class="font-italic align-middle" style="color:grey;">{{rotation.note}}
+                                </td>
+                                <td class="text-right align-middle">
+                                    <v-icon color="green" class="mx-1" @click="openEditDialog(rotation)">edit</v-icon>
+                                    <v-icon color="red" class="mx-1" @click="deleteRotation(rotation)">delete</v-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <v-pagination :total-visible="5" v-model="current_page" :length="last_page"
+                                          @input="next"></v-pagination>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -837,7 +997,8 @@
                             </tbody>
                         </table>
                         <div class="text-center">
-                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
+                            <v-pagination :total-visible="5" v-model="current_page" :length="last_page"
+                                          @input="next"></v-pagination>
                         </div>
                     </div>
                 </div>
@@ -869,19 +1030,14 @@
                         if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
                         if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
                         return 0;
-                    })
-                    .filter((row, index) => {
-                        let start = (this.currentPage - 1) * this.pageSize;
-                        let end = this.currentPage * this.pageSize;
-                        if (index >= start && index < end) return true;
                     });
             },
-            nb_pages() {
-                return Math.round(this.rotations.length / this.pageSize);
-            }
         },
         data() {
             return {
+                current_page: 1,
+                last_page: 1,
+                pageSize: 0,
                 buttonLoading: false,
                 cities: [],
                 vehicles: [],
@@ -899,10 +1055,14 @@
                 rotationsManagerRoute: {name: "DispatcherDashboard_rotationsManager"},
                 menu: false,
                 currentSortDir: "",
-                pageSize: 10,
-                currentPage: 1,
                 currentRotationCategory: null,
-
+                //search inputs
+                showSearchOption: false,
+                searchByDate: null,
+                searchByJobId: null,
+                searchByBadgeId: null,
+                searchByVehicleNumber: null,
+                searchQuery: null,
             };
         },
         methods: {
@@ -910,12 +1070,26 @@
             BASE_URL() {
                 return this.$store.state.BASE_URL;
             },
-            nextPage: function () {
-                if (this.currentPage * this.pageSize < this.rotations.length)
-                    this.currentPage++;
+            makePagination(meta) {
+                this.last_page = meta.last_page;
+                this.current_page = meta.current_page;
+                this.pageSize = meta.pageSize;
             },
-            prevPage: function () {
-                if (this.currentPage > 1) this.currentPage--;
+            next(page) {
+                if (this.searchQuery != null) {
+                    this.fetchRotations(
+                        this.BASE_URL() +
+                        "/api/dispatcher/rotations/search?" +
+                        this.searchQuery +
+                        "&page=" +
+                        page
+                    );
+                    // example of searchQuery : searchbyBadgeId=979
+                } else {
+                    this.fetchRotations(
+                        this.BASE_URL() + "/api/dispatcher/rotations?page=" + page
+                    );
+                }
             },
             sort: function (s) {
                 //if s == current sort, reverse
@@ -985,31 +1159,56 @@
                         this.$swal("Try again", error.response.data.errors, "warning");
                     });
             },
-            fetchRotations() {
-                this.isLoading = true;
+            fetchRotations(page_url) {
 
-                let url = this.BASE_URL() + "/api/dispatcher/rotations";
+                this.isLoading = true;
+                let vm = this;
+                page_url =
+                    page_url || this.BASE_URL() + "/api/dispatcher/rotations";
+
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + this.$store.state.token_dispatcher;
                 axios
-                    .get(url)
+                    .get(page_url)
                     .then(res => {
+                        res = res.data;
                         this.rotations = res.data;
+                        if (this.rotations.length == 0) {
+                            this.searchQuery = null;
+                            this.$swal("No Rotations Found!", "", "warning");
+                            this.isLoading = false;
+                            return
+                        }
+                        let meta = {};
+                        meta.current_page = res.current_page
+                        meta.last_page = res.last_page;
+                        meta.pageSize = res.per_page;
+                        vm.makePagination(meta)
                         this.isLoading = false;
                     })
                     .catch(error => {
-                        this.$swal("Try again", error.response.data.errors, "warning");
                         this.isLoading = false;
-
+                        console.log("error: " + error);
+                        this.$swal("Something went wrong! ", "try again ", "warning");
                     });
             },
             getRotationsForSelectedCategory() {
                 this.isLoading = true;
                 let url;
+                let vm = this;
                 if (this.currentRotationCategory != null && this.currentRotationCategory.id != null) {
-                    url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/" + this.currentRotationCategory.id;
+                    if (this.searchQuery != null) {
+                        url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/"
+                            + this.currentRotationCategory.id
+                            + this.searchQuery ;
+
+                    } else {
+
+                        url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/" + this.currentRotationCategory.id;
+                    }
                 } else {
-                    url = this.BASE_URL() + "/api/dispatcher/rotations";
+                    this.fetchRotations();
+                    return;
 
                 }
                 axios.defaults.headers.common["Authorization"] =
@@ -1017,11 +1216,26 @@
                 axios
                     .get(url)
                     .then(res => {
-                        this.rotations = res.data;
 
+                        res = res.data;
+                        this.rotations = res.data;
+                        if (this.rotations.length == 0) {
+                            this.searchQuery = null;
+                            this.$swal("No Rotations Found!", "", "warning");
+                            this.isLoading = false;
+                            return
+                        }
+                        let meta = {};
+                        meta.current_page = res.current_page
+                        meta.last_page = res.last_page;
+                        meta.pageSize = res.per_page;
+                        vm.makePagination(meta)
                         this.isLoading = false;
+
+
                     })
                     .catch(error => {
+                        console.log("error : " + error);
                         this.$swal("Something wrong happened!", error.response.data.errors, "warning");
                         this.isLoading = false;
 
@@ -1032,8 +1246,55 @@
                 this.fetchCities();
                 this.fetchRotationsCategories();
                 this.fetchRotations();
+            },
+            search(searchValue, type) {
+
+                if (searchValue == "") {
+                    this.searchQuery = null;
+                    this.fetchItems();
+                    return;
+                }
+                let vm = this;
+                this.isLoading = true;
+                let url;
+                if (this.currentRotationCategory) {
+                    url = this.BASE_URL() +
+                        "/api/dispatcher/rotations/search?" +
+                        type +
+                        "=" +
+                        searchValue +
+                        "&category=" + this.currentRotationCategory.id;
+                } else {
+                    url = this.BASE_URL() +
+                        "/api/dispatcher/rotations/search?" +
+                        type +
+                        "=" +
+                        searchValue +
+                        "&category=";
+                }
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + this.$store.state.token_dispatcher;
+                axios
+                    .get(url)
+                    .then(res => {
+                        res = res.data;
+                        this.rotations = res.data;
+                        this.isLoading = false;
+
+                        this.searchQuery = type + "=" + searchValue;
 
 
+                        let meta = {};
+                        meta.current_page = res.current_page
+                        meta.last_page = res.last_page;
+                        meta.pageSize = res.per_page;
+                        vm.makePagination(meta);
+                    })
+                    .catch(error => {
+                        this.$swal("Try again", error.response.data.errors, "warning");
+                        this.isLoading = false;
+
+                    });
             },
             openAddDialog() {
                 this.addDialogIsOpen = true;
@@ -1203,6 +1464,7 @@
         max-width: 100%;
         white-space: nowrap;
     }
+
     .sentence {
         margin-top: 2em;
         font-family: "Quicksand", sans-serif;
