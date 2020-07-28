@@ -243,6 +243,7 @@ class RotationsController extends Controller
                     $q->where('date', 'LIKE', '%' . $date . '%');
                 }
             })
+            ->orderBy('date', 'desc')
             ->orderBy('marks', 'desc')
             ->paginate(20)
             ->appends(request()->query());
