@@ -375,7 +375,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::post('rotation', 'RotationsController@store')->name('rotation.store');
         Route::put('rotation/{id}', 'RotationsController@update')->name('rotation.update');
         Route::delete('rotation/{id}', 'RotationsController@destroy')->name('rotation.delete');
-        Route::get('rotationsCategory/{id}', 'RotationsController@rotationsByCategory')->name('rotation.rotationsCategory');
+//        Route::get('rotationsCategory/{id}', 'RotationsController@rotationsByCategory')->name('rotation.rotationsCategory');
         Route::get('rotationsByVehicle/{id}', 'RotationsController@rotationsByVehicle')->name('rotation.rotationsByVehicle');
         Route::get('rotationsByVehicleAndCategory/{category_id}/{vehicle_id}', 'RotationsController@rotationsByVehicleAndCategory')->name('rotation.rotationsByVehicleAndCategory');
         //Search

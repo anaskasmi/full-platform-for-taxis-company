@@ -290,12 +290,10 @@
                     </v-btn>
                 </div>
                 <hr/>
-                <!-- progress -->
-                <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
-                <!--End Progress-->
+
 
                 <!--Start Content-->
-                <div v-if="!isLoading">
+                <div>
                     <div>
 
 
@@ -323,6 +321,7 @@
                                                         max="3000-12-31"
                                                         min="1000-01-01"
                                                         class="form-control"
+                                                        @input="search(searchByDate,'searchByDate')"
                                                     />
                                                     <!-- {{-- search button --}} -->
                                                     <div class="input-group-prepend">
@@ -355,6 +354,7 @@
                                                             placeholder="Search by Job ID"
                                                             aria-describedby="button-addon7"
                                                             class="form-control"
+                                                            @input="search(searchByJobId,'searchByJobId')"
                                                         />
 
                                                         <!-- {{-- search button --}} -->
@@ -391,6 +391,7 @@
                                                             placeholder="Search by Badge ID"
                                                             aria-describedby="button-addon7"
                                                             class="form-control"
+                                                            @input="search(searchByBadgeId,'searchByBadgeId')"
                                                         />
 
                                                         <!-- {{-- search button --}} -->
@@ -425,6 +426,7 @@
                                                             placeholder="Search by Vehicle Number"
                                                             aria-describedby="button-addon7"
                                                             class="form-control"
+                                                            @input="search(searchByVehicleNumber,'searchByVehicleNumber')"
                                                         />
 
                                                         <!-- {{-- search button --}} -->
@@ -452,10 +454,12 @@
                         <div class="sentence text-center mb-6">
                             Pick a category !
                         </div>
-                        <v-select-search @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
-                                         :options="rotationsCategories" label="name"
-                                         style="font-size: 1.3em !important; color: #1d68a7"
-                                         class="shadow my-4">
+                        <v-select-search
+                            @input="search(currentRotationCategory?currentRotationCategory.id:null,'searchByCategoryId')"
+                            v-model="currentRotationCategory"
+                            :options="rotationsCategories" label="name"
+                            style="font-size: 1.3em !important; color: #1d68a7"
+                            class="shadow my-4">
                             <template #selected-option="{ id,name }" class="">
                                 <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
                             </template>
@@ -463,8 +467,12 @@
                     </div>
                     <!--End SELECT-->
 
+
+                    <!-- progress -->
+                    <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
+                    <!--End Progress-->
                     <!-- table -->
-                    <div class="table-responsive">
+                    <div class="table-responsive" v-if="!isLoading">
                         <table class="table table-hover" style="table-layout:fixed">
                             <thead class="thead-dark">
                             <tr>
@@ -890,9 +898,11 @@
                         <div class="font-weight-bold text-center pb-2">
                             Pick a category !
                         </div>
-                        <v-select @input="getRotationsForSelectedCategory" v-model="currentRotationCategory"
-                                  :options="rotationsCategories" label="name"
-                                  style="">
+                        <v-select
+                            @input="search(currentRotationCategory?currentRotationCategory.id:null,'searchByCategoryId')"
+                            v-model="currentRotationCategory"
+                            :options="rotationsCategories" label="name"
+                            style="">
                             <template #selected-option="{ id,name }">
                                 <div class="font-weight-bolder pa-0 ma-0">{{ name }}</div>
                             </template>
@@ -1063,6 +1073,7 @@
                 searchByBadgeId: null,
                 searchByVehicleNumber: null,
                 searchQuery: null,
+                searchQueryArray: new Map(),
             };
         },
         methods: {
@@ -1076,20 +1087,7 @@
                 this.pageSize = meta.pageSize;
             },
             next(page) {
-                if (this.searchQuery != null) {
-                    this.fetchRotations(
-                        this.BASE_URL() +
-                        "/api/dispatcher/rotations/search?" +
-                        this.searchQuery +
-                        "&page=" +
-                        page
-                    );
-                    // example of searchQuery : searchbyBadgeId=979
-                } else {
-                    this.fetchRotations(
-                        this.BASE_URL() + "/api/dispatcher/rotations?page=" + page
-                    );
-                }
+                this.fetchRotations(page);
             },
             sort: function (s) {
                 //if s == current sort, reverse
@@ -1159,68 +1157,28 @@
                         this.$swal("Try again", error.response.data.errors, "warning");
                     });
             },
-            fetchRotations(page_url) {
+            fetchRotations(page) {
 
                 this.isLoading = true;
                 let vm = this;
-                page_url =
-                    page_url || this.BASE_URL() + "/api/dispatcher/rotations";
-
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
-                axios
-                    .get(page_url)
-                    .then(res => {
-                        res = res.data;
-                        this.rotations = res.data;
-                        if (this.rotations.length == 0) {
-                            this.searchQuery = null;
-                            this.$swal("No Rotations Found!", "", "warning");
-                            this.isLoading = false;
-                            return
-                        }
-                        let meta = {};
-                        meta.current_page = res.current_page
-                        meta.last_page = res.last_page;
-                        meta.pageSize = res.per_page;
-                        vm.makePagination(meta)
-                        this.isLoading = false;
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        console.log("error: " + error);
-                        this.$swal("Something went wrong! ", "try again ", "warning");
-                    });
-            },
-            getRotationsForSelectedCategory() {
-                this.isLoading = true;
-                let url;
-                let vm = this;
-                if (this.currentRotationCategory != null && this.currentRotationCategory.id != null) {
-                    if (this.searchQuery != null) {
-                        url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/"
-                            + this.currentRotationCategory.id
-                            + this.searchQuery ;
-
-                    } else {
-
-                        url = this.BASE_URL() + "/api/dispatcher/rotationsCategory/" + this.currentRotationCategory.id;
-                    }
-                } else {
-                    this.fetchRotations();
-                    return;
-
+                let url = this.BASE_URL() + "/api/dispatcher/rotations?";
+                if (this.searchQuery) {
+                    url = url + this.searchQuery;
                 }
+                if (page) {
+                    url = url + "&page=" + page;
+                }
+
+
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + this.$store.state.token_dispatcher;
                 axios
                     .get(url)
                     .then(res => {
-
                         res = res.data;
                         this.rotations = res.data;
                         if (this.rotations.length == 0) {
-                            this.searchQuery = null;
+                            // this.searchQuery = null;
                             this.$swal("No Rotations Found!", "", "warning");
                             this.isLoading = false;
                             return
@@ -1231,16 +1189,15 @@
                         meta.pageSize = res.per_page;
                         vm.makePagination(meta)
                         this.isLoading = false;
-
-
                     })
                     .catch(error => {
-                        console.log("error : " + error);
-                        this.$swal("Something wrong happened!", error.response.data.errors, "warning");
                         this.isLoading = false;
-
+                        this.searchQuery = null;
+                        console.log("error: " + error);
+                        this.$swal("Something went wrong! ", "try again ", "warning");
                     });
             },
+
             fetchItems() {
                 this.fetchVehicles();
                 this.fetchCities();
@@ -1248,53 +1205,24 @@
                 this.fetchRotations();
             },
             search(searchValue, type) {
-
-                if (searchValue == "") {
+                if (searchValue == null) {
+                    searchValue = "";
+                    this.searchQueryArray.delete(type);
                     this.searchQuery = null;
-                    this.fetchItems();
-                    return;
-                }
-                let vm = this;
-                this.isLoading = true;
-                let url;
-                if (this.currentRotationCategory) {
-                    url = this.BASE_URL() +
-                        "/api/dispatcher/rotations/search?" +
-                        type +
-                        "=" +
-                        searchValue +
-                        "&category=" + this.currentRotationCategory.id;
+                    for (let [key, value] of this.searchQueryArray) {
+                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
+                    }
                 } else {
-                    url = this.BASE_URL() +
-                        "/api/dispatcher/rotations/search?" +
-                        type +
-                        "=" +
-                        searchValue +
-                        "&category=";
+                    this.searchQueryArray.delete(type);
+                    this.searchQueryArray.set(type, searchValue);
+                    this.searchQuery = null;
+                    for (let [key, value] of this.searchQueryArray) {
+                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
+                    }
                 }
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
-                axios
-                    .get(url)
-                    .then(res => {
-                        res = res.data;
-                        this.rotations = res.data;
-                        this.isLoading = false;
+                this.fetchRotations();
+                return;
 
-                        this.searchQuery = type + "=" + searchValue;
-
-
-                        let meta = {};
-                        meta.current_page = res.current_page
-                        meta.last_page = res.last_page;
-                        meta.pageSize = res.per_page;
-                        vm.makePagination(meta);
-                    })
-                    .catch(error => {
-                        this.$swal("Try again", error.response.data.errors, "warning");
-                        this.isLoading = false;
-
-                    });
             },
             openAddDialog() {
                 this.addDialogIsOpen = true;

@@ -10,8 +10,8 @@ export const store = new Vuex.Store({
 
 
 
-        BASE_URL: 'http://app.test',
-        // BASE_URL : 'https://mytaxioffice.com',
+        // BASE_URL: 'http://app.test',
+        BASE_URL : 'https://mytaxioffice.com',
         //tokens
         token_driver: localStorage.getItem('access_token_driver') || null,
         token_admin: localStorage.getItem('access_token_admin') || null,

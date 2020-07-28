@@ -189,8 +189,8 @@ class RotationsController extends Controller
             'searchByVehicleNumber' => 'sometimes',
             'searchByBadgeId' => 'sometimes',
             'searchByJobId' => 'sometimes',
-            'searchByDate' => 'sometimes|date',
-            'categoryId'=>'sometimes|numeric'
+            'searchByDate' => 'sometimes',
+            'searchByCategoryId'=>'sometimes'
         ]);
         $rotations = DB::table('rotations')
             ->join('vehicles', 'rotations.vehicle_id', '=', 'vehicles.id')
@@ -221,7 +221,6 @@ class RotationsController extends Controller
 
             ->where(function ($q) use (
                 $data
-//                $data["searchByVehicleNumber"],$data["searchByBadgeId"],$data["searchByJobId"],$data["searchByDate"]
             ) {
                 if (array_key_exists("searchByVehicleNumber", $data)) {
                     $q->where('vehicles.number', 'LIKE', '%' . $data['searchByVehicleNumber'] . '%');
@@ -234,76 +233,9 @@ class RotationsController extends Controller
 
                     $q->where('job_id', 'LIKE', '%' . $data['searchByJobId'] . '%');
                 }
-                if (array_key_exists("categoryId", $data)) {
+                if (array_key_exists("searchByCategoryId", $data)) {
 
-                    $q->where("rotation_category_id", $data['categoryId']);
-                }
-                if (array_key_exists("searchByDate", $data)) {
-                    $date = strtotime($data['searchByDate']);
-                    $date = date('Y-m-d', $date);
-                    $q->where('date', 'LIKE', '%' . $date . '%');
-                }
-            })
-            ->orderBy('marks', 'desc')
-            ->paginate(20)
-            ->appends(request()->query());
-        return $rotations;
-
-    }
-
-    //to get rotation for only one specific rotation category
-    public function rotationsByCategory($id, Request $request)
-    {
-
-        $data = request()->validate([
-            'searchByVehicleNumber' => 'sometimes',
-            'searchByBadgeId' => 'sometimes',
-            'searchByJobId' => 'sometimes',
-            'searchByDate' => 'sometimes|date',
-        ]);
-        $rotations = DB::table('rotations')
-            ->join('vehicles', 'rotations.vehicle_id', '=', 'vehicles.id')
-            ->join('cities', 'rotations.city_id', '=', 'cities.id')
-            ->join('rotations_categories', 'rotations.rotation_category_id', '=', 'rotations_categories.id')
-            ->join('drivers', 'badge_id', '=', 'drivers.PermitNumber')
-            ->select(DB::raw(
-            //vehicles
-                'CONCAT(vehicles.type, " ", vehicles.number) AS vehicle'),
-                //rotation
-                'rotations.id as id',
-                'rotations.type as type',
-                'rotations.marks as marks',
-                'rotations.job_id as job_id',
-                'rotations.date as date',
-                'rotations.note as note',
-                //city
-                'cities.id as city_id',
-                'cities.name as city',
-                //category
-                'rotations_categories.name as rotationsCategory',
-                //driver
-                'drivers.PermitNumber as badge_id',
-                'drivers.Name as driver',
-                'drivers.image as driverImageUrl'
-            )
-            ->where("rotation_category_id", $id)
-            ->where(function ($q) use (
-                $data
-//                $data["searchByVehicleNumber"],$data["searchByBadgeId"],$data["searchByJobId"],$data["searchByDate"]
-            ) {
-
-
-                if (array_key_exists("searchByVehicleNumber", $data)) {
-
-                    $q->where('vehicles.number', 'LIKE', '%' . $data['searchByVehicleNumber'] . '%');
-                }
-                if (array_key_exists("searchByBadgeId", $data)) {
-
-                    $q->where('badge_id', 'LIKE', '%' . $data['searchByBadgeId'] . '%');
-                }
-                if (array_key_exists("searchByJobId", $data)) {
-
-                    $q->where('job_id', 'LIKE', '%' . $data['searchByJobId'] . '%');
+                    $q->where("rotation_category_id", $data['searchByCategoryId']);
                 }
                 if (array_key_exists("searchByDate", $data)) {
                     $date = strtotime($data['searchByDate']);
