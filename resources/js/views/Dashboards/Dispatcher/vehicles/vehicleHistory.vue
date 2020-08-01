@@ -862,6 +862,7 @@
                         if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
                         if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
                         return 0;
+
                     })
                     .filter((row, index) => {
                         let start = (this.currentPage - 1) * this.pageSize;

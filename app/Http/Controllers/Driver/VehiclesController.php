@@ -15,6 +15,7 @@ class VehiclesController extends Controller
     //list all the vehicles
     public function vehicles()
     {
+
         //get vehicles
         $vehicles = Vehicle::
             select(
@@ -35,9 +36,9 @@ class VehiclesController extends Controller
             ->get();
         //add to each vehicles its own marks
         foreach ($vehicles as $vehicle) {
-           
+
             $marksByCategory = array();
-            
+
             foreach ($rotationsCategories as $rotationsCategory) {
                 //check if there is a mark row
                 $markRowExiste = Marks::where('vehicle_id', $vehicle->id)

@@ -29,6 +29,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jakub-onderka/php-console-color" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jakub-onderka/php-console-highlighter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/framework" />
@@ -116,6 +117,12 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/symfony" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/theseer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/tijsverkoyen" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/vlucas" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/webmozart" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vendor/zendframework" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/wapmorgan/mp3info" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />

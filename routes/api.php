@@ -41,6 +41,12 @@ Route::get('/config-cache', function () {
     $exitCode = Artisan::call('config:cache');
     return '<h1>Clear Config cleared</h1>';
 });
+//Clear Config cache:
+Route::get('/routeList', function () {
+    $exitCode = Artisan::call('route:list');
+    dd(Artisan::output());
+    return '<h1>'.$exitCode.'</h1>';
+});
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////// DOWNLOADABLES //////////////////////////////////////
@@ -296,13 +302,13 @@ Route::prefix('/director')->name('director.')->namespace('Director')->group(func
 
         //dispatchers
         //CRUD
-        Route::get('comments', 'commentsController@index')->name('comments.index');
-        Route::get('comment/{id}', 'commentsController@show')->name('comments.show');
-        Route::post('comment', 'commentsController@store')->name('comments.store');
-        Route::PATCH('comment/{id}', 'commentsController@update')->name('comments.update');
-        Route::delete('comment/{id}', 'commentsController@destroy')->name('comments.delete');
+        Route::get('comments', 'CommentsController@index')->name('comments.index');
+        Route::get('comment/{id}', 'CommentsController@show')->name('comments.show');
+        Route::post('comment', 'CommentsController@store')->name('comments.store');
+        Route::PATCH('comment/{id}', 'CommentsController@update')->name('comments.update');
+        Route::delete('comment/{id}', 'CommentsController@destroy')->name('comments.delete');
         //Search
-        Route::get('comments/search', 'commentsController@search')->name('comments.search');
+        Route::get('comments/search', 'CommentsController@search')->name('comments.search');
 
         //WeeklyTaxiShifts
         Route::get('reports/WeeklyTaxiShifts/list', 'WeeklyTaxiShiftsController@WeeklyTaxiShifts')->name('reports.WeeklyTaxiShifts.WeeklyTaxiShifts');
@@ -370,6 +376,10 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::delete('rotationsCategory/{id}', 'RotationsCategoriesController@destroy')->name('RotationsCategorys.delete');
         //rotations
         //CRUD
+        //calculate total marks
+        Route::get('rotations/calculateMarks', 'RotationsController@recalculateAllVehiclesMarks')->name('rotation.rotations');
+
+
         Route::get('rotations', 'RotationsController@rotations')->name('rotation.rotations');
         Route::get('rotation/{id}', 'RotationsController@show')->name('RotationsCategorys.show');
         Route::post('rotation', 'RotationsController@store')->name('rotation.store');

@@ -85,15 +85,15 @@
                                             v-on:keyup.enter="editVehicle()"
                                         ></v-text-field>
                                     </v-row>
-                                    <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index" class>
-                                        <v-text-field
-                                            autocomplete="false"
-                                            class
-                                            :label="rotationsCategory.name+ ' total marks'"
-                                            required
-                                            v-model="editForm.marksByCategory[rotationsCategory.id]"
-                                        ></v-text-field>
-                                    </v-row>
+<!--                                    <v-row v-for="(rotationsCategory, index) in rotationsCategories" :key="index" class>-->
+<!--                                        <v-text-field-->
+<!--                                            autocomplete="false"-->
+<!--                                            class-->
+<!--                                            :label="rotationsCategory.name+ ' total marks'"-->
+<!--                                            required-->
+<!--                                            v-model="editForm.marksByCategory[rotationsCategory.id]"-->
+<!--                                        ></v-text-field>-->
+<!--                                    </v-row>-->
                                     <v-row>
                                         <v-btn color="info" class="mt-2" tile block @click="editVehicle()">UPDATE
                                         </v-btn>
@@ -209,8 +209,6 @@
                                     </template>
                                     <span>Click To Go To This Vehicle's History</span>
                                 </v-tooltip>
-
-                                <v-icon color="green" class="mx-1" @click="openEditDialog(vehicle)">edit</v-icon>
                                 <v-icon color="red" class="mx-1" @click="deleteVehicle(vehicle)">delete</v-icon>
                             </td>
                             <td v-else class="text-right">
@@ -223,16 +221,15 @@
                                     <span>Click To Go To This Vehicle's History</span>
                                 </v-tooltip>
 
-                                <v-icon color="green" class="mx-1" @click="openEditDialog(vehicle)">edit</v-icon>
                                 <v-icon color="red" class="mx-1" @click="deleteVehicle(vehicle)">delete</v-icon>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <div class="text-center">
-                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
-                    </div>
+<!--                    <div class="text-center">-->
+<!--                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -388,10 +385,10 @@
                     <!-- start show vehicle marks dialog-->
                     <!-- header -->
 
-                        <v-btn color="grey" text tile block class="" :to="rotationsManagerRoute">
-                            <v-icon class="mr-2">keyboard_return</v-icon>
-                            Rotations Manager
-                        </v-btn>
+                    <v-btn color="grey" text tile block class="" :to="rotationsManagerRoute">
+                        <v-icon class="mr-2">keyboard_return</v-icon>
+                        Rotations Manager
+                    </v-btn>
                     <hr>
                     <div
                         class=" text-uppercase text-center my-4"
@@ -401,18 +398,18 @@
                     </div>
 
 
-                        <v-btn
-                            link
-                            tile
-                            block
-                            class=""
-                            outlined
-                            color="success "
-                            @click="openAddDialog()"
-                        >
-                            <v-icon left>mdi-pencil</v-icon>
-                            <div>New Vehicle</div>
-                        </v-btn>
+                    <v-btn
+                        link
+                        tile
+                        block
+                        class=""
+                        outlined
+                        color="success "
+                        @click="openAddDialog()"
+                    >
+                        <v-icon left>mdi-pencil</v-icon>
+                        <div>New Vehicle</div>
+                    </v-btn>
                     <hr/>
                     <!-- progress -->
                     <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
@@ -421,11 +418,19 @@
                         <table class="table table-hover" style="">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('number')">Name</th>
-                                <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('type')">Type</th>
-                                <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('number')">Number</th>
-                                <th scope="col" style="cursor:pointer" class="align-middle fitCell" @click="sort('totalMarks')">Total Marks</th>
-                                <th ></th>
+                                <th scope="col" style="cursor:pointer" class="align-middle fitCell"
+                                    @click="sort('number')">Name
+                                </th>
+                                <th scope="col" style="cursor:pointer" class="align-middle fitCell"
+                                    @click="sort('type')">Type
+                                </th>
+                                <th scope="col" style="cursor:pointer" class="align-middle fitCell"
+                                    @click="sort('number')">Number
+                                </th>
+                                <th scope="col" style="cursor:pointer" class="align-middle fitCell"
+                                    @click="sort('totalMarks')">Total Marks
+                                </th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -435,7 +440,8 @@
                                     class="text-uppercase table-primary align-middle fitCell"
                                 >{{vehicle.type}}-{{vehicle.number}}
                                 </th>
-                                <th v-else class="text-uppercase middle fitCell">{{vehicle.type}}-{{vehicle.number}}</th>
+                                <th v-else class="text-uppercase middle fitCell">{{vehicle.type}}-{{vehicle.number}}
+                                </th>
                                 <th
                                     v-if="minVehicleMarksAndNumber.id == vehicle.id"
                                     class="text-uppercase table-primary align-middle fitCell"
@@ -454,7 +460,8 @@
                                 >{{vehicle.totalMarks}}
                                 </th>
                                 <th v-else class="middle fitCell">{{vehicle.totalMarks}}</th>
-                                <td class="align-middle fitCell table-primary  " v-if="minVehicleMarksAndNumber.id == vehicle.id">
+                                <td class="align-middle fitCell table-primary  "
+                                    v-if="minVehicleMarksAndNumber.id == vehicle.id">
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
                                             <v-btn text class="ma-0 pa-0" v-on="on"
@@ -465,7 +472,6 @@
                                         <span>Click To Go To This Vehicle's History</span>
                                     </v-tooltip>
 
-                                    <v-icon color="green" class="ma-2" @click="openEditDialog(vehicle)">edit</v-icon>
                                     <v-icon color="red" class="ma-2" @click="deleteVehicle(vehicle)">delete</v-icon>
                                 </td>
                                 <td v-else class="align-middle fitCell">
@@ -479,16 +485,15 @@
                                         <span>Click To Go To This Vehicle's History</span>
                                     </v-tooltip>
 
-                                    <v-icon color="green" class="ma-2" @click="openEditDialog(vehicle)">edit</v-icon>
                                     <v-icon color="red" class="ma-2" @click="deleteVehicle(vehicle)">delete</v-icon>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
 
-                        <div class="text-center">
-                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
-                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -541,22 +546,44 @@
                     .sort((a, b) => {
                         let modifier = 1;
                         if (this.currentSortDir === "desc") modifier = -1;
+
+
                         if (this.currentSort == "number") {
-                            if (parseInt(a[this.currentSort], 10) < parseInt(b[this.currentSort], 10))
+                            if (
+                                parseInt(a[this.currentSort], 10) <
+                                parseInt(b[this.currentSort], 10)
+                            )
                                 return -1 * modifier;
-                            if (parseInt(a[this.currentSort], 10) > parseInt(b[this.currentSort], 10))
+                            if (
+                                parseInt(a[this.currentSort], 10) >
+                                parseInt(b[this.currentSort], 10)
+                            )
                                 return 1 * modifier;
+                            if (
+                                parseInt(a[this.currentSort], 10) ==
+                                parseInt(b[this.currentSort], 10)
+                            )
+                                return 1 * modifier;
+                        } else if (this.currentSort == "totalMarks") {
+
+
+                            return (a.totalMarks - b.totalMarks || a.number - b.number)*modifier;
+
+
                         } else {
                             if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
                             if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                            if (a[this.currentSort] == b[this.currentSort]) return 1 * modifier;
+
                         }
                         return 0;
                     })
-                    .filter((row, index) => {
-                        let start = (this.currentPage - 1) * this.pageSize;
-                        let end = this.currentPage * this.pageSize;
-                        if (index >= start && index < end) return true;
-                    });
+                    // .filter((row, index) => {
+                    //     let start = (this.currentPage - 1) * this.pageSize;
+                    //     let end = this.currentPage * this.pageSize;
+                    //     if (index >= start && index < end) return true;
+                    // })
+                    ;
             },
             nb_pages() {
                 return Math.round(this.vehicles.length / this.pageSize) + 1;
@@ -580,6 +607,22 @@
             prevPage: function () {
                 if (this.currentPage > 1) this.currentPage--;
             },
+            parsIntFromItems() {
+                this.vehicles.forEach(vehicle => {
+                    vehicle.marksByCategory[this.$route.params.id]= parseInt(
+                        vehicle.marksByCategory[this.$route.params.id], 10
+                    );
+                    vehicle.number= parseInt(
+                        vehicle.number, 10
+                    );
+                });
+            },
+            sortVehiclesByMarksThenNumbers() {
+                this.vehicles.sort(function (a, b) {
+                    return a.totalMarks - b.totalMarks || a.number - b.number;
+                });
+
+            },
             fetchItems() {
                 let url = this.BASE_URL() + "/api/dispatcher/vehicles";
                 axios.defaults.headers.common["Authorization"] =
@@ -591,6 +634,7 @@
                         this.vehicles = res.data;
                         this.fetchRotationsCategories();
                         //get min vehicle in marks
+                        this.parsIntFromItems();
                         let minMarks = this.vehicles[0].marksByCategory[
                             this.$route.params.id
                             ];
@@ -617,7 +661,9 @@
                                 this.minVehicleMarksAndNumber = vehicle;
                             }
                         });
-                        //
+                        //sort
+                        this.sortVehiclesByMarksThenNumbers();
+                        this.minVehicleMarksAndNumber = this.vehicles[0];
                         this.isLoading = false;
                         if (!this.vehicles) {
                             this.noResultfound = true;
@@ -816,7 +862,8 @@
         justify-self: end;
     }
 
-    .fitCell{
-        max-width:100%;white-space:nowrap;
+    .fitCell {
+        max-width: 100%;
+        white-space: nowrap;
     }
 </style>

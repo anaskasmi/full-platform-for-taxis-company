@@ -80,9 +80,9 @@
                         </tbody>
                     </table>
 
-                    <div class="text-center">
-                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
-                    </div>
+                    <!--                    <div class="text-center">-->
+                    <!--                        <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>-->
+                    <!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -203,9 +203,9 @@
                             </tbody>
                         </table>
 
-                        <div class="text-center">
-                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>
-                        </div>
+                        <!--                        <div class="text-center">-->
+                        <!--                            <v-pagination v-model="currentPage" :length="nb_pages"></v-pagination>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -259,28 +259,44 @@
                     .sort((a, b) => {
                         let modifier = 1;
                         if (this.currentSortDir === "desc") modifier = -1;
+
+
                         if (this.currentSort == "number") {
                             if (
                                 parseInt(a[this.currentSort], 10) <
                                 parseInt(b[this.currentSort], 10)
                             )
-                                return -1 * modifier;
+                                return 1 * modifier;
                             if (
                                 parseInt(a[this.currentSort], 10) >
                                 parseInt(b[this.currentSort], 10)
                             )
-                                return 1 * modifier;
+                                return -1 * modifier;
+                            // if (
+                            //     parseInt(a[this.currentSort], 10) ==
+                            //     parseInt(b[this.currentSort], 10)
+                            // )
+                            //     return 1 * modifier;
+                        } else if (this.currentSort == "totalMarks") {
+
+
+                            return (a.totalMarks - b.totalMarks || a.number - b.number)*modifier;
+
+
                         } else {
                             if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
                             if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                            if (a[this.currentSort] == b[this.currentSort]) return 1 * modifier;
+
                         }
                         return 0;
                     })
-                    .filter((row, index) => {
-                        let start = (this.currentPage - 1) * this.pageSize;
-                        let end = this.currentPage * this.pageSize;
-                        if (index >= start && index < end) return true;
-                    });
+                    // .filter((row, index) => {
+                    //     let start = (this.currentPage - 1) * this.pageSize;
+                    //     let end = this.currentPage * this.pageSize;
+                    //     if (index >= start && index < end) return true;
+                    // })
+                    ;
             },
             nb_pages() {
                 return Math.ceil(this.vehicles.length / this.pageSize);
@@ -303,6 +319,22 @@
             prevPage: function () {
                 if (this.currentPage > 1) this.currentPage--;
             },
+            parsIntFromItems() {
+                this.vehicles.forEach(vehicle => {
+                    vehicle.marksByCategory[this.$route.params.id] = parseInt(
+                        vehicle.marksByCategory[this.$route.params.id], 10
+                    );
+                    vehicle.number = parseInt(
+                        vehicle.number, 10
+                    );
+                });
+            },
+            sortVehiclesByMarksThenNumbers() {
+                this.vehicles.sort(function (a, b) {
+                    return a.totalMarks - b.totalMarks || a.number - b.number;
+                });
+
+            },
             fetchItems() {
                 let url = this.BASE_URL() + "/api/driver/vehicles";
                 axios.defaults.headers.common["Authorization"] =
@@ -313,14 +345,17 @@
                     .then(res => {
                         this.vehicles = res.data;
                         this.fetchRotationsCategories();
+                        this.parsIntFromItems();
                         //get min vehicle in marks
-                        let minMarks = this.vehicles[0].marksByCategory[
-                            this.$route.params.id
-                            ];
+                        let minMarks = parseInt(
+                            this.vehicles[0].marksByCategory[this.$route.params.id], 10
+                        );
                         this.minVehicleMarks = this.vehicles[0];
                         this.vehicles.forEach(vehicle => {
                             vehicle.totalMarks =
-                                vehicle.marksByCategory[this.$route.params.category_id];
+                                parseInt(
+                                    vehicle.marksByCategory[this.$route.params.category_id], 10
+                                );
                             if (vehicle.totalMarks < minMarks) {
                                 minMarks = vehicle.totalMarks;
                                 this.minVehicleMarks = vehicle;
@@ -332,16 +367,18 @@
                                 this.arrayOfEqualVehicles.push(vehicle);
                             }
                         });
-                        //get the car with the smallest number
-                        let smallestNumber = this.arrayOfEqualVehicles[0].number;
+                        //get the car with the smallest car number
+                        let smallestNumber = parseInt(this.arrayOfEqualVehicles[0].number, 10);
                         this.minVehicleMarksAndNumber = this.arrayOfEqualVehicles[0];
                         this.arrayOfEqualVehicles.forEach(vehicle => {
-                            if (vehicle.number < smallestNumber) {
-                                smallestNumber = vehicle.number;
+                            if (parseInt(vehicle.number, 10) < smallestNumber) {
+                                smallestNumber = parseInt(vehicle.number, 10);
                                 this.minVehicleMarksAndNumber = vehicle;
                             }
                         });
-                        //
+                        //sort
+                        this.sortVehiclesByMarksThenNumbers();
+                        this.minVehicleMarksAndNumber = this.vehicles[0];
                         this.isLoading = false;
                         if (!this.vehicles) {
                             this.noResultfound = true;

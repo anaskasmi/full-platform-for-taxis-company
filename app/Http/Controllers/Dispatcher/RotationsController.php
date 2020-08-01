@@ -17,6 +17,70 @@ use DB;
 
 class RotationsController extends Controller
 {
+    //this function called after any changement in rotaions to update total marks for a vehicle
+    public function recalculatedTotalMarks($vehicleId)
+    {
+        $rotationsCategories = RotationsCategory::get();
+        foreach ($rotationsCategories as $rotationsCategory) {
+            $currentCategoryId = $rotationsCategory->id;
+            $currentCategoryName = $rotationsCategory->name;
+            $sumOfMarksOfCurrentCategory =
+                Rotation::
+                where("rotation_category_id", $currentCategoryId)
+                    ->where("vehicle_id", $vehicleId)
+                    ->sum('marks');
+            $markRowToUpdate =
+                Marks::
+                where('rotation_category_id', $currentCategoryId)
+                    ->where('vehicle_id', $vehicleId)
+                    ->first();
+            if ($markRowToUpdate) {
+                $markRowToUpdate->marks = $sumOfMarksOfCurrentCategory;
+                $markRowToUpdate->save();
+            } else {
+                $markRowToUpdate = new Marks;
+                $markRowToUpdate->vehicle_id = $vehicleId;
+                $markRowToUpdate->rotation_category_id = $currentCategoryId;
+                $markRowToUpdate->rotation_category_name = $currentCategoryName;
+                $markRowToUpdate->marks = $sumOfMarksOfCurrentCategory;
+                $markRowToUpdate->save();
+            }
+
+        }
+
+    }
+
+    //recalculate all vehicles marks
+    public function recalculateAllVehiclesMarks()
+    {
+        $vehicles = Vehicle::get();
+        foreach ($vehicles as $vehicle) {
+            echo "-------------------------vehicle id : " . $vehicle->id . "---------------------------------" . "<br>";
+            $rotationsCategories = RotationsCategory::get();
+            foreach ($rotationsCategories as $rotationsCategory) {
+                $marks = Marks::
+                select('marks')
+                    ->where('rotation_category_id', $rotationsCategory->id)
+                    ->where('vehicle_id', $vehicle->id)
+                    ->first();
+                echo "old value of " . $rotationsCategory->name . " has : " . $marks . "<br>";
+
+            }
+            //update marks
+            $this->recalculatedTotalMarks($vehicle->id);
+            echo "------------------" . "<br>";
+            foreach ($rotationsCategories as $rotationsCategory) {
+                $marks = Marks::
+                select('marks')
+                    ->where('rotation_category_id', $rotationsCategory->id)
+                    ->where('vehicle_id', $vehicle->id)
+                    ->first();
+                echo "new value of " . $rotationsCategory->name . " has : " . $marks . "<br>";
+
+            }
+        }
+    }
+
     //search rotations
     public function search(Request $request)
     {
@@ -190,7 +254,7 @@ class RotationsController extends Controller
             'searchByBadgeId' => 'sometimes',
             'searchByJobId' => 'sometimes',
             'searchByDate' => 'sometimes',
-            'searchByCategoryId'=>'sometimes'
+            'searchByCategoryId' => 'sometimes'
         ]);
         $rotations = DB::table('rotations')
             ->join('vehicles', 'rotations.vehicle_id', '=', 'vehicles.id')
@@ -218,20 +282,19 @@ class RotationsController extends Controller
                 'drivers.Name as driver',
                 'drivers.image as driverImageUrl'
             )
-
             ->where(function ($q) use (
                 $data
             ) {
                 if (array_key_exists("searchByVehicleNumber", $data)) {
-                    $q->where('vehicles.number', 'LIKE', '%' . $data['searchByVehicleNumber'] . '%');
+                    $q->where('vehicles.number', 'LIKE', $data['searchByVehicleNumber']);
                 }
                 if (array_key_exists("searchByBadgeId", $data)) {
 
-                    $q->where('badge_id', 'LIKE', '%' . $data['searchByBadgeId'] . '%');
+                    $q->where('badge_id', 'LIKE', $data['searchByBadgeId']);
                 }
                 if (array_key_exists("searchByJobId", $data)) {
 
-                    $q->where('job_id', 'LIKE', '%' . $data['searchByJobId'] . '%');
+                    $q->where('job_id', 'LIKE', $data['searchByJobId']);
                 }
                 if (array_key_exists("searchByCategoryId", $data)) {
 
@@ -580,6 +643,7 @@ class RotationsController extends Controller
                     $markRowToUpdate->save();
                 }
                 $rotation->marks = $data['marks'];
+                $this->recalculatedTotalMarks($rotation->vehicle_id);
             }
             $rotation->save();
 
@@ -643,6 +707,9 @@ class RotationsController extends Controller
             $marksRow->rotation_category_name = $rotationsCategory->name;
             $marksRow->marks = $data['marks'];
             $marksRow->save();
+            //update marks
+            $this->recalculatedTotalMarks($rotation->vehicle_id);
+
         }
         return new RotationResource($rotation);
     }
@@ -673,10 +740,12 @@ class RotationsController extends Controller
                 //update
                 $markRowToUpdate->save();
             }
-
+            //update marks
+            $this->recalculatedTotalMarks($rotation->vehicle_id);
             return new RotationResource($rotation);
         }
 
     }
+
 
 }
