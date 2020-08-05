@@ -109,6 +109,7 @@
                     {title: 'LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
                     // {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
                     {title: 'Rotations', link: {name: 'DriverDashboard_rotations_categories'}},
+                    {title: 'Preinspection', link: {name: 'DriverDashboard_preInspections_index'}},
                 ],
                 mobileItems: [
                     {title: 'Profile', link: {name: 'DriverDashboard_profile'}},
@@ -116,6 +117,7 @@
                     {title: 'LogSheet', link: {name: 'DriverDashboard_reports_dailyLogSheet'}},
                     // {title: 'Weekly total hours', link: {name: 'DriverDashboard_reports_weeklydriverHours_index'}},
                     {title: 'Rotations', link: {name: 'DriverDashboard_rotations_categories'}},
+                    {title: 'Preinspection', link: {name: 'DriverDashboard_preInspections_index'}},
                     {title: 'Change Password', link: {name: 'DriverDashboard_changePassword'}},
                     // {title: 'Logout', link: {name: '#'}},
                 ],

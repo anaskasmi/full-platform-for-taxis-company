@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { isContext } from 'vm';
-import { resolve } from 'path';
+import {isContext} from 'vm';
+import {resolve} from 'path';
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 
     state: {
-
 
 
         // BASE_URL: 'http://app.test',
@@ -56,9 +56,13 @@ export const store = new Vuex.Store({
         },
 
         //posSlips Information
-        posSlipsInfo_batch:'',
-        posSlipsInfo_month:'',
-        posSlipsInfo_year:'',
+        posSlipsInfo_batch: '',
+        posSlipsInfo_month: '',
+        posSlipsInfo_year: '',
+
+        //vehicle authentication
+        vehicleAuthId: '',
+        vehicleAuthPassword: ''
 
     },
     getters: {
@@ -76,6 +80,16 @@ export const store = new Vuex.Store({
         },
         loggedIn_dispatcher(state) {
             return state.token_dispatcher !== null;
+
+        },
+        //vehicle authentication
+        getVehicleAuthId(state) {
+            return localStorage.getItem('vehicleAuthId');
+
+
+        },
+        getVehicleAuthPassword(state) {
+            return localStorage.getItem('vehicleAuthPassword');
 
         },
     },
@@ -163,7 +177,6 @@ export const store = new Vuex.Store({
         },
 
 
-
         retrieveToken_admin: (state, token) => {
             state.token_admin = token;
         },
@@ -172,14 +185,12 @@ export const store = new Vuex.Store({
         },
 
 
-
         retrieveToken_director: (state, token) => {
             state.token_director = token;
         },
         destroyToken_director: (state) => {
             state.token_director = null;
         },
-
 
 
         retrieveToken_dispatcher: (state, token) => {
@@ -227,6 +238,15 @@ export const store = new Vuex.Store({
             state.showPastMonth = false;
             state.showCurrentYear = false;
             state.showPastYear = true;
+        },
+        //vehicle authentication
+        setVehicleAuthId: (state, value) => {
+            state.vehicleAuthId = value;
+            localStorage.setItem('vehicleAuthId', value);
+        },
+        setVehicleAuthPassword: (state, value) => {
+            state.vehicleAuthPassword = value;
+            localStorage.setItem('vehicleAuthPassword', value);
         },
 
     },
@@ -337,88 +357,87 @@ export const store = new Vuex.Store({
                             'PermitNumber': credentials.PermitNumber,
                             'password': credentials.password,
                         }).then(
-                            res => {
-                                const token = res.data.access_token;
-                                localStorage.setItem('access_token_driver', token);
-                                context.commit('retrieveToken_driver', token);
-                                resolve(res);
-                            }
-                        ).catch(
-                            err => {
-                                console.log('err : ');
-                                console.log(err);
-                                reject(err);
-                            }
-                        )
+                        res => {
+                            const token = res.data.access_token;
+                            localStorage.setItem('access_token_driver', token);
+                            context.commit('retrieveToken_driver', token);
+                            resolve(res);
+                        }
+                    ).catch(
+                        err => {
+                            console.log('err : ');
+                            console.log(err);
+                            reject(err);
+                        }
+                    )
                 });
 
-            }
-            else if (credentials.type == 'admin') {
+            } else if (credentials.type == 'admin') {
                 return new Promise((resolve, reject) => {
                     axios.post(context.state.BASE_URL + '/api/admin/auth/login',
                         {
                             'email': credentials.email,
                             'password': credentials.password,
                         }).then(
-                            res => {
-                                const token = res.data.access_token;
-                                localStorage.setItem('access_token_admin', token);
-                                context.commit('retrieveToken_admin', token);
-                                resolve(res);
-                            }
-                        ).catch(
-                            err => {
-                                console.log('err : ');
-                                console.log(err);
-                                reject(err);
-                            }
-                        )
+                        res => {
+                            const token = res.data.access_token;
+                            localStorage.setItem('access_token_admin', token);
+                            context.commit('retrieveToken_admin', token);
+                            resolve(res);
+                        }
+                    ).catch(
+                        err => {
+                            console.log('err : ');
+                            console.log(err);
+                            reject(err);
+                        }
+                    )
                 });
-            }
-            else if (credentials.type == 'director') {
+            } else if (credentials.type == 'director') {
                 return new Promise((resolve, reject) => {
                     axios.post(context.state.BASE_URL + '/api/director/auth/login',
                         {
                             'email': credentials.email,
                             'password': credentials.password,
                         }).then(
-                            res => {
-                                const token = res.data.access_token;
-                                localStorage.setItem('access_token_director', token);
-                                context.commit('retrieveToken_director', token);
-                                resolve(res);
-                            }
-                        ).catch(
-                            err => {
-                                console.log('err : ');
-                                console.log(err);
-                                reject(err);
-                            }
-                        )
+                        res => {
+                            const token = res.data.access_token;
+                            localStorage.setItem('access_token_director', token);
+                            context.commit('retrieveToken_director', token);
+                            resolve(res);
+                        }
+                    ).catch(
+                        err => {
+                            console.log('err : ');
+                            console.log(err);
+                            reject(err);
+                        }
+                    )
                 });
-            }
-            else if (credentials.type == 'dispatcher') {
+            } else if (credentials.type == 'dispatcher') {
                 return new Promise((resolve, reject) => {
                     axios.post(context.state.BASE_URL + '/api/dispatcher/auth/login',
                         {
                             'email': credentials.email,
                             'password': credentials.password,
                         }).then(
-                            res => {
-                                const token = res.data.access_token;
-                                localStorage.setItem('access_token_dispatcher', token);
-                                context.commit('retrieveToken_dispatcher', token);
-                                resolve(res);
-                            }
-                        ).catch(
-                            err => {
-                                console.log('err : ');
-                                console.log(err);
-                                reject(err);
-                            }
-                        )
+                        res => {
+                            const token = res.data.access_token;
+                            localStorage.setItem('access_token_dispatcher', token);
+                            context.commit('retrieveToken_dispatcher', token);
+                            resolve(res);
+                        }
+                    ).catch(
+                        err => {
+                            console.log('err : ');
+                            console.log(err);
+                            reject(err);
+                        }
+                    )
                 });
             }
-        }
+        },
+
+
     }
 });

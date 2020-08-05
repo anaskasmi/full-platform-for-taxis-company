@@ -621,31 +621,9 @@ class RotationsController extends Controller
             $rotation->date = $data["date"];
             $rotation->date = $data["date"];
             $rotation->note = $data["note"];
-            //updating marks on the rotation and on marks table
-            if ($rotation->marks != $data['marks']) {
-                //check if marks row exist
-                $markRowToUpdate =
-                    Marks::
-                    where('vehicle_id', $rotation->vehicle_id)
-                        ->where('rotation_category_id', $rotation->rotation_category_id)
-                        ->first();
-                //if exist update it
-                if ($markRowToUpdate) {
-                    //if marks value different than null
-                    if ($markRowToUpdate->marks) {
-                        //remove the old value and add the new one
-                        $markRowToUpdate->marks = $markRowToUpdate->marks - $rotation->marks + $data['marks'];
-                    } //if marks value was empty
-                    else {
-                        $markRowToUpdate->marks = $data['marks'];
-                    }
-                    //update
-                    $markRowToUpdate->save();
-                }
-                $rotation->marks = $data['marks'];
-                $this->recalculatedTotalMarks($rotation->vehicle_id);
-            }
+            $rotation->marks = $data['marks'];
             $rotation->save();
+            $this->recalculatedTotalMarks($rotation->vehicle_id);
 
         } catch (\Illuminate\Database\QueryException $e) {
             return $e;
@@ -678,39 +656,8 @@ class RotationsController extends Controller
         }
         //create rotation
         $rotation = Rotation::create($data);
-
-        //**update marks of the vehicle**//
-        //get rotation category because we need the name
-        $rotationsCategory = RotationsCategory::whereId($rotation->rotation_category_id)->firstOrFail();
-        //check if marks row exist
-        $markRowToUpdate =
-            Marks::
-            where('vehicle_id', $rotation->vehicle_id)
-                ->where('rotation_category_id', $rotation->rotation_category_id)
-                ->first();
-        //if exist update it
-        if ($markRowToUpdate) {
-            //if marks value different than null
-            if ($markRowToUpdate->marks) {
-                $markRowToUpdate->marks = $markRowToUpdate->marks + $data['marks'];
-            } //if marks value was empty
-            else {
-                $markRowToUpdate->marks = $data['marks'];
-            }
-            //update
-            $markRowToUpdate->save();
-        } //if marks row doesnt exist create new one
-        else {
-            $marksRow = new Marks;
-            $marksRow->vehicle_id = $rotation->vehicle_id;
-            $marksRow->rotation_category_id = $rotationsCategory->id;
-            $marksRow->rotation_category_name = $rotationsCategory->name;
-            $marksRow->marks = $data['marks'];
-            $marksRow->save();
-            //update marks
-            $this->recalculatedTotalMarks($rotation->vehicle_id);
-
-        }
+        //update marks
+        $this->recalculatedTotalMarks($rotation->vehicle_id);
         return new RotationResource($rotation);
     }
 
@@ -720,26 +667,6 @@ class RotationsController extends Controller
         //* delete rotation *//
         $rotation = Rotation::findOrFail($id);
         if ($rotation->delete()) {
-
-            //* downgrad marks for the vehicle **/
-            //get rotation category because we need the name
-            $rotationsCategory = RotationsCategory::whereId($rotation->rotation_category_id)->firstOrFail();
-            //check if marks row exist
-            $markRowToUpdate = Marks::where('vehicle_id', $rotation->vehicle_id)
-                ->where('rotation_category_id', $rotation->rotation_category_id)
-                ->first();
-            //if exist update it
-            if ($markRowToUpdate) {
-                //if marks value different than null
-                if ($markRowToUpdate->marks) {
-                    $markRowToUpdate->marks = $markRowToUpdate->marks - $rotation->marks;
-                } //if marks value was empty
-                else {
-                    $markRowToUpdate->marks = 0;
-                }
-                //update
-                $markRowToUpdate->save();
-            }
             //update marks
             $this->recalculatedTotalMarks($rotation->vehicle_id);
             return new RotationResource($rotation);

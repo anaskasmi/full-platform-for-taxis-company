@@ -10,4 +10,7 @@ class Vehicle extends Model
     protected $table = 'vehicles';
     protected $primaryKey = 'id';
     protected $guarded=[];
+    protected $hidden = [];
+//    protected $visible = ['password', 'type'];
+
 }

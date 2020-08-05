@@ -37,9 +37,11 @@ import AdminDashboard_reports from '@/js/views/Dashboards/Admin/reports/Index.vu
 import AdminDashboard_reports_dailyLogSheet_list from '@/js/views/Dashboards/Admin/reports/dailyLogSheet/list.vue'
 import AdminDashboard_reports_dailyLogSheet_index from '@/js/views/Dashboards/Admin/reports/dailyLogSheet/index.vue'
 //weekly taxi shifts
-import AdminDashboard_reports_weeklyTaxiShifts_index from '@/js/views/Dashboards/Admin/reports/weeklyTaxiShifts/index.vue'
+import AdminDashboard_reports_weeklyTaxiShifts_index
+    from '@/js/views/Dashboards/Admin/reports/weeklyTaxiShifts/index.vue'
 //weeklydriverHours
-import AdminDashboard_reports_weeklydriverHours_index from '@/js/views/Dashboards/Admin/reports/weeklydriverHours/index.vue'
+import AdminDashboard_reports_weeklydriverHours_index
+    from '@/js/views/Dashboards/Admin/reports/weeklydriverHours/index.vue'
 //comments crud
 import AdminDashboard_comments from '@/js/views/Dashboards/Admin/commentsCrud/Index.vue'
 import AdminDashboard_comments_show from '@/js/views/Dashboards/Admin/commentsCrud/show.vue'
@@ -54,10 +56,10 @@ import AdminDashboard_specialShifts_show from '@/js/views/Dashboards/Admin/speci
 import AdminDashboard_specialShifts_edit from '@/js/views/Dashboards/Admin/specialShiftsCrud/edit.vue'
 import AdminDashboard_specialShifts_add from '@/js/views/Dashboards/Admin/specialShiftsCrud/add.vue'
 
-//batches 
+//batches
 import AdminDashboard_batches from '@/js/views/Dashboards/Admin/batches/Index.vue'
 
-//envelopes 
+//envelopes
 import AdminDashboard_batches_envelopes from '@/js/views/Dashboards/Admin/envelopes/Index.vue'
 
 //envelope processing
@@ -85,11 +87,15 @@ import DriverDashboard_reports from '@/js/views/Dashboards/Driver/reports/Index.
 import DriverDashboard_reports_dailyLogSheet from '@/js/views/Dashboards/Driver/reports/dailyLogSheet/index.vue'
 
 //weeklydriverHours
-import DriverDashboard_reports_weeklydriverHours_index from '@/js/views/Dashboards/Driver/reports/weeklydriverHours/index.vue'
+import DriverDashboard_reports_weeklydriverHours_index
+    from '@/js/views/Dashboards/Driver/reports/weeklydriverHours/index.vue'
 //weeklydriverHours
 import DriverDashboard_rotations_categories from '@/js/views/Dashboards/Driver/rotations/Categories.vue'
 import DriverDashboard_rotations_vehicles from '@/js/views/Dashboards/Driver/rotations/Vehicles.vue'
 import DriverDashboard_rotations_vehicleHistory from '@/js/views/Dashboards/Driver/rotations/VehicleHistory.vue'
+
+//preinspections
+import DriverDashboard_preInspections_index from '@/js/views/Dashboards/Driver/preInspections/Index.vue'
 
 
 ////////////////////////////////////////////////// Director ////////////////////////////////////////////////////////////
@@ -105,7 +111,8 @@ import DirectorDashboard_comments_edit from '@/js/views/Dashboards/Director/comm
 import DirectorDashboard_comments_add from '@/js/views/Dashboards/Director/commentsCrud/add.vue'
 
 //weekly taxi shifts
-import DirectorDashboard_reports_weeklyTaxiShifts_index from '@/js/views/Dashboards/Director/reports/weeklyTaxiShifts/index.vue'
+import DirectorDashboard_reports_weeklyTaxiShifts_index
+    from '@/js/views/Dashboards/Director/reports/weeklyTaxiShifts/index.vue'
 
 
 ////////////////////////////////////////////////// Dispatcher ////////////////////////////////////////////////////////////
@@ -136,14 +143,18 @@ import DispatcherDashboard_accountTypes from '@/js/views/Dashboards/Dispatcher/a
 
 //authorization Files crud
 import DispatcherDashboard_authorizationFiles from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/Index.vue'
-import DispatcherDashboard_authorizationFiles_show from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/show.vue'
+import DispatcherDashboard_authorizationFiles_show
+    from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/show.vue'
 import DispatcherDashboard_authorizationFiles_add from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/add.vue'
-import DispatcherDashboard_authorizationFiles_edit from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/edit.vue'
+import DispatcherDashboard_authorizationFiles_edit
+    from '@/js/views/Dashboards/Dispatcher/authorizationFilesCrud/edit.vue'
 
 // rotations Manager
 import DispatcherDashboard_rotationsManager from '@/js/views/Dashboards/Dispatcher/rotationsManager/Index.vue'
-import DispatcherDashboard_rotations_categories from '@/js/views/Dashboards/Dispatcher/rotationsManager/rotationCategory.vue'
-import DispatcherDashboard_rotations_byCategories_byVehicle from '@/js/views/Dashboards/Dispatcher/rotationsManager/rotationsByVehicleAndCategory.vue'
+import DispatcherDashboard_rotations_categories
+    from '@/js/views/Dashboards/Dispatcher/rotationsManager/rotationCategory.vue'
+import DispatcherDashboard_rotations_byCategories_byVehicle
+    from '@/js/views/Dashboards/Dispatcher/rotationsManager/rotationsByVehicleAndCategory.vue'
 //rotationsCategories crud
 import DispatcherDashboard_rotationsCategories from '@/js/views/Dashboards/Dispatcher/rotationsCategories/Index.vue'
 //rotations
@@ -153,15 +164,14 @@ import DispatcherDashboard_cities from '@/js/views/Dashboards/Dispatcher/cities/
 //vehicles Files crud
 import DispatcherDashboard_vehicles from '@/js/views/Dashboards/Dispatcher/vehicles/Index.vue'
 import DispatcherDashboard_vehicleHistory from '@/js/views/Dashboards/Dispatcher/vehicles/vehicleHistory.vue'
+// PreInspections
+import DispatcherDashboard_preInspections_index from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/Index.vue'
 
 
-
-import { store } from './store/store';
+import {store} from './store/store';
 
 
 Vue.use(VueRouter);
-
-
 
 
 const router = new VueRouter(
@@ -282,7 +292,6 @@ const router = new VueRouter(
                         },
 
 
-
                         {
                             path: 'dispatchers',
                             component: EmptyRouterView,
@@ -315,9 +324,6 @@ const router = new VueRouter(
                         },
 
 
-
-
-
                         {
                             path: 'trips',
                             component: EmptyRouterView,
@@ -348,9 +354,6 @@ const router = new VueRouter(
                                     }
                                 ]
                         },
-
-
-
 
 
                         {
@@ -389,9 +392,6 @@ const router = new VueRouter(
 
                                 ]
                         },
-
-
-
 
 
                         {
@@ -485,9 +485,6 @@ const router = new VueRouter(
                                     }
                                 ]
                         },
-
-
-
 
 
                         {
@@ -646,367 +643,379 @@ const router = new VueRouter(
                                                         component: DriverDashboard_rotations_vehicleHistory,
                                                     },
 
-                                                        ]
+                                                ]
                                             },
 
-                                                    ]
+                                        ]
                                     }
-                                ]},
-                                    {
-                                        path: 'profile',
-                                        name: 'DriverDashboard_profile',
-                                        component: DriverDashboard_profile,
-                                    },
-                                    {
-                                        path: 'changePassword',
-                                        name: 'DriverDashboard_changePassword',
-                                        component: DriverDashboard_changePassword,
-                                    },
-
-
-
-
-
                                 ]
                         },
-
-
-
-
-
-                        /////////////////////////////////// Director  ///////////////////////////////////////
                         {
-                            path: '/directorDashboard',
-                            component: EmptyRouterView,
-                            meta: {
-                                requiresDirector: true,
-                            },
-                            children:
-                                [
-                                    {
-                                        path: '',
-                                        name: 'DirectorDashboard',
-                                        component: DirectorDashboard,
-                                    },
-                                    {
-                                        path: 'profile',
-                                        name: 'DirectorDashboard_profile',
-                                        component: DirectorDashboard_profile,
-                                    },
-                                    {
-                                        path: 'changePassword',
-                                        name: 'DirectorDashboard_changePassword',
-                                        component: DirectorDashboard_changePassword,
-                                    },
-
-                                    {
-                                        path: 'comments',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DirectorDashboard_comments',
-                                                    component: DirectorDashboard_comments,
-                                                },
-
-                                                {
-                                                    path: 'show/:id',
-                                                    name: 'DirectorDashboard_comments_show',
-                                                    component: DirectorDashboard_comments_show,
-                                                },
-
-                                                {
-                                                    path: 'add/',
-                                                    name: 'DirectorDashboard_comments_add',
-                                                    component: DirectorDashboard_comments_add,
-                                                },
-
-                                                {
-                                                    path: 'edit/:id',
-                                                    name: 'DirectorDashboard_comments_edit',
-                                                    component: DirectorDashboard_comments_edit,
-                                                }
-                                            ]
-                                    },
-
-
-                                    {
-                                        path: 'weeklyTaxiShifts',
-                                        name: 'DirectorDashboard_reports_weeklyTaxiShifts_index',
-                                        component: DirectorDashboard_reports_weeklyTaxiShifts_index,
-                                    },
-
-
-
-
-
-                                ]
+                            path: 'profile',
+                            name: 'DriverDashboard_profile',
+                            component: DriverDashboard_profile,
                         },
-
-
-
-
-
-                        /////////////////////////////////// Dispatcher  ///////////////////////////////////////
                         {
-                            path: '/dispatcherDashboard',
-                            component: EmptyRouterView,
-                            meta: {
-                                requiresDispatcher: true,
-                            },
-                            children:
-                                [
-                                    {
-                                        path: '',
-                                        name: 'DispatcherDashboard',
-                                        component: DispatcherDashboard,
-                                    },
-                                    {
-                                        path: 'profile',
-                                        name: 'DispatcherDashboard_profile',
-                                        component: DispatcherDashboard_profile,
-                                    },
-                                    {
-                                        path: 'changePassword',
-                                        name: 'DispatcherDashboard_changePassword',
-                                        component: DispatcherDashboard_changePassword,
-                                    },
-
-                                    {
-                                        path: 'drivers',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_drivers',
-                                                    component: DispatcherDashboard_drivers,
-                                                },
-
-                                                {
-                                                    path: 'show/:id',
-                                                    name: 'DispatcherDashboard_drivers_show',
-                                                    component: DispatcherDashboard_drivers_show,
-                                                },
-
-                                                {
-                                                    path: 'add/',
-                                                    name: 'DispatcherDashboard_drivers_add',
-                                                    component: DispatcherDashboard_drivers_add,
-                                                },
-
-                                                {
-                                                    path: 'edit/:id',
-                                                    name: 'DispatcherDashboard_drivers_edit',
-                                                    component: DispatcherDashboard_drivers_edit,
-                                                }
-                                            ]
-                                    },
-                                    {
-                                        path: 'specialShifts',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_specialShifts',
-                                                    component: DispatcherDashboard_specialShifts,
-                                                },
-
-                                                {
-                                                    path: 'show/:id',
-                                                    name: 'DispatcherDashboard_specialShifts_show',
-                                                    component: DispatcherDashboard_specialShifts_show,
-                                                },
-
-                                                {
-                                                    path: 'add/',
-                                                    name: 'DispatcherDashboard_specialShifts_add',
-                                                    component: DispatcherDashboard_specialShifts_add,
-                                                },
-
-                                            ]
-                                    },
-
-                                    {
-                                        path: 'mySpecialShifts',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_mySpecialShifts',
-                                                    component: DispatcherDashboard_mySpecialShifts,
-                                                },
-
-                                                {
-                                                    path: 'show/:id',
-                                                    name: 'DispatcherDashboard_mySpecialShifts_show',
-                                                    component: DispatcherDashboard_mySpecialShifts_show,
-                                                },
-
-                                                {
-                                                    path: 'add/',
-                                                    name: 'DispatcherDashboard_mySpecialShifts_add',
-                                                    component: DispatcherDashboard_mySpecialShifts_add,
-                                                },
-
-                                                {
-                                                    path: 'edit/:id',
-                                                    name: 'DispatcherDashboard_mySpecialShifts_edit',
-                                                    component: DispatcherDashboard_mySpecialShifts_edit,
-                                                }
-                                            ]
-                                    },
-
-                                    {
-                                        path: 'authorizationFiles',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_authorizationFiles',
-                                                    component: DispatcherDashboard_authorizationFiles,
-                                                },
-
-                                                {
-                                                    path: 'show/:id',
-                                                    name: 'DispatcherDashboard_authorizationFiles_show',
-                                                    component: DispatcherDashboard_authorizationFiles_show,
-                                                },
-
-                                                {
-                                                    path: 'add/',
-                                                    name: 'DispatcherDashboard_authorizationFiles_add',
-                                                    component: DispatcherDashboard_authorizationFiles_add,
-                                                },
-
-                                                {
-                                                    path: 'edit/:id',
-                                                    name: 'DispatcherDashboard_authorizationFiles_edit',
-                                                    component: DispatcherDashboard_authorizationFiles_edit,
-                                                }
-                                            ]
-                                    },
-                                    {
-                                        path: 'rotationsManager',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_rotationsManager',
-                                                    component: DispatcherDashboard_rotationsManager,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'rotationCategory/:id',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_rotations_categories',
-                                                    component: DispatcherDashboard_rotations_categories,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'rotationsByVehicleAndCategory/:category_id/:vehicle_id',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_rotations_byCategories_byVehicle',
-                                                    component: DispatcherDashboard_rotations_byCategories_byVehicle,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'rotationsCategories',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_rotationsCategories',
-                                                    component: DispatcherDashboard_rotationsCategories,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'rotations',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_rotations',
-                                                    component: DispatcherDashboard_rotations,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'cities',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_cities',
-                                                    component: DispatcherDashboard_cities,
-                                                },
-
-                                            ]
-                                    },
-                                    {
-                                        path: 'vehicles',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_vehicles',
-                                                    component: DispatcherDashboard_vehicles,
-                                                },
-                                                {
-                                                    path: 'History/:id',
-                                                    name: 'DispatcherDashboard_vehicleHistory',
-                                                    component: DispatcherDashboard_vehicleHistory,
-                                                },
-
-                                            ]
-                                    },
-
-                                    {
-                                        path: 'accountTypes',
-                                        component: EmptyRouterView,
-                                        children:
-                                            [
-                                                {
-                                                    path: '',
-                                                    name: 'DispatcherDashboard_accountTypes',
-                                                    component: DispatcherDashboard_accountTypes,
-                                                },
-                                            ]
-                                    },
-
-
-
-                                ]
+                            path: 'changePassword',
+                            name: 'DriverDashboard_changePassword',
+                            component: DriverDashboard_changePassword,
                         },
+
 
                     ]
-            });
+            },
+            {
+                path: '/preInspections',
+                component: EmptyRouterView,
+                children:
+                    [
+                        {
+                            path: '',
+                            name: 'DriverDashboard_preInspections_index',
+                            component: DriverDashboard_preInspections_index,
+                        },
+                    ]
+            },
+
+
+            /////////////////////////////////// Director  ///////////////////////////////////////
+            {
+                path: '/directorDashboard',
+                component: EmptyRouterView,
+                meta: {
+                    requiresDirector: true,
+                },
+                children:
+                    [
+                        {
+                            path: '',
+                            name: 'DirectorDashboard',
+                            component: DirectorDashboard,
+                        },
+                        {
+                            path: 'profile',
+                            name: 'DirectorDashboard_profile',
+                            component: DirectorDashboard_profile,
+                        },
+                        {
+                            path: 'changePassword',
+                            name: 'DirectorDashboard_changePassword',
+                            component: DirectorDashboard_changePassword,
+                        },
+
+                        {
+                            path: 'comments',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DirectorDashboard_comments',
+                                        component: DirectorDashboard_comments,
+                                    },
+
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DirectorDashboard_comments_show',
+                                        component: DirectorDashboard_comments_show,
+                                    },
+
+                                    {
+                                        path: 'add/',
+                                        name: 'DirectorDashboard_comments_add',
+                                        component: DirectorDashboard_comments_add,
+                                    },
+
+                                    {
+                                        path: 'edit/:id',
+                                        name: 'DirectorDashboard_comments_edit',
+                                        component: DirectorDashboard_comments_edit,
+                                    }
+                                ]
+                        },
+
+
+                        {
+                            path: 'weeklyTaxiShifts',
+                            name: 'DirectorDashboard_reports_weeklyTaxiShifts_index',
+                            component: DirectorDashboard_reports_weeklyTaxiShifts_index,
+                        },
+
+
+                    ]
+            },
+
+
+            /////////////////////////////////// Dispatcher  ///////////////////////////////////////
+            {
+                path: '/dispatcherDashboard',
+                component: EmptyRouterView,
+                meta: {
+                    requiresDispatcher: true,
+                },
+                children:
+                    [
+                        {
+                            path: '',
+                            name: 'DispatcherDashboard',
+                            component: DispatcherDashboard,
+                        },
+                        {
+                            path: 'profile',
+                            name: 'DispatcherDashboard_profile',
+                            component: DispatcherDashboard_profile,
+                        },
+                        {
+                            path: 'changePassword',
+                            name: 'DispatcherDashboard_changePassword',
+                            component: DispatcherDashboard_changePassword,
+                        },
+
+                        {
+                            path: 'drivers',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_drivers',
+                                        component: DispatcherDashboard_drivers,
+                                    },
+
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DispatcherDashboard_drivers_show',
+                                        component: DispatcherDashboard_drivers_show,
+                                    },
+
+                                    {
+                                        path: 'add/',
+                                        name: 'DispatcherDashboard_drivers_add',
+                                        component: DispatcherDashboard_drivers_add,
+                                    },
+
+                                    {
+                                        path: 'edit/:id',
+                                        name: 'DispatcherDashboard_drivers_edit',
+                                        component: DispatcherDashboard_drivers_edit,
+                                    }
+                                ]
+                        },
+                        {
+                            path: 'specialShifts',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_specialShifts',
+                                        component: DispatcherDashboard_specialShifts,
+                                    },
+
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DispatcherDashboard_specialShifts_show',
+                                        component: DispatcherDashboard_specialShifts_show,
+                                    },
+
+                                    {
+                                        path: 'add/',
+                                        name: 'DispatcherDashboard_specialShifts_add',
+                                        component: DispatcherDashboard_specialShifts_add,
+                                    },
+
+                                ]
+                        },
+
+                        {
+                            path: 'mySpecialShifts',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_mySpecialShifts',
+                                        component: DispatcherDashboard_mySpecialShifts,
+                                    },
+
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DispatcherDashboard_mySpecialShifts_show',
+                                        component: DispatcherDashboard_mySpecialShifts_show,
+                                    },
+
+                                    {
+                                        path: 'add/',
+                                        name: 'DispatcherDashboard_mySpecialShifts_add',
+                                        component: DispatcherDashboard_mySpecialShifts_add,
+                                    },
+
+                                    {
+                                        path: 'edit/:id',
+                                        name: 'DispatcherDashboard_mySpecialShifts_edit',
+                                        component: DispatcherDashboard_mySpecialShifts_edit,
+                                    }
+                                ]
+                        },
+
+                        {
+                            path: 'authorizationFiles',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_authorizationFiles',
+                                        component: DispatcherDashboard_authorizationFiles,
+                                    },
+
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DispatcherDashboard_authorizationFiles_show',
+                                        component: DispatcherDashboard_authorizationFiles_show,
+                                    },
+
+                                    {
+                                        path: 'add/',
+                                        name: 'DispatcherDashboard_authorizationFiles_add',
+                                        component: DispatcherDashboard_authorizationFiles_add,
+                                    },
+
+                                    {
+                                        path: 'edit/:id',
+                                        name: 'DispatcherDashboard_authorizationFiles_edit',
+                                        component: DispatcherDashboard_authorizationFiles_edit,
+                                    }
+                                ]
+                        },
+                        {
+                            path: 'rotationsManager',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_rotationsManager',
+                                        component: DispatcherDashboard_rotationsManager,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'rotationCategory/:id',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_rotations_categories',
+                                        component: DispatcherDashboard_rotations_categories,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'rotationsByVehicleAndCategory/:category_id/:vehicle_id',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_rotations_byCategories_byVehicle',
+                                        component: DispatcherDashboard_rotations_byCategories_byVehicle,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'rotationsCategories',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_rotationsCategories',
+                                        component: DispatcherDashboard_rotationsCategories,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'rotations',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_rotations',
+                                        component: DispatcherDashboard_rotations,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'cities',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_cities',
+                                        component: DispatcherDashboard_cities,
+                                    },
+
+                                ]
+                        },
+                        {
+                            path: 'vehicles',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_vehicles',
+                                        component: DispatcherDashboard_vehicles,
+                                    },
+                                    {
+                                        path: 'History/:id',
+                                        name: 'DispatcherDashboard_vehicleHistory',
+                                        component: DispatcherDashboard_vehicleHistory,
+                                    },
+
+                                ]
+                        },
+
+                        {
+                            path: 'accountTypes',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_accountTypes',
+                                        component: DispatcherDashboard_accountTypes,
+                                    },
+                                ]
+                        },
+                        {
+                            path: 'preInspections',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DispatcherDashboard_preInspections_index',
+                                        component: DispatcherDashboard_preInspections_index,
+                                    },
+                                ]
+                        },
+
+
+                    ]
+            },
+
+        ]
+    });
 
 router.beforeEach((to, from, next) => {
 
@@ -1059,17 +1068,12 @@ router.beforeEach((to, from, next) => {
         } else {
             next()
         }
-    }
-    else {
+    } else {
         next() //dont change
     }
 
 
-
 })
-
-
-
 
 
 export default router;

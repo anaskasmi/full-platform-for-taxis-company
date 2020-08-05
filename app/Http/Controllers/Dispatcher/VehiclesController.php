@@ -8,6 +8,8 @@ use App\Marks;
 use App\RotationsCategory;
 use App\Vehicle;
 use Illuminate\Http\Request;
+use Response;
+
 
 class VehiclesController extends Controller
 {
@@ -16,18 +18,19 @@ class VehiclesController extends Controller
     {
         //get vehicles
         $vehicles = Vehicle::
-            select(
+        select(
             'id',
             'number',
-            'type'
+            'type',
+            'password'
 
         )
-->orderBy('type')
-    ->get();
+            ->orderBy('type')
+            ->get();
 
         //get all rotation types
         $rotationsCategories = RotationsCategory::
-            select(
+        select(
             'id',
             'name'
         )
@@ -46,7 +49,7 @@ class VehiclesController extends Controller
                     $marksByCategory [(string)$rotationsCategory->id] = $markRowExiste->marks;
                 }
             }
-             $vehicle['marksByCategory']=$marksByCategory;
+            $vehicle['marksByCategory'] = $marksByCategory;
 
         }
 
@@ -58,7 +61,7 @@ class VehiclesController extends Controller
     public function show($id)
     {
         $vehicle = Vehicle::
-            select(
+        select(
             'id',
             'number',
             'type'
@@ -88,7 +91,7 @@ class VehiclesController extends Controller
         //update type and number
         try {
             Vehicle::
-                whereId($id)
+            whereId($id)
                 ->update($data);
             $vehicle = Vehicle::whereId($id)->first();
         } catch (\Illuminate\Database\QueryException $e) {
@@ -97,7 +100,7 @@ class VehiclesController extends Controller
         //update marks
         //get all rotation types
         $rotationsCategories = RotationsCategory::
-            select(
+        select(
             'id',
             'name'
         )
@@ -123,8 +126,7 @@ class VehiclesController extends Controller
                     }
                 }
                 $marksRow->save();
-            }
-            //Marks row exist
+            } //Marks row exist
             else {
                 foreach ($request->input('marksByCategory') as $inputCategoryId => $inputTotalMarks) {
                     if ($inputCategoryId == $rotationsCategory->id) {
@@ -153,7 +155,7 @@ class VehiclesController extends Controller
         $vehicle = Vehicle::create($data);
         //get all rotation types
         $rotationsCategories = RotationsCategory::
-            select(
+        select(
             'id',
             'name'
         )
@@ -182,9 +184,25 @@ class VehiclesController extends Controller
         return new VehicleResource($vehicle);
     }
 
+    public function resetVehiclesPassword($id)
+    {
+        $vehicle = Vehicle::find($id);
+        function generateRandomString($length = 4) {
+            return substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+        }
+        $vehicle->password = generateRandomString();;
+        $vehicle->save();
+        return Response::json(array(
+            'code' => 200,
+            'message' => "password reset done successfully "
+        ), 200);
+
+    }
+
     //delete an existing Vehicle
     public function destroy($id)
     {
+
         $vehicle = Vehicle::findOrFail($id);
         if ($vehicle->delete()) {
             //get all mark rows whith the same vehicle id

@@ -274,6 +274,8 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         Route::get('rotationsByVehicleAndCategory/{category_id}/{vehicle_id}', 'RotationsController@rotationsByVehicleAndCategory')->name('rotation.rotationsByVehicleAndCategory');
         //vehicles
         Route::get('vehicles', 'VehiclesController@vehicles')->name('vehicles.vehicles');
+        Route::get('vehiclesWithNames', 'VehiclesController@vehiclesWithNames')->name('vehicles.vehiclesWithNames');
+        Route::post('authenticateVehicle', 'VehiclesController@authenticateVehicle')->name('vehicles.authenticateVehicle');
         //rotationsCategories
         Route::get('rotationsCategories', 'RotationsCategoriesController@rotationsCategories')->name('RotationsCategorys.RotationsCategorys');
 
@@ -405,6 +407,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::post('vehicle', 'VehiclesController@store')->name('vehicles.store');
         Route::put('vehicle/{id}', 'VehiclesController@update')->name('vehicles.update');
         Route::delete('vehicle/{id}', 'VehiclesController@destroy')->name('vehicles.delete');
+        Route::get('vehicles/resetVehiclesPassword/{id}', 'VehiclesController@resetVehiclesPassword')->name('vehicles.resetVehiclesPassword');
     });
 
 });

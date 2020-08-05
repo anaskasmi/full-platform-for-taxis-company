@@ -147,17 +147,7 @@
                 </div>
                 <div class="wrapper_header mt-10">
                     <div class="title_header text-uppercase">{{currentCategory.name}}</div>
-                    <v-btn
-                        link
-                        tile
-                        class="ma-2 button_header"
-                        outlined
-                        color="success "
-                        @click="openAddDialog()"
-                    >
-                        <v-icon left>mdi-pencil</v-icon>
-                        <div>New Vehicle</div>
-                    </v-btn>
+
                 </div>
                 <hr/>
                 <!-- progress -->
@@ -398,18 +388,7 @@
                     </div>
 
 
-                    <v-btn
-                        link
-                        tile
-                        block
-                        class=""
-                        outlined
-                        color="success "
-                        @click="openAddDialog()"
-                    >
-                        <v-icon left>mdi-pencil</v-icon>
-                        <div>New Vehicle</div>
-                    </v-btn>
+
                     <hr/>
                     <!-- progress -->
                     <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>

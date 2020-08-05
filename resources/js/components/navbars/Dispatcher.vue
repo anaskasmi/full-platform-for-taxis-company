@@ -110,6 +110,7 @@
                     {title: 'Account Types', link: {name: 'DispatcherDashboard_accountTypes'}},
                     {title: 'authorization Files', link: {name: 'DispatcherDashboard_authorizationFiles'}},
                     {title: 'Rotations Manager', link: {name: 'DispatcherDashboard_rotationsManager'}},
+                    {title: 'PreInspections', link: {name: 'DispatcherDashboard_preInspections_index'}},
                 ],
                 mobileItems: [
                     {title: 'profile', link: {name: 'DispatcherDashboard_profile'}},
@@ -119,6 +120,7 @@
                     {title: 'Account Types', link: {name: 'DispatcherDashboard_accountTypes'}},
                     {title: 'authorization Files', link: {name: 'DispatcherDashboard_authorizationFiles'}},
                     {title: 'Rotations Manager', link: {name: 'DispatcherDashboard_rotationsManager'}},
+                    {title: 'PreInspections', link: {name: 'DispatcherDashboard_preInspections_index'}},
                     {title: 'change my password', link:{ name: 'DispatcherDashboard_changePassword'}},
                 ],
             }
