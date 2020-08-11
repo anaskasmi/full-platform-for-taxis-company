@@ -288,6 +288,11 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         // Route::PATCH('voiceMessage/{trip_id}', 'TripsController@update')->name('trips.update');
         // Route::delete('voiceMessage/{trip_id}', 'TripsController@destroy')->name('trips.delete');
 
+
+        //PreInspection routes
+        Route::post('storePreInspection', 'PreInspectionsController@store')->name('PreInspectionsController.store');
+
+
     });
 
 });

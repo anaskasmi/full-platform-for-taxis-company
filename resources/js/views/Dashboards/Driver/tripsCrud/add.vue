@@ -42,7 +42,7 @@
                     >TRIP INFO
                     </v-alert>
 
-                    <div class="form-group">
+                    <div class="form-group ">
                         <v-text-field label="JOB ID" v-model="trip.job_id" type="text" name="job_id"></v-text-field>
                     </div>
 

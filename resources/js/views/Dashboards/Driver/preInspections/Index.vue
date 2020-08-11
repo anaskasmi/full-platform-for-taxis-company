@@ -96,7 +96,7 @@
         },
         created() {
             // this.fetchItems();
-            this.showPageByName("vehicleIdentification")
+            this.showPageByName("newFile")
 
         },
         data() {
