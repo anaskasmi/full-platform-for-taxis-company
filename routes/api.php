@@ -293,6 +293,7 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         Route::post('storePreInspection', 'PreInspectionsController@store')->name('PreInspectionsController.store');
         Route::get('slipsByDriver', 'PreInspectionsController@slipsByDriver')->name('PreInspectionsController.slipsByDriver');
         Route::post('slipsByVehicle', 'PreInspectionsController@slipsByVehicle')->name('PreInspectionsController.slipsByVehicle');
+        Route::get('preInspectionSlip/{id}', 'PreInspectionsController@getSlipById')->name('PreInspectionsController.getSlipById');
 
 
     });

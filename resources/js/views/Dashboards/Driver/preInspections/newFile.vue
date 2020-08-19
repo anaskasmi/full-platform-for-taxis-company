@@ -81,15 +81,9 @@
 
                         <!-- car no  -->
                         <v-col cols="6" class="pr-0 mr-0 float-right">
-                            <v-select-search
-                                class="w-100 align-middle"
-                                label="name"
-                                placeholder="Car No"
-                                v-model="slipData.VehicleId"
-                                :options="vehicles"
-                                :reduce="vehicle => vehicle.id"
-                            ></v-select-search>
 
+                            <v-text-field outlined label="Licensed plat No" v-model="slipData.licensedPlate" type="text"
+                            ></v-text-field>
                         </v-col>
                     </div>
 
@@ -97,11 +91,15 @@
                     <!-- Row 3 Licensed plate & badge ID   -->
                     <div class="form-group row col-12 px-0 mx-0">
                         <!--Licensed plate-->
-                        <v-col cols="12" class="pr-0 mr-0 float-right">
-                            <v-text-field outlined label="Licensed plat No" v-model="slipData.licensedPlate" type="text"
-                            ></v-text-field>
 
-                        </v-col>
+                        <v-select-search
+                            class="w-100 align-middle"
+                            label="name"
+                            placeholder="Car No"
+                            v-model="slipData.VehicleId"
+                            :options="vehicles"
+                            :reduce="vehicle => vehicle.id"
+                        ></v-select-search>
                     </div>
 
                     <!-- Odometer at all starting shift  -->
@@ -565,24 +563,24 @@
                         value="slipData.driverName"
                     ></v-text-field>
                     <v-container fluid class="card bg-light mt-12">
-
-                        <div class=" font-weight-bold" style="font-size: 1.6em">
-                            <input class="" type="radio"
-                                   v-model="slipData.aboveAffectedCorrected"
-                                   name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="false" checked>
-                            <label class="form-check-label text-uppercase" for="aboveAffectedNeedsToBeCorrected">
-                                above Affected Needs To Be Corrected for safe operation of vehicle
-                            </label>
-                        </div>
                         <div class=" font-weight-bold" style="font-size: 1.6em">
                             <input class=" "
                                    v-model="slipData.aboveAffectedCorrected"
                                    type="radio" name="exampleRadios"
                                    id="aboveAffectedCorrected" value="true">
-                            <label class="form-check-label text-uppercase  " for="aboveAffectedCorrected">
+                            <label class="form-check-label text-uppercase text-primary " for="aboveAffectedCorrected">
                                 above Affected Corrected
                             </label>
                         </div>
+                        <div class=" font-weight-bold" style="font-size: 1.6em">
+                            <input class="" type="radio"
+                                   v-model="slipData.aboveAffectedCorrected"
+                                   name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="false" checked>
+                            <label class="form-check-label text-uppercase text-secondary" for="aboveAffectedNeedsToBeCorrected">
+                                above Affected Needs To Be Corrected for safe operation of vehicle
+                            </label>
+                        </div>
+
                     </v-container>
                     <div class="card w-75 pa-8 ma-6 mx-auto shadow" v-if="errors" >
                         <div class="card-header font-weight-bold text-uppercase text-center text-secondary mb-4" style="font-size: 1.6em" >
@@ -601,20 +599,7 @@
 
                     <!-- submit btn -->
                     <div class="row col-12 mt-4">
-                        <div class="col-6">
                             <v-btn color="success" tile type="submit" block>submit</v-btn>
-                        </div>
-                        <div class="col-6">
-                            <v-btn
-                                color="grey "
-                                dark
-                                tile
-                                block
-                                class="col-6"
-                                @click="$router.go(-1)"
-                            >cancel
-                            </v-btn>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -702,6 +687,10 @@
                         this.isStoring = false;
 
                         this.$swal('created successfully', '', 'success');
+                        this.$router.push({
+                            name: "DriverDashboard_preInspections_showSlip",
+                            params: { id: res.data.id }
+                        });
                     })
                     .catch(error => {
                         console.log(error);

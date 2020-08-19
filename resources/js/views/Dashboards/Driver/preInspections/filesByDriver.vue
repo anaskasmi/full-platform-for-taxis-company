@@ -1,9 +1,10 @@
 <template>
     <div>
+
         <!-- progress -->
         <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
 
-        <div v-else class="table-responsive">
+        <div v-else   class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
@@ -16,10 +17,10 @@
                 </thead>
                 <tbody>
                 <tr v-for="(slip,i) in slips" :key="i">
-                    <td>{{slip.driverName}}</td>
-                    <td>{{slip.date}}</td>
-                    <td>{{slip.vehicleName}}</td>
-                    <td>{{slip.shiftType}}</td>
+                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.driverName}}</td>
+                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.date}}</td>
+                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.vehicle.vehicleName}}</td>
+                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.shiftType}}</td>
 
 
                     <td class="text-right">
@@ -32,7 +33,7 @@
                             @click=""
                         >delete
                         </v-icon>
-                        <v-icon color="info" class="mx-1" @click="">description
+                        <v-icon color="info" class="mx-1" @click="openSlip(slip.id)">description
                         </v-icon>
                     </td>
                 </tr>
@@ -48,16 +49,18 @@
 <script>
 
     export default {
-        created(){
-          this.fetchSlips();
+        created() {
+            this.fetchSlips();
         },
-        components: {},
+
         data() {
             return {
                 slips: {},
-                isLoading:false,
+                isLoading: false,
                 current_page: 1,
                 last_page: 1,
+                slipToConsult: null,
+                slipIsOpen:false,
             };
         },
         methods: {
@@ -72,8 +75,15 @@
                 this.current_page = meta.current_page;
                 this.pageSize = meta.pageSize;
             },
-            fetchSlips(page){
-                this.isLoading=true;
+            openSlip(id) {
+                this.$router.push({
+                    name: "DriverDashboard_preInspections_showSlip",
+                    params: { id: id }
+                });
+            },
+
+            fetchSlips(page) {
+                this.isLoading = true;
                 let url = this.BASE_URL() + "/api/driver/slipsByDriver";
                 let vm = this;
 
@@ -85,8 +95,8 @@
                 axios
                     .get(url)
                     .then(res => {
-                        res=res.data;
-                        this.slips=res.data;
+                        res = res.data;
+                        this.slips = res.data;
                         let meta = {};
                         meta.current_page = res.current_page
                         meta.last_page = res.last_page;

@@ -96,6 +96,7 @@ import DriverDashboard_rotations_vehicleHistory from '@/js/views/Dashboards/Driv
 
 //preinspections
 import DriverDashboard_preInspections_index from '@/js/views/Dashboards/Driver/preInspections/Index.vue'
+import DriverDashboard_preInspections_showSlip from '@/js/views/Dashboards/Driver/preInspections/showFile.vue'
 
 
 ////////////////////////////////////////////////// Director ////////////////////////////////////////////////////////////
@@ -673,6 +674,11 @@ const router = new VueRouter(
                             path: '',
                             name: 'DriverDashboard_preInspections_index',
                             component: DriverDashboard_preInspections_index,
+                        },
+                        {
+                            path: 'show/:id',
+                            name: 'DriverDashboard_preInspections_showSlip',
+                            component: DriverDashboard_preInspections_showSlip,
                         },
                     ]
             },

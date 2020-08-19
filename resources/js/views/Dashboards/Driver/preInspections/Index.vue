@@ -39,11 +39,11 @@
                             <v-btn v-if="showFilesByDriver==false" outlined x-large tile color="success" dark
                                    @click="showPageByName('filesByDriver')">
                                 <v-icon class="mr-5"> folder_open</v-icon>
-                                Files By Driver
+                                My Files
                             </v-btn>
                             <v-btn v-if="showFilesByDriver==true" x-large tile color="success" dark>
                                 <v-icon class="mr-5">folder_open</v-icon>
-                                Files By Driver
+                                My Files
                             </v-btn>
                         </div>
 
@@ -96,7 +96,7 @@
         },
         created() {
             // this.fetchItems();
-            this.showPageByName("newFile")
+            this.showPageByName("filesByDriver")
 
         },
         data() {

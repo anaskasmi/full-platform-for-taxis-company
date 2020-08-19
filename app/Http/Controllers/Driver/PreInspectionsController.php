@@ -12,6 +12,7 @@ use App\PreInspection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PreInspectionsController extends Controller
 {
@@ -68,7 +69,7 @@ class PreInspectionsController extends Controller
                     ->appends(request()->query());
                 foreach ($slips as $slip) {
                     unset($slip["password"]);
-                    $slip["vehicleName"]=$slip["type"]." ".$slip["number"];
+                    $slip["vehicleName"] = $slip["type"] . " " . $slip["number"];
 
                 }
 
@@ -96,19 +97,46 @@ class PreInspectionsController extends Controller
         $currentDriver = Auth::user();
         $owner_badge_Id = $currentDriver->PermitNumber;
 
-        $slips = PreInspection::where('ownerBadgeId', $owner_badge_Id)
-            ->join('vehicles', 'pre_inspection_slips.VehicleId', '=', 'vehicles.id')
+        $slips = PreInspection::
+
+        where('ownerBadgeId', $owner_badge_Id)
+//            ->join('vehicles', 'pre_inspection_slips.VehicleId', '=', 'vehicles.id')
+            ->withAll()
             ->orderBy('pre_inspection_slips.date')
-            ->paginate(2)
+            ->paginate(20)
             ->appends(request()->query());
 
+
         foreach ($slips as $slip) {
-            unset($slip["password"]);
-            $slip["vehicleName"]=$slip["type"]." ".$slip["number"];
+            unset($slip["vehicle"]["password"]);
+            $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
 
         }
 
         return $slips;
+
+    }
+
+
+    //slips by ID
+    public function getSlipById($id)
+    {
+        if (!is_numeric($id)) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "wrong id! "
+            ), 400);
+        }
+
+        $slip = PreInspection::
+        whereId($id)
+            ->withAll()
+            ->first();
+        //hide vehicle password
+        unset($slip["vehicle"]["password"]);
+//        //prepare full name
+        $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
+        return $slip;
 
     }
 
