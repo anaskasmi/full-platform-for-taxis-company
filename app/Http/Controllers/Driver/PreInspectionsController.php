@@ -40,6 +40,7 @@ class PreInspectionsController extends Controller
             'driverRemarks' => 'Nullable',
             'driverName' => 'required',
             'aboveAffectedCorrected' => 'required',
+            'safeToDrive' => 'required'
         ]);
         $data['ownerBadgeId'] = $owner_badge_Id;
         $slip = PreInspection::create($data);
@@ -52,40 +53,32 @@ class PreInspectionsController extends Controller
     }
 
     //slips by vehicle
-    public function slipsByVehicle(Request $request)
+    public function slipsByVehicle($id)
     {
-        $data = request()->validate([
-            'vehicleId' => 'required',
-            'password' => 'required'
-        ]);
-        $vehicle = Vehicle::whereId($data['vehicleId'])
-            ->first();
-        if ($vehicle) {
-            if ($vehicle->password == $data['password']) {
-                $slips = PreInspection::where('VehicleId', $data['vehicleId'])
-                    ->join('vehicles', 'pre_inspection_slips.VehicleId', '=', 'vehicles.id')
-                    ->orderBy('pre_inspection_slips.date')
-                    ->paginate(20)
-                    ->appends(request()->query());
-                foreach ($slips as $slip) {
-                    unset($slip["password"]);
-                    $slip["vehicleName"] = $slip["type"] . " " . $slip["number"];
-
-                }
-
-
-                return $slips;
-
-            } else {
-                return Response::json(array(
-                    'message' => "vehicle Not authenticated ",
-                ), 401);
-            }
-        } else {
+        if (!is_numeric($id)) {
             return Response::json(array(
-                'message' => "vehicle Not Found ",
+                'code' => 400,
+                'message' => "wrong id! "
             ), 400);
         }
+
+        $slips = PreInspection::
+        where('vehicleId', $id)
+            ->withAll()
+            ->orderBy('pre_inspection_slips.date')
+            ->paginate(20)
+            ->appends(request()->query());
+
+
+        foreach ($slips as $slip) {
+            if (isset($slip["vehicle"]["password"]))
+                unset($slip["vehicle"]["password"]);
+            if (isset($slip["vehicle"]["number"]) && isset($slip["vehicle"]["type"]))
+                $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
+
+        }
+
+        return $slips;
 
 
     }
@@ -108,8 +101,10 @@ class PreInspectionsController extends Controller
 
 
         foreach ($slips as $slip) {
-            unset($slip["vehicle"]["password"]);
-            $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
+            if (isset($slip["vehicle"]["password"]))
+                unset($slip["vehicle"]["password"]);
+            if (isset($slip["vehicle"]["number"]) && isset($slip["vehicle"]["type"]))
+                $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
 
         }
 
@@ -134,10 +129,125 @@ class PreInspectionsController extends Controller
             ->first();
         //hide vehicle password
         unset($slip["vehicle"]["password"]);
-//        //prepare full name
+        //prepare full name
         $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
         return $slip;
 
+    }
+
+    //delete by ID
+    public function deleteSlip($id)
+    {
+        if (!is_numeric($id)) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "wrong id! "
+            ), 400);
+        }
+        //get slip
+        $slip = PreInspection::
+        whereId($id)
+            ->first();
+        //exist?
+        if (!$slip) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "Slip with this id doesnt exist"
+            ), 400);
+        }
+        //is owner?
+        $currentDriver = Auth::user();
+        $owner_badge_Id = $currentDriver->PermitNumber;
+        if ($owner_badge_Id != $slip->ownerBadgeId) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "You are not Allowed to remove this slip"
+            ), 400);
+        }
+        //delete
+        if ($slip->delete()) {
+            return Response::json(array(
+                'code' => 200,
+                'message' => "slip of id  " . $slip->id . " deleted successfully !",
+            ), 200);
+        } else {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "Couldn't delete slip "
+            ), 400);
+        }
+
+
+    }
+
+    //edit by ID
+    public function editSlip(Request $request, $id)
+    {
+        $data = request()->validate([
+            'shiftType' => 'required',
+            'date' => 'Date|required',
+            'VehicleId' => 'Numeric|required',
+            'licensedPlate' => 'required',
+            'odometer' => 'required',
+            'interiorExterior' => 'required',
+            'lampsAndIndicators' => 'required',
+            'steeringTires' => 'required',
+            'wheelsAndHubsAndFastners' => 'required',
+            'glassAndMirrors' => 'required',
+            'hydraulicBrakeSystem' => 'required',
+            'heaterDefroster' => 'required',
+            'windShieldWipersAndWashers' => 'required',
+            'horn' => 'required',
+            'wheelChairLiftAndEmergencyEquipment' => 'required',
+            'turnJake' => 'required',
+            'driverRemarks' => 'Nullable',
+            'driverName' => 'required',
+            'aboveAffectedCorrected' => 'required',
+            'safeToDrive' => 'required'
+
+        ]);
+
+        if (!is_numeric($id)) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "wrong id! "
+            ), 400);
+        }
+        //get slip
+        $slip = PreInspection::
+        whereId($id)
+            ->first();
+        //exist?
+        if (!$slip) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "Slip with this id doesnt exist"
+            ), 400);
+        }
+        //is owner?
+        $currentDriver = Auth::user();
+        $owner_badge_Id = $currentDriver->PermitNumber;
+        if ($owner_badge_Id != $slip->ownerBadgeId) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "You are not Allowed to remove this slip"
+            ), 400);
+        }
+
+
+        //update
+        if ($slip->update($data)) {
+            return Response::json(array(
+                'code' => 200,
+                'message' => "slip of id  " . $slip->id . " updated successfully !",
+                'id' => $slip->id
+            ), 200);
+        } else {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "Something went wrong! we couldn't update slip "
+            ), 400);
+        }
     }
 
 

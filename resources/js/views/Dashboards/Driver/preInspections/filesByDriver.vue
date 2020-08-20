@@ -4,7 +4,7 @@
         <!-- progress -->
         <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
 
-        <div v-else   class="table-responsive">
+        <div v-if="!isLoading" class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
@@ -19,18 +19,19 @@
                 <tr v-for="(slip,i) in slips" :key="i">
                     <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.driverName}}</td>
                     <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.date}}</td>
-                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.vehicle.vehicleName}}</td>
+                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.vehicle.vehicleName}}
+                    </td>
                     <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.shiftType}}</td>
 
 
                     <td class="text-right">
-                        <v-icon color="success" class="mx-1" @click="">edit
+                        <v-icon color="success" class="mx-1" @click="editSlip(slip.id)">edit
                         </v-icon>
 
                         <v-icon
                             color="red lighten-1"
                             class="mx-1"
-                            @click=""
+                            @click="deleteSlip(slip.id)"
                         >delete
                         </v-icon>
                         <v-icon color="info" class="mx-1" @click="openSlip(slip.id)">description
@@ -60,7 +61,7 @@
                 current_page: 1,
                 last_page: 1,
                 slipToConsult: null,
-                slipIsOpen:false,
+                slipIsOpen: false,
             };
         },
         methods: {
@@ -78,7 +79,7 @@
             openSlip(id) {
                 this.$router.push({
                     name: "DriverDashboard_preInspections_showSlip",
-                    params: { id: id }
+                    params: {id: id}
                 });
             },
 
@@ -109,6 +110,43 @@
                         this.isLoading = false;
 
                     });
+            },
+            editSlip(id)
+            {
+                this.$router.push({
+                    name: "DriverDashboard_preInspections_editSlip",
+                    params: {id: id}
+                });
+            },
+            deleteSlip(id) {
+                let url = this.BASE_URL() + "/api/driver/preInspectionSlip/" + id;
+                this.$swal
+                    .fire({
+                        text: "Are You Sure You Want To Delete this PreInspection slip?",
+                        type: "question",
+                        animation: true,
+                        focusConfirm: false,
+                        padding: "2rem",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes"
+                    })
+                    .then(res => {
+                        if (res.value) {
+                            axios.defaults.headers.common["Authorization"] =
+                                "Bearer " + this.$store.state.token_driver;
+                            axios
+                                .delete(url)
+                                .then(response => {
+                                    console.log(response.data)
+                                    this.$swal.fire("Deleted", response.data.message, "success");
+                                })
+                                .catch(error => {
+                                    this.$swal.fire("Something went wrong", error.response.data.message, "error");
+                                });
+                            this.fetchSlips();
+                        }
+                    });
+
             }
 
         },

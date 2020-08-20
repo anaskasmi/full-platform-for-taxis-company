@@ -14,7 +14,7 @@
                     </v-btn>
                 </div>
                 <div class="mt-8 col-12">
-                    <div class="title_header text-uppercase col-6 mb-10">Pre Inspection Slip</div>
+                    <div class="title_header text-uppercase col-6 mb-10">Show - Pre Inspection Slip</div>
                 </div>
                 <br/>
                 <!-- progress -->
@@ -61,7 +61,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">Affected Corrected</td>
-                            <td v-if="slip.glassAndMirrors=='true'" class="text-uppercase font-weight-bold table-success">{{slip.aboveAffectedCorrected}}</td>
+                            <td v-if="slip.aboveAffectedCorrected=='true'" class="text-uppercase font-weight-bold table-success">{{slip.aboveAffectedCorrected}}</td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.aboveAffectedCorrected}}</td>
                         </tr>
 
@@ -174,10 +174,18 @@
                         <tr>
                             <td class="text-uppercase font-weight-bold">wind Shield Wipers And Washers</td>
                             <td v-if="slip.windShieldWipersAndWashers=='true'" class="text-uppercase font-weight-bold table-success">{{slip.windShieldWipersAndWashers}}</td>
-                            <td v-else class="text-uppercase font-weight-bold table-warning table-warning">{{slip.windShieldWipersAndWashers}}</td>
+                            <td v-else class="text-uppercase font-weight-bold table-warning ">{{slip.windShieldWipersAndWashers}}</td>
                         </tr>
-
-
+                        <br>
+                        <tr class="table-light mt-4">
+                            <td colspan="2" class="text-center text-uppercase font-weight-bold">
+                                Safe to drive ?
+                            </td>
+                        </tr>
+                        <tr style="font-size: 1.4em">
+                            <td colspan="2" v-if="slip.safeToDrive=='true'" class="text-uppercase font-weight-bold table-success text-center">{{slip.safeToDrive}}</td>
+                            <td colspan="2" v-else class="text-uppercase font-weight-bold  table-danger text-center">{{slip.safeToDrive}}</td>
+                        </tr>
                         </tbody>
                     </table>
 

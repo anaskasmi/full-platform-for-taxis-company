@@ -292,8 +292,10 @@ Route::prefix('/driver')->name('driver.')->namespace('Driver')->group(function (
         //PreInspection routes
         Route::post('storePreInspection', 'PreInspectionsController@store')->name('PreInspectionsController.store');
         Route::get('slipsByDriver', 'PreInspectionsController@slipsByDriver')->name('PreInspectionsController.slipsByDriver');
-        Route::post('slipsByVehicle', 'PreInspectionsController@slipsByVehicle')->name('PreInspectionsController.slipsByVehicle');
+        Route::get('slipsByVehicle/{id}', 'PreInspectionsController@slipsByVehicle')->name('PreInspectionsController.slipsByVehicle');
         Route::get('preInspectionSlip/{id}', 'PreInspectionsController@getSlipById')->name('PreInspectionsController.getSlipById');
+        Route::delete('preInspectionSlip/{id}', 'PreInspectionsController@deleteSlip')->name('PreInspectionsController.deleteSlipe');
+        Route::put('preInspectionSlip/{id}', 'PreInspectionsController@editSlip')->name('PreInspectionsController.editSlip');
 
 
     });
