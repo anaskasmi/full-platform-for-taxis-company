@@ -10,18 +10,7 @@
                 <div class="mt-8 col-12">
                     <div class="title_header text-uppercase col-6 mb-10">Pre Inspections</div>
                     <v-row class="mb-4 mt-10 justify-content-around" no-gutters>
-                        <div class="text-center  ml-4">
-                            <v-btn v-if="showVehiclesPasswords==false" outlined x-large tile color="success" dark
-                                   @click="showPageByName('vehiclesPasswords')">
-                                <v-icon class="mr-5">directions_car</v-icon>
-                                Vehicles Passwords
-                            </v-btn>
-                            <v-btn v-if="showVehiclesPasswords==true" x-large tile color="success" dark>
-                                <v-icon class="mr-5">directions_car</v-icon>
-                                Vehicles Passwords
-                            </v-btn>
-                        </div>
-                        <v-spacer></v-spacer>
+
 
                         <div class="text-center">
                             <v-btn v-if="showFilesByVehicle==false" outlined x-large tile color="success" dark
@@ -66,7 +55,6 @@
 
                 <!-- content -->
                 <div  class="col-12">
-                    <vehiclesPassword v-if="showVehiclesPasswords"></vehiclesPassword>
                     <filesByVehicle v-if="showFilesByVehicle"></filesByVehicle>
                     <filesByDriver v-if="showFilesByDriver"></filesByDriver>
                     <allFiles v-if="showAllFiles"></allFiles>
@@ -80,7 +68,6 @@
 <script>
     import NavbarAdmin from "@/js/components/navbars/Dispatcher.vue";
     import Drawer from "@/js/components/drawers/Dispatcher.vue";
-    import vehiclesPassword from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/vehiclesPasswords.vue";
     import filesByVehicle from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByVehicle.vue";
     import filesByDriver from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByDriver.vue";
     import allFiles from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/allFiles.vue";
@@ -89,19 +76,17 @@
         components: {
             NavbarAdmin,
             Drawer,
-            vehiclesPassword,
             filesByVehicle,
             filesByDriver,
             allFiles,
         },
         created() {
             // this.fetchItems();
-            this.showPageByName("vehiclesPasswords")
+            this.showPageByName("allFiles")
 
         },
         data() {
             return {
-                showVehiclesPasswords: false,
                 showFilesByVehicle: false,
                 showFilesByDriver: false,
                 showAllFiles: false,
@@ -112,7 +97,6 @@
                 return this.$store.state.BASE_URL;
             },
             hideAllTabs() {
-                this.showVehiclesPasswords = false;
                 this.showFilesByVehicle = false;
                 this.showFilesByDriver = false;
                 this.showAllFiles = false;
@@ -121,10 +105,7 @@
             showPageByName(name) {
                 this.hideAllTabs();
                 switch (name) {
-                    case "vehiclesPasswords":
-                        this.hideAllTabs();
-                        this.showVehiclesPasswords = true;
-                        break;
+
                     case "filesByVehicle":
                         this.hideAllTabs();
                         this.showFilesByVehicle = true;
@@ -142,33 +123,7 @@
                 }
             },
             fetchItems() {
-                // this.isLoading = true;
-                // let page_url = this.BASE_URL() + "/api/dispatcher/rotationsCategories";
-                // axios.defaults.headers.common["Authorization"] =
-                //     "Bearer " + this.$store.state.token_dispatcher;
-                // axios
-                //     .get(page_url)
-                //     .then(res => {
-                //         this.rotationsCategories = res.data.data;
-                //         this.isLoading = false;
-                //     })
-                //     .catch(error => {
-                //         console.log(error);
-                //         this.isLoading = false;
-                //         if (
-                //
-                //
-                //             error.response &&
-                //             error.response.data &&
-                //             error.response.data.errors
-                //         ) {
-                //             {
-                //                 this.$swal("Try again", error.response.data.errors, "warning");
-                //             }
-                //         } else {
-                //             this.$swal("Try again", "Unknown error has occurred ! ", "warning");
-                //         }
-                //     });
+
             },
 
         }

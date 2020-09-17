@@ -45,7 +45,7 @@ Route::get('/config-cache', function () {
 Route::get('/routeList', function () {
     $exitCode = Artisan::call('route:list');
     dd(Artisan::output());
-    return '<h1>'.$exitCode.'</h1>';
+    return '<h1>' . $exitCode . '</h1>';
 });
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -418,6 +418,18 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::put('vehicle/{id}', 'VehiclesController@update')->name('vehicles.update');
         Route::delete('vehicle/{id}', 'VehiclesController@destroy')->name('vehicles.delete');
         Route::get('vehicles/resetVehiclesPassword/{id}', 'VehiclesController@resetVehiclesPassword')->name('vehicles.resetVehiclesPassword');
+
+        //preInspection
+        //CRUD
+        //PreInspection routes
+        //Route::post('storePreInspection', 'PreInspectionsController@store')->name('PreInspectionsController.store');
+        Route::get('preInspectionsSlips', 'PreInspectionsController@allSlips')->name('PreInspectionsController.allSlips');
+        Route::get('slipsByDriver/{badgeId}', 'PreInspectionsController@slipsByDriver')->name('PreInspectionsController.slipsByDriver');
+        Route::get('slipsByVehicle/{id}', 'PreInspectionsController@slipsByVehicle')->name('PreInspectionsController.slipsByVehicle');
+        Route::get('preInspectionSlip/{id}', 'PreInspectionsController@getSlipById')->name('PreInspectionsController.getSlipById');
+        Route::delete('preInspectionSlip/{id}', 'PreInspectionsController@deleteSlip')->name('PreInspectionsController.deleteSlipe');
+        //Route::put('preInspectionSlip/{id}', 'PreInspectionsController@editSlip')->name('PreInspectionsController.editSlip');
+
     });
 
 });
