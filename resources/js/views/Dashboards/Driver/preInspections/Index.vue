@@ -10,18 +10,6 @@
                 <div class="mt-8 col-12">
                     <div class="title_header text-uppercase col-6 mb-10">Pre Inspections</div>
                     <v-row class="mb-4 mt-10 justify-content-around" no-gutters>
-                        <div class="text-center  ml-4">
-                            <v-btn v-if="showVehicleIdentification==false" outlined x-large tile color="success" dark
-                                   @click="showPageByName('vehicleIdentification')">
-                                <v-icon class="mr-5">directions_car</v-icon>
-                                Identify Vehicle
-                            </v-btn>
-                            <v-btn v-if="showVehicleIdentification==true" x-large tile color="success" dark>
-                                <v-icon class="mr-5">directions_car</v-icon>
-                                Identify Vehicle
-                            </v-btn>
-                        </div>
-                        <v-spacer></v-spacer>
 
                         <div class="text-center">
                             <v-btn v-if="showFilesByVehicle==false" outlined x-large tile color="success" dark
@@ -70,6 +58,80 @@
                     <filesByVehicle v-if="showFilesByVehicle"></filesByVehicle>
                     <filesByDriver v-if="showFilesByDriver"></filesByDriver>
                     <newFile v-if="showNewFile"></newFile>
+                </div>
+            </div>
+        </div>
+
+
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <!----------------------------Mobile Version---------------------------->
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+
+        <div class="pa-0 ma-0 " v-if="$mq=='mobile'">
+            <!-- nav -->
+            <NavbarDriver></NavbarDriver>
+            <div class="container px-4">
+                <div>
+                    <!-- header -->
+                    <div class="mt-8 col-12">
+                        <div
+                            class=" text-uppercase text-center"
+                            style="font-size: 2em;color: rgb(124, 124, 124);"
+                        >
+                            Pre Inspections
+                        </div>
+                        <div class="mb-4 mt-10 justify-content-around" no-gutters>
+
+                            <div class="text-center">
+                                <v-btn v-if="showFilesByVehicle==false" outlined x-large tile block color="success" dark
+                                       @click="showPageByName('filesByVehicle')">
+                                    <v-icon class="mr-5"> folder_open</v-icon>
+                                    Files by Vehicle
+                                </v-btn>
+                                <v-btn v-if="showFilesByVehicle==true" x-large tile block color="success" dark>
+                                    <v-icon class="mr-5">folder_open</v-icon>
+                                    Files by Vehicle
+                                </v-btn>
+                            </div>
+                            <v-spacer class="my-2"></v-spacer>
+                            <div class="text-center">
+                                <v-btn v-if="showFilesByDriver==false" outlined x-large block tile color="success" dark
+                                       @click="showPageByName('filesByDriver')">
+                                    <v-icon class="mr-5"> folder_open</v-icon>
+                                    My Files
+                                </v-btn>
+                                <v-btn v-if="showFilesByDriver==true" x-large tile block color="success" dark>
+                                    <v-icon class="mr-5">folder_open</v-icon>
+                                    My Files
+                                </v-btn>
+                            </div>
+
+                            <v-spacer class="my-2"></v-spacer>
+                            <div class="text-center">
+                                <v-btn v-if="showNewFile==false" outlined x-large block tile color="success" dark
+                                       @click="showPageByName('newFile')">
+                                    <v-icon class="mr-5">insert_drive_file</v-icon>
+                                    New Slip
+                                </v-btn>
+                                <v-btn v-if="showNewFile==true" x-large tile block color="success" dark>
+                                    <v-icon class="mr-5">insert_drive_file</v-icon>
+                                    New Slip
+                                </v-btn>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+
+
+                    <!-- content -->
+                    <div class="col-12">
+                        <vehicleIdentification v-if="showVehicleIdentification"></vehicleIdentification>
+                        <filesByVehicle v-if="showFilesByVehicle"></filesByVehicle>
+                        <filesByDriver v-if="showFilesByDriver"></filesByDriver>
+                        <newFile v-if="showNewFile"></newFile>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,4 +285,5 @@
         justify-self: center;
         font-size: 2.5em;
     }
+
 </style>

@@ -1200,7 +1200,7 @@
                                 {{rotation.note}}
                             </td>
                             <td class="text-right align-middle">
-                                <v-icon color="green" class="ma-2" @click="openEditDialog(rotation)">edit</v-icon>
+                                <v-icon color="green" class="ma-2 " @click="openEditDialog(rotation)">edit</v-icon>
                                 <v-icon color="red" class="ma-2" @click="deleteRotation(rotation)">delete</v-icon>
                             </td>
                         </tr>

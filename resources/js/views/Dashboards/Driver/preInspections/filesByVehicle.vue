@@ -32,17 +32,17 @@
                 </thead>
                 <tbody>
                 <tr v-for="(slip,i) in slips" :key="i">
-                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.driverName}}</td>
-                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.date}}</td>
-                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.vehicle.vehicleName}}
+                    <td class="font-weight-bold text-uppercase align-middle fitCell" style="font-size: 1.2em;">{{slip.driverName}}</td>
+                    <td class="font-weight-bold text-uppercase align-middle fitCell" style="font-size: 1.2em;">{{slip.date}}</td>
+                    <td class="font-weight-bold text-uppercase align-middle fitCell" style="font-size: 1.2em;">{{slip.vehicle.vehicleName}}
                     </td>
-                    <td class="font-weight-bold text-uppercase" style="font-size: 1.2em;">{{slip.shiftType}}</td>
+                    <td class="font-weight-bold text-uppercase align-middle fitCell" style="font-size: 1.2em;">{{slip.shiftType}}</td>
 
 
                     <td class="text-right">
                         <v-icon
                             color="success"
-                            class="mx-1"
+                            class="ma-2"
                             @click="editSlip(slip.id)"
                             v-if="slip.ownerBadgeId == ownerBadgeId"
                         >
@@ -51,13 +51,13 @@
 
                         <v-icon
                             color="red lighten-1"
-                            class="mx-1"
+                            class="ma-2"
                             @click="deleteSlip(slip.id)"
                             v-if="slip.ownerBadgeId == ownerBadgeId"
 
                         >delete
                         </v-icon>
-                        <v-icon color="info" class="mx-1" @click="openSlip(slip.id)">description
+                        <v-icon color="info" class="ma-2" @click="openSlip(slip.id)">description
                         </v-icon>
                     </td>
                 </tr>
@@ -226,5 +226,9 @@
 <style scoped>
     a:hover {
         text-decoration: none;
+    }
+    .fitCell {
+        max-width: 100%;
+        white-space: nowrap;
     }
 </style>
