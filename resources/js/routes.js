@@ -168,6 +168,7 @@ import DispatcherDashboard_vehicles from '@/js/views/Dashboards/Dispatcher/vehic
 import DispatcherDashboard_vehicleHistory from '@/js/views/Dashboards/Dispatcher/vehicles/vehicleHistory.vue'
 // PreInspections
 import DispatcherDashboard_preInspections_index from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/Index.vue'
+import DispatcherDashboard_preInspections_showSlip from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/showFile.vue'
 
 
 import {store} from './store/store';
@@ -1018,6 +1019,11 @@ const router = new VueRouter(
                                         path: '',
                                         name: 'DispatcherDashboard_preInspections_index',
                                         component: DispatcherDashboard_preInspections_index,
+                                    },
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DispatcherDashboard_preInspections_showSlip',
+                                        component: DispatcherDashboard_preInspections_showSlip,
                                     },
                                 ]
                         },

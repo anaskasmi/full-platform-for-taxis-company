@@ -429,6 +429,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         Route::get('preInspectionSlip/{id}', 'PreInspectionsController@getSlipById')->name('PreInspectionsController.getSlipById');
         Route::delete('preInspectionSlip/{id}', 'PreInspectionsController@deleteSlip')->name('PreInspectionsController.deleteSlipe');
         //Route::put('preInspectionSlip/{id}', 'PreInspectionsController@editSlip')->name('PreInspectionsController.editSlip');
+        Route::get('vehiclesWithNames', 'VehiclesController@vehiclesWithNames')->name('vehicles.vehiclesWithNames');
 
     });
 

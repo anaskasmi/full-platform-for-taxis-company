@@ -9,10 +9,27 @@ use App\RotationsCategory;
 use App\Vehicle;
 use Illuminate\Http\Request;
 use Response;
-
+use Illuminate\Support\Facades\DB;
 
 class VehiclesController extends Controller
 {
+    //list all the vehicles with names
+    public function vehiclesWithNames()
+    {
+
+        //get vehicles
+        $vehicles = Vehicle::
+        select(
+            DB::raw("CONCAT(type, ' ', number)   as name"),
+            'id',
+            'number',
+            'type'
+
+        )
+            ->orderBy('number', 'desc')
+            ->get();
+        return $vehicles;
+    }
     //list all the vehicles
     public function vehicles()
     {

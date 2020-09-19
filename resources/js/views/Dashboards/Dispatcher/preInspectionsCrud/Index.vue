@@ -69,7 +69,7 @@
     import NavbarAdmin from "@/js/components/navbars/Dispatcher.vue";
     import Drawer from "@/js/components/drawers/Dispatcher.vue";
     import filesByVehicle from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByVehicle.vue";
-    import filesByDriver from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByDriver.vue";
+    import filesByDriver from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/listDrivers.vue";
     import allFiles from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/allFiles.vue";
 
     export default {
