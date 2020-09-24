@@ -69,6 +69,8 @@
                 last_page: 1,
             };
         },
+        props: ['badgeId'],
+
         methods: {
             BASE_URL() {
                 return this.$store.state.BASE_URL;
@@ -92,7 +94,7 @@
 
             fetchSlips(page) {
                 this.isLoading = true;
-                let url = this.BASE_URL() + "/api/dispatcher/preInspectionsSlips";
+                let url = this.BASE_URL() + "/api/dispatcher/slipsByDriver/"+this.badgeId;
                 let vm = this;
 
                 if (page) {

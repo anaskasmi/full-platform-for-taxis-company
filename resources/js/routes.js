@@ -169,6 +169,7 @@ import DispatcherDashboard_vehicleHistory from '@/js/views/Dashboards/Dispatcher
 // PreInspections
 import DispatcherDashboard_preInspections_index from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/Index.vue'
 import DispatcherDashboard_preInspections_showSlip from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/showFile.vue'
+import DispatcherDashboard_preInspections_showDriversFiles from '@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByDriver.vue'
 
 
 import {store} from './store/store';
@@ -1024,6 +1025,11 @@ const router = new VueRouter(
                                         path: 'show/:id',
                                         name: 'DispatcherDashboard_preInspections_showSlip',
                                         component: DispatcherDashboard_preInspections_showSlip,
+                                    },
+                                    {
+                                        path: 'show/driver/:id',
+                                        name: 'DispatcherDashboard_preInspections_showDriversFiles',
+                                        component: DispatcherDashboard_preInspections_showDriversFiles,
                                     },
                                 ]
                         },

@@ -1,66 +1,98 @@
 <template>
     <div class="ma-0 pa-0">
-        <div class="pa-0 ma-0 " v-if="$mq=='desktop'">
 
-            <div >
-
+        <div v-if="driverWasPicked">
+            <v-btn block outlined color="blue" class="my-6" @click="backToDriverList()">
+                Back
+            </v-btn>
+            <FilesByDriver :badgeId="pickedDriverId"/>
+        </div>
+        <div v-else>
+            <div>
                 <!--Start Content-->
                 <div>
-
                     <!-- progress -->
                     <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
                     <!--End Progress-->
                     <!-- table -->
-                    <div class="table-responsive shadow-sm pa-4" v-if="!isLoading">
+                    <div class="table-responsive " v-if="!isLoading">
+                        <div class="row ">
+                            <div class="sentence mx-auto pb-4">Pick a Driver</div>
+                        </div>
+                        <!-- search start -->
+                        <div class="row">
+                            <div class="col-md-12 md-form active-cyan-2 mb-3">
+                                <form @submit.prevent="search(searchValue)">
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <button id="button-addon7" type="submit" class="btn btn-dark">
+                                                <!-- <i class="fa fa-search"></i> -->
+                                                <v-icon dark small>search</v-icon>
+                                            </button>
+                                        </div>
+                                        <input
+                                            type="search"
+                                            name="searchValue"
+                                            v-model="searchValue"
+                                            placeholder="Search by name or badge ID"
+                                            aria-describedby="button-addon7"
+                                            class="form-control"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- search end -->
+                        <br>
+                        <br>
+
                         <table class="table table-hover table-striped" style="table-layout:fixed">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" @click="sort('driver')" style="cursor:ns-resize	">Driver</th>
+                                <th scope="col" style="cursor:ns-resize	">Driver</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" @click="sort('vehicle')" style="cursor:ns-resize	">Badge ID</th>
+                                <th scope="col" style="cursor:ns-resize	">Badge ID</th>
                                 <th></th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            <tr v-for="(rotation,i) in sortedRows" :key="i">
+                            <tr v-for="(driver,i) in drivers" :key="i">
                                 <td>
                                     <img
-                                        v-if="rotation.driverImageUrl"
-                                        :src="BASE_URL()+'/storage/'+rotation.driverImageUrl"
-                                        :alt="rotation.driver"
+                                        v-if="driver.image"
+                                        :src="BASE_URL()+'/storage/'+driver.image"
+                                        :alt="driver.driver"
                                         class="w-25"
                                         style="cursor:pointer; "
-                                        @click="showDriver(rotation.badge_id)"
                                     />
                                     <img
                                         v-else
                                         :src="BASE_URL()+'/storage/uploads/IMAGES/man.png'"
-                                        :alt="rotation.driver"
+                                        :alt="driver.driver"
                                         class="w-25"
                                         style="cursor:pointer;"
-                                        @click="showDriver(rotation.badge_id)"
                                     />
                                 </td>
 
                                 <td
-                                    colspan="2"
-                                    class="align-middle"
-                                    @click="showDriver(rotation.badge_id)"
-                                    style="cursor:pointer; color:#1e3799;"
+                                    class="text-uppercase align-middle font-weight-medium"
+                                    style="cursor:pointer;"
                                 >
-                                    {{rotation.driver}}
+                                    {{driver.FirstName}} {{driver.LastName}}
                                 </td>
-                                <td class="text-uppercase align-middle" style="color:#01a3a4"></td>
+                                <td class="text-uppercase align-middle font-weight-medium"> {{driver.PermitNumber}}</td>
+                                <td class="align-middle" @click="showFilesOfDriver(driver.PermitNumber)">
+                                    <v-btn large outlined rounded color="success" class="float-right">
+                                        OPEN
+                                    </v-btn>
+                                </td>
 
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-center mt-6">
-                        <v-pagination :total-visible="5" v-model="current_page" :length="last_page"
-                                      @input="next"></v-pagination>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -71,19 +103,21 @@
 <script>
     import NavbarDispatcher from "@/js/components/navbars/Dispatcher.vue";
     import Drawer from "@/js/components/drawers/Dispatcher.vue";
+    import FilesByDriver from "@/js/views/Dashboards/Dispatcher/preInspectionsCrud/filesByDriver.vue";
 
     export default {
         beforeMount() {
-            this.fetchItems();
+            this.fetchDrivers();
 
         },
         components: {
             NavbarDispatcher,
-            Drawer
+            Drawer,
+            FilesByDriver
         },
         computed: {
             sortedRows: function () {
-                return this.rotations
+                return this.drivers
                     .sort((a, b) => {
                         let modifier = 1;
                         if (this.currentSortDir === "desc") modifier = -1;
@@ -95,37 +129,17 @@
         },
         data() {
             return {
-                current_page: 1,
-                last_page: 1,
-                pageSize: 0,
-                cities: [],
-                vehicles: [],
-                rotationsCategories: [],
-                rotations: [],
-                noCityfound: false,
-                addDialogIsOpen: false,
-                editDialogIsOpen: false,
-                editedId: "",
-                addForm: {},
-                editForm: {},
-                cityName_editForm: "",
-                cityMarks_editForm: "",
+                drivers: {},
                 isLoading: true,
-                disableAddButton: false,
-                disableEditButton: false,
-                rotationsManagerRoute: {name: "DispatcherDashboard_rotationsManager"},
-                menu: false,
                 currentSortDir: "",
-                currentRotationCategory: null,
                 //search inputs
                 showSearchOption: false,
-                searchByDate: null,
                 searchByJobId: null,
                 searchByBadgeId: null,
-                searchByVehicleNumber: null,
-                searchQuery: null,
-                searchQueryArray: new Map(),
-                rotationsTotalNumber: 0,
+                //search
+                searchValue: "",
+                pickedDriverId: "",
+                driverWasPicked: false,
             };
         },
         methods: {
@@ -138,9 +152,7 @@
                 this.current_page = meta.current_page;
                 this.pageSize = meta.pageSize;
             },
-            next(page) {
-                this.fetchRotations(page);
-            },
+
             sort: function (s) {
                 //if s == current sort, reverse
                 if (s === this.currentSort) {
@@ -148,78 +160,11 @@
                 }
                 this.currentSort = s;
             },
-            compare(a, b) {
-                if (parseInt(a.number, 10) < parseInt(b.number, 10)) {
-                    return -1;
-                }
-                if (parseInt(a.number, 10) > parseInt(b.number, 10)) {
-                    return 1;
-                }
-                return 0;
-            },
-            fetchVehicles() {
-                let url = this.BASE_URL() + "/api/dispatcher/vehicles";
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
 
-                axios
-                    .get(url)
-                    .then(res => {
-                        this.vehicles = res.data;
-                        this.vehicles.sort(this.compare);
-                        this.vehicles.forEach(vehicle => {
-                            vehicle.name = vehicle.type + " " + vehicle.number;
-                        });
-                    })
-                    .catch(error => {
-                        this.$swal(
-                            "Error in fetching Vehicles",
-                            error.response.data.errors,
-                            "warning"
-                        );
-                    });
-            },
-            fetchCities() {
-                let url = this.BASE_URL() + "/api/dispatcher/cities";
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
-                axios
-                    .get(url)
-                    .then(res => {
-                        this.cities = res.data.data;
-                    })
-                    .catch(error => {
-                        this.$swal(
-                            "Error in fetching Cities",
-                            error.response.data.errors,
-                            "warning"
-                        );
-                    });
-            },
-            fetchRotationsCategories() {
-                let url = this.BASE_URL() + "/api/dispatcher/rotationsCategories";
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
-                axios
-                    .get(url)
-                    .then(res => {
-                        this.rotationsCategories = res.data.data;
-                    })
-                    .catch(error => {
-                        this.$swal("Try again", error.response.data.errors, "warning");
-                    });
-            },
-            fetchRotations(page) {
+            fetchDrivers() {
 
                 this.isLoading = true;
-                let vm = this;
-                let url = this.BASE_URL() + "/api/dispatcher/rotations?";
-                if (this.searchQuery) {
-                    url = url + this.searchQuery;
-                }
-                if (page) {
-                    url = url + "&page=" + page;
-                }
+                let url = this.BASE_URL() + "/api/dispatcher/drivers";
 
 
                 axios.defaults.headers.common["Authorization"] =
@@ -228,198 +173,65 @@
                     .get(url)
                     .then(res => {
                         res = res.data;
-                        this.rotations = res.data;
-                        if (this.rotations.length == 0) {
+                        this.drivers = res.data;
+                        if (this.drivers.length == 0) {
                             // this.searchQuery = null;
-                            this.$swal("No Rotations Found!", "", "warning");
+                            this.$swal("No Drivers Found!", "", "warning");
                             this.isLoading = false;
-                            this.rotationsTotalNumber = 0;
                             return
                         }
-                        let meta = {};
-                        meta.current_page = res.current_page
-                        meta.last_page = res.last_page;
-                        meta.pageSize = res.per_page;
-                        this.rotationsTotalNumber = res.total;
-                        vm.makePagination(meta)
+
                         this.isLoading = false;
                     })
                     .catch(error => {
                         this.isLoading = false;
-                        this.searchQuery = null;
                         console.log("error: " + error);
                         this.$swal("Something went wrong! ", "try again ", "warning");
                     });
             },
+            search(searchValue) {
 
-            fetchItems() {
-                this.fetchVehicles();
-                this.fetchCities();
-                this.fetchRotationsCategories();
-                this.fetchRotations();
-            },
-            search(searchValue, type) {
-                if (searchValue == null) {
-                    searchValue = "";
-                    this.searchQueryArray.delete(type);
-                    this.searchQuery = null;
-                    for (let [key, value] of this.searchQueryArray) {
-                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
-                    }
-                } else {
-                    this.searchQueryArray.delete(type);
-                    this.searchQueryArray.set(type, searchValue);
-                    this.searchQuery = null;
-                    for (let [key, value] of this.searchQueryArray) {
-                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
-                    }
+                if (searchValue == "") {
+                    this.fetchDrivers();
+                    return;
                 }
-                this.fetchRotations();
-                return;
 
-            },
-            clearSearchFields() {
-                this.searchByDate = null;
-                this.searchByJobId = null;
-                this.searchByBadgeId = null;
-                this.searchByVehicleNumber = null;
-                this.searchQueryArray.delete("searchByDate");
-                this.searchQueryArray.delete("searchByJobId");
-                this.searchQueryArray.delete("searchByBadgeId");
-                this.searchQueryArray.delete("searchByVehicleNumber");
-                this.searchQuery = null;
-                for (let [key, value] of this.searchQueryArray) {
-                    this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
-                }
-                this.fetchRotations();
-            },
-            openAddDialog() {
-                this.addDialogIsOpen = true;
-            },
-            closeAddDialog() {
-                this.addDialogIsOpen = false;
-                Object.keys(this.addForm).forEach(key => (this.addForm[key] = null));
-            },
-            openEditDialog(rotation) {
-                this.editForm = Object.assign({}, rotation);
-                this.editForm.city_id = parseInt(this.editForm.city_id, 10);
-                this.editDialogIsOpen = true;
-            },
-            closeEditDialog() {
-                this.editDialogIsOpen = false;
-            },
-            addRotation() {
-                this.disableAddButton = true;
-                let url = this.BASE_URL() + "/api/dispatcher/rotation";
+                this.isLoading = true;
+                let url = this.BASE_URL() + "/api/dispatcher/drivers/search";
+
+
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + this.$store.state.token_dispatcher;
                 axios
-                    .post(url, this.addForm)
+                    .get(
+                        this.BASE_URL() + "/api/dispatcher/drivers/search?searchValue=" +
+                        searchValue
+                    )
                     .then(res => {
-                        this.$swal({
-                            title: "Success",
-                            text: "Rotation added successfully!",
-                            type: "success",
-                            timer: 2000
-                        });
-                        this.fetchItems();
-                        this.closeAddDialog();
-                        this.disableAddButton = false;
+                        res = res.data;
+                        this.drivers = res.data;
+                        if (this.drivers.length == 0) {
+                            // this.searchQuery = null;
+                            this.$swal("No Drivers Found!", "", "warning");
+                            this.isLoading = false;
+                            return
+                        }
 
+                        this.isLoading = false;
                     })
                     .catch(error => {
-                        this.pageIsLoading = false;
-                        let output = "<br><br>";
-                        for (let property in error.response.data.errors) {
-                            output +=
-                                '<p align="left">' +
-                                "*" +
-                                error.response.data.errors[property] +
-                                "</p>";
-                        }
-
-                        this.$swal(error.response.data.message, output, "warning");
-                        this.disableAddButton = false;
-
+                        this.isLoading = false;
+                        console.log("error: " + error);
+                        this.$swal("Something went wrong! ", "try again ", "warning");
                     });
             },
-            editRotation() {
-                this.disableEditButton = true;
-                let url =
-                    this.BASE_URL() + "/api/dispatcher/rotation/" + this.editForm.id;
-
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + this.$store.state.token_dispatcher;
-                this.editForm._method = "put";
-                axios
-                    .post(url, this.editForm)
-                    .then(res => {
-                        this.$swal({
-                            title: "Success",
-                            text: "Rotation Updated successfully!",
-                            type: "success",
-                            timer: 2000
-                        });
-                        this.fetchItems();
-                        this.closeEditDialog();
-                        this.buttonLoading = false;
-                        this.disableEditButton = false;
-
-                    })
-                    .catch(error => {
-                        let output = "<br><br>";
-                        for (let property in error.response.data.errors) {
-                            output +=
-                                '<p align="left">' +
-                                "*" +
-                                error.response.data.errors[property] +
-                                "</p>";
-                        }
-
-                        this.$swal(error.response.data.message, output, "warning");
-                        this.disableEditButton = false;
-
-                    });
+            showFilesOfDriver: function (badge_id) {
+                this.driverWasPicked = true;
+                this.pickedDriverId = badge_id;
             },
-            deleteRotation(rotation) {
-                this.$swal
-                    .fire({
-                        text: "Are You Sure You Want To Delete This Rotation?",
-                        type: "question",
-                        animation: true,
-                        focusConfirm: false,
-                        padding: "2rem",
-                        showCancelButton: true,
-                        confirmButtonText: "Yes"
-                    })
-                    .then(res => {
-                        if (res.value) {
-                            let url =
-                                this.BASE_URL() + "/api/dispatcher/rotation/" + rotation.id;
-                            axios.defaults.headers.common["Authorization"] =
-                                "Bearer " + this.$store.state.token_dispatcher;
-                            axios
-                                .delete(url)
-                                .then(res => {
-                                    this.fetchItems();
-                                    this.$swal({
-                                        title: "Success",
-                                        text: "Rotation Deleted successfully!",
-                                        type: "success",
-                                        timer: 2000
-                                    });
-                                })
-                                .catch(error => {
-                                    this.$swal("Try again", error.response.data.errors, "warning");
-                                });
-                        }
-                    });
-            },
-            showDriver: function (badge_id) {
-                this.$router.push({
-                    name: "DispatcherDashboard_drivers_show",
-                    params: {id: badge_id}
-                });
+            backToDriverList: function () {
+                this.driverWasPicked = false;
+                this.pickedDriverId = "";
             }
         }
     };
