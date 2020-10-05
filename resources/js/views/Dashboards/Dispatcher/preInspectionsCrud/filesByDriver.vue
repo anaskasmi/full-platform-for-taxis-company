@@ -13,7 +13,7 @@
                     <th scope="col">Driver Name</th>
                     <th scope="col">Date</th>
                     <th scope="col">Vehicle</th>
-                    <th scope="col">shiftType</th>
+                    <th scope="col">Shift Type</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -120,7 +120,11 @@
 
                     });
             },
-
+            downloadSlip(id){
+                let url = this.BASE_URL() + `/api/dispatcher/preInspection/${id}/download`;
+                let win = window.open(url, '_blank');
+                win.focus();
+            },
             deleteSlip(id) {
                 let url = this.BASE_URL() + "/api/dispatcher/preInspectionSlip/" + id;
                 this.$swal

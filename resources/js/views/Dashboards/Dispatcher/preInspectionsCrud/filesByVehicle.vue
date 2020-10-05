@@ -43,18 +43,22 @@
                         <v-icon
                             color="success"
                             class="ma-2"
+                            @click="downloadSlip(slip.id)"
+                        >
+                            mdi-download-outline
+                        </v-icon>
+                        <v-icon
+                            color="success"
+                            class="ma-2"
                             @click="editSlip(slip.id)"
                             v-if="slip.ownerBadgeId == ownerBadgeId"
                         >
                             edit
                         </v-icon>
-
                         <v-icon
                             color="red lighten-1"
                             class="ma-2"
                             @click="deleteSlip(slip.id)"
-                            v-if="slip.ownerBadgeId == ownerBadgeId"
-
                         >delete
                         </v-icon>
                         <v-icon color="info" class="ma-2" @click="openSlip(slip.id)">description
@@ -136,7 +140,11 @@
                     params: {id: id}
                 });
             },
-
+            downloadSlip(id){
+                let url = this.BASE_URL() + `/api/dispatcher/preInspection/${id}/download`;
+                let win = window.open(url, '_blank');
+                win.focus();
+            },
             fetchSlips(page) {
                 this.isLoading = true;
                 let url = this.BASE_URL() + "/api/dispatcher/slipsByVehicle/"+this.currentVehicle.id;

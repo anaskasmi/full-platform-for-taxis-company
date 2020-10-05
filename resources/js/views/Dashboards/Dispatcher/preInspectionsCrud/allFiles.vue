@@ -89,7 +89,11 @@
                     params: {id: id}
                 });
             },
-
+            downloadSlip(id){
+                let url = this.BASE_URL() + `/api/dispatcher/preInspection/${id}/download`;
+                let win = window.open(url, '_blank');
+                win.focus();
+            },
             fetchSlips(page) {
                 this.isLoading = true;
                 let url = this.BASE_URL() + "/api/dispatcher/preInspectionsSlips";

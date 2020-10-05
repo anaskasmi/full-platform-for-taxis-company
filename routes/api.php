@@ -62,6 +62,11 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('generatePDFs/{batch_id}', 'AccountSlipsController@generatePDFs')->name('Envelopes.generatePDFs');
     });
 });
+Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->group(function () {
+    //pre_inspection_downloads
+    Route::get('preInspection/{id}/download', 'PreInspectionsController@downloadPreInspectioSlip')->name('PreInspectionsController.downloadPreInspectioSlip');
+
+});
 
 //admin routes
 Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
@@ -69,7 +74,6 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::post('auth/login', 'AuthController@login');
     //reports download links
     //daily log sheet
-
     Route::get('reports/DailyLogSheet/{badgeId}/printPDF/{date}', 'DailyLogSheetController@printPDF')->name('reports.DailyLogSheet.printPDF');
     Route::get('reports/currentMonth/{badgeId}/printPDF', 'DailyLogSheetController@currentMonth_pdf')->name('reports.currentMonth.printPDF');
     Route::get('reports/pastMonth/{badgeId}/printPDF', 'DailyLogSheetController@pastMonth_pdf')->name('reports.pastMonth.printPDF');
@@ -79,7 +83,8 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::get('reports/WeeklyTaxiShifts/printPDF/{date}', 'WeeklyTaxiShiftsController@printPDF')->name('reports.WeeklyTaxiShifts.printPDF');
     //WeeklyDriverHours
     Route::get('reports/WeeklyDriverHours/printPDF/{date}', 'WeeklyDriverHoursController@printPDF')->name('reports.WeeklyDriverHours.printPDF');
-    //test
+
+
 
     Route::group(['middleware' => 'apiAuth:admin'], function () {
 

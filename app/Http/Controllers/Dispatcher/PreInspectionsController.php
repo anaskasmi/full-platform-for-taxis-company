@@ -9,7 +9,7 @@ use App\PreInspection;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-
+use PDF;
 class PreInspectionsController extends Controller
 {
 
@@ -19,7 +19,7 @@ class PreInspectionsController extends Controller
     {
 
         $slips = PreInspection::
-            withAll()
+        withAll()
             ->orderBy('pre_inspection_slips.date')
             ->paginate(20)
             ->appends(request()->query());
@@ -228,5 +228,44 @@ class PreInspectionsController extends Controller
         }
     }
 
+
+    // current Month pdf
+    public function downloadPreInspectioSlip($id, Request $request)
+    {
+        ini_set('memory_limit', '-1');
+        //validate if the id is a number
+        if (!is_numeric($id)) {
+            return Response::json(array(
+                'code' => 400,
+                'message' => "wrong id! "
+            ), 400);
+        }
+
+        $slip = PreInspection::
+        whereId($id)
+            ->withAll()
+            ->first();
+
+
+        if (!$slip) {
+            return Response::json(array(
+                'code' => 404,
+                'message' => "Not Found! "
+            ), 404);
+        }
+        //hide vehicle password
+        unset($slip["vehicle"]["password"]);
+        //prepare full name
+        $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
+
+
+        $pdf = PDF::loadView('dispatcher.pre_inspection_slips', compact('slip'))->setPaper('a4', 'landscape');
+        $date = $slip['date'];
+        $name = $slip["vehicle"]["vehicleName"];
+        $name_pdf = $name . '-' . $date . '.pdf';
+        return $pdf->stream($name_pdf, array('Attachment' => 0));
+
+
+    }
 
 }

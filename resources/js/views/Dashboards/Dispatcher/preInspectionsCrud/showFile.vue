@@ -61,7 +61,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">Affected Corrected</td>
-                            <td v-if="slip.aboveAffectedCorrected=='true'"
+                            <td v-if="slip.aboveAffectedCorrected=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.aboveAffectedCorrected}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -106,7 +106,7 @@
                         </tr>
                         <tr>
                             <td class="text-uppercase font-weight-bold">glass And Mirrors</td>
-                            <td v-if="slip.glassAndMirrors=='true'"
+                            <td v-if="slip.glassAndMirrors=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.glassAndMirrors}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.glassAndMirrors}}
@@ -115,7 +115,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">heater Defroster</td>
-                            <td v-if="slip.heaterDefroster=='true'"
+                            <td v-if="slip.heaterDefroster=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.heaterDefroster}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.heaterDefroster}}
@@ -124,7 +124,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">horn</td>
-                            <td v-if="slip.horn=='true'" class="text-uppercase font-weight-bold table-success">
+                            <td v-if="slip.horn=='yes'" class="text-uppercase font-weight-bold table-success">
                                 {{slip.horn}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.horn}}</td>
@@ -132,7 +132,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">hydraulic Brake System</td>
-                            <td v-if="slip.hydraulicBrakeSystem=='true'"
+                            <td v-if="slip.hydraulicBrakeSystem=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.hydraulicBrakeSystem}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -142,7 +142,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">interior Exterior</td>
-                            <td v-if="slip.interiorExterior=='true'"
+                            <td v-if="slip.interiorExterior=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.interiorExterior}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.interiorExterior}}
@@ -151,7 +151,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">lampsAndIndicators</td>
-                            <td v-if="slip.lampsAndIndicators=='true'"
+                            <td v-if="slip.lampsAndIndicators=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.lampsAndIndicators}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -162,14 +162,14 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">steering Tires</td>
-                            <td v-if="slip.steeringTires=='true'" class="text-uppercase font-weight-bold table-success">
+                            <td v-if="slip.steeringTires=='yes'" class="text-uppercase font-weight-bold table-success">
                                 {{slip.steeringTires}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.steeringTires}}</td>
                         </tr>
                         <tr>
                             <td class="text-uppercase font-weight-bold">turn Jake</td>
-                            <td v-if="slip.turnJake=='true'" class="text-uppercase font-weight-bold table-success">
+                            <td v-if="slip.turnJake=='yes'" class="text-uppercase font-weight-bold table-success">
                                 {{slip.turnJake}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.turnJake}}</td>
@@ -177,7 +177,7 @@
 
                         <tr>
                             <td class="text-uppercase font-weight-bold">wheel Chair Lift And Emergency Equipment</td>
-                            <td v-if="slip.wheelChairLiftAndEmergencyEquipment=='true'"
+                            <td v-if="slip.wheelChairLiftAndEmergencyEquipment=='yes'"
                                 class="text-uppercase font-weight-bold table-success">
                                 {{slip.wheelChairLiftAndEmergencyEquipment}}
                             </td>
@@ -187,7 +187,7 @@
                         </tr>
                         <tr>
                             <td class="text-uppercase font-weight-bold">wheels And Hubs And Fastners</td>
-                            <td v-if="slip.wheelsAndHubsAndFastners=='true'"
+                            <td v-if="slip.wheelsAndHubsAndFastners=='yes'"
                                 class="text-uppercase font-weight-bold table-success">{{slip.wheelsAndHubsAndFastners}}
                             </td>
                             <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -196,7 +196,7 @@
                         </tr>
                         <tr>
                             <td class="text-uppercase font-weight-bold">wind Shield Wipers And Washers</td>
-                            <td v-if="slip.windShieldWipersAndWashers=='true'"
+                            <td v-if="slip.windShieldWipersAndWashers=='yes'"
                                 class="text-uppercase font-weight-bold table-success">
                                 {{slip.windShieldWipersAndWashers}}
                             </td>
@@ -211,7 +211,7 @@
                             </td>
                         </tr>
                         <tr style="font-size: 1.4em">
-                            <td colspan="2" v-if="slip.safeToDrive=='true'"
+                            <td colspan="2" v-if="slip.safeToDrive=='yes'"
                                 class="text-uppercase font-weight-bold table-success text-center">{{slip.safeToDrive}}
                             </td>
                             <td colspan="2" v-else class="text-uppercase font-weight-bold  table-danger text-center">
@@ -294,7 +294,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">Affected Corrected</td>
-                                <td v-if="slip.aboveAffectedCorrected=='true'"
+                                <td v-if="slip.aboveAffectedCorrected=='yes'"
                                     class="text-uppercase font-weight-bold table-success">
                                     {{slip.aboveAffectedCorrected}}
                                 </td>
@@ -340,7 +340,7 @@
                             </tr>
                             <tr>
                                 <td class="text-uppercase font-weight-bold">glass And Mirrors</td>
-                                <td v-if="slip.glassAndMirrors=='true'"
+                                <td v-if="slip.glassAndMirrors=='yes'"
                                     class="text-uppercase font-weight-bold table-success">{{slip.glassAndMirrors}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -350,7 +350,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">heater Defroster</td>
-                                <td v-if="slip.heaterDefroster=='true'"
+                                <td v-if="slip.heaterDefroster=='yes'"
                                     class="text-uppercase font-weight-bold table-success">{{slip.heaterDefroster}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -360,7 +360,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">horn</td>
-                                <td v-if="slip.horn=='true'" class="text-uppercase font-weight-bold table-success">
+                                <td v-if="slip.horn=='yes'" class="text-uppercase font-weight-bold table-success">
                                     {{slip.horn}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.horn}}</td>
@@ -368,7 +368,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">hydraulic Brake System</td>
-                                <td v-if="slip.hydraulicBrakeSystem=='true'"
+                                <td v-if="slip.hydraulicBrakeSystem=='yes'"
                                     class="text-uppercase font-weight-bold table-success">{{slip.hydraulicBrakeSystem}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -378,7 +378,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">interior Exterior</td>
-                                <td v-if="slip.interiorExterior=='true'"
+                                <td v-if="slip.interiorExterior=='yes'"
                                     class="text-uppercase font-weight-bold table-success">{{slip.interiorExterior}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -388,7 +388,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">lampsAndIndicators</td>
-                                <td v-if="slip.lampsAndIndicators=='true'"
+                                <td v-if="slip.lampsAndIndicators=='yes'"
                                     class="text-uppercase font-weight-bold table-success">{{slip.lampsAndIndicators}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">
@@ -399,7 +399,7 @@
 
                             <tr>
                                 <td class="text-uppercase font-weight-bold">steering Tires</td>
-                                <td v-if="slip.steeringTires=='true'"
+                                <td v-if="slip.steeringTires=='yes'"
                                     class="text-uppercase font-weight-bold table-success">
                                     {{slip.steeringTires}}
                                 </td>
@@ -409,7 +409,7 @@
                             </tr>
                             <tr>
                                 <td class="text-uppercase font-weight-bold">turn Jake</td>
-                                <td v-if="slip.turnJake=='true'" class="text-uppercase font-weight-bold table-success">
+                                <td v-if="slip.turnJake=='yes'" class="text-uppercase font-weight-bold table-success">
                                     {{slip.turnJake}}
                                 </td>
                                 <td v-else class="text-uppercase font-weight-bold table-warning">{{slip.turnJake}}</td>
@@ -418,7 +418,7 @@
                             <tr>
                                 <td class="text-uppercase font-weight-bold">wheel Chair Lift And Emergency Equipment
                                 </td>
-                                <td v-if="slip.wheelChairLiftAndEmergencyEquipment=='true'"
+                                <td v-if="slip.wheelChairLiftAndEmergencyEquipment=='yes'"
                                     class="text-uppercase font-weight-bold table-success">
                                     {{slip.wheelChairLiftAndEmergencyEquipment}}
                                 </td>
@@ -428,7 +428,7 @@
                             </tr>
                             <tr>
                                 <td class="text-uppercase font-weight-bold">wheels And Hubs And Fastners</td>
-                                <td v-if="slip.wheelsAndHubsAndFastners=='true'"
+                                <td v-if="slip.wheelsAndHubsAndFastners=='yes'"
                                     class="text-uppercase font-weight-bold table-success">
                                     {{slip.wheelsAndHubsAndFastners}}
                                 </td>
@@ -438,7 +438,7 @@
                             </tr>
                             <tr>
                                 <td class="text-uppercase font-weight-bold">wind Shield Wipers And Washers</td>
-                                <td v-if="slip.windShieldWipersAndWashers=='true'"
+                                <td v-if="slip.windShieldWipersAndWashers=='yes'"
                                     class="text-uppercase font-weight-bold table-success">
                                     {{slip.windShieldWipersAndWashers}}
                                 </td>
@@ -453,7 +453,7 @@
                                 </td>
                             </tr>
                             <tr style="font-size: 1.4em">
-                                <td colspan="2" v-if="slip.safeToDrive=='true'"
+                                <td colspan="2" v-if="slip.safeToDrive=='yes'"
                                     class="text-uppercase font-weight-bold table-success text-center">
                                     {{slip.safeToDrive}}
                                 </td>

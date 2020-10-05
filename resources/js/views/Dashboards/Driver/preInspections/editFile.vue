@@ -192,7 +192,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="Interior_exterior_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.interiorExterior">
                                                     <label class="form-check-label" for="Interior_exterior_true_id">
                                                         True
@@ -202,7 +202,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="Interior_exterior_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.interiorExterior">
                                                     <label class="form-check-label" for="Interior_exterior_false_id">
                                                         False
@@ -223,7 +223,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="lamp_indicator_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.lampsAndIndicators">
                                                     <label class="form-check-label" for="lamp_indicator_true_id">
                                                         True
@@ -233,7 +233,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="lamp_indicator_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.lampsAndIndicators">
                                                     <label class="form-check-label" for="lamp_indicator_false_id">
                                                         False
@@ -254,7 +254,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="steering_tires_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.steeringTires">
                                                     <label class="form-check-label" for="steering_tires_true_id">
                                                         True
@@ -264,7 +264,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="steering_tires_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.steeringTires">
                                                     <label class="form-check-label" for="steering_tires_false_id">
                                                         False
@@ -284,7 +284,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="wheel_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.wheelsAndHubsAndFastners">
                                                     <label class="form-check-label" for="wheel_true_id">
                                                         True
@@ -293,7 +293,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="wheel_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.wheelsAndHubsAndFastners">
                                                     <label class="form-check-label" for="wheel_false_id">
                                                         False
@@ -313,7 +313,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="glass_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.glassAndMirrors">
                                                     <label class="form-check-label" for="glass_true_id">
                                                         True
@@ -322,7 +322,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="glass_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.glassAndMirrors">
                                                     <label class="form-check-label" for="glass_false_id">
                                                         False
@@ -343,7 +343,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="brake_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.hydraulicBrakeSystem">
                                                     <label class="form-check-label" for="brake_true_id">
                                                         True
@@ -352,7 +352,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="brake_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.hydraulicBrakeSystem">
                                                     <label class="form-check-label" for="brake_false_id">
                                                         False
@@ -373,7 +373,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="heater_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.heaterDefroster">
                                                     <label class="form-check-label" for="heater_true_id">
                                                         True
@@ -382,7 +382,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="heater_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.heaterDefroster">
                                                     <label class="form-check-label" for="heater_false_id">
                                                         False
@@ -405,7 +405,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="windShield_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.windShieldWipersAndWashers">
                                                     <label class="form-check-label" for="windShield_true_id">
                                                         True
@@ -415,7 +415,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="windShield_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.windShieldWipersAndWashers">
                                                     <label class="form-check-label" for="windShield_false_id">
                                                         False
@@ -436,7 +436,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="horn_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.horn">
                                                     <label class="form-check-label" for="horn_true_id">
                                                         True
@@ -445,7 +445,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="horn_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.horn">
                                                     <label class="form-check-label" for="horn_false_id">
                                                         False
@@ -467,7 +467,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="chairLift_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                                     <label class="form-check-label" for="chairLift_true_id">
                                                         True
@@ -477,7 +477,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="chairLift_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                                     <label class="form-check-label" for="chairLift_false_id">
                                                         False
@@ -498,7 +498,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="trunk_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.turnJake">
                                                     <label class="form-check-label" for="trunk_true_id">
                                                         True
@@ -507,7 +507,7 @@
                                                 <div class="form-check form-check-inline "
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio" id="trunk_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.turnJake">
                                                     <label class="form-check-label" for="trunk_false_id">
                                                         False
@@ -528,7 +528,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="safe_to_drive_true_id"
-                                                           value="true"
+                                                           value="yes"
                                                            v-model="slipData.safeToDrive">
                                                     <label class="form-check-label" for="safe_to_drive_true_id">
                                                         True
@@ -538,7 +538,7 @@
                                                      style="font-size: 1.3rem">
                                                     <input class="form-check-input" type="radio"
                                                            id="safe_to_drive_false_id"
-                                                           value="false"
+                                                           value="no"
                                                            v-model="slipData.safeToDrive">
                                                     <label class="form-check-label" for="safe_to_drive_false_id">
                                                         False
@@ -600,7 +600,7 @@
                                         <input class=" "
                                                v-model="slipData.aboveAffectedCorrected"
                                                type="radio" name="exampleRadios"
-                                               id="aboveAffectedCorrected" value="true">
+                                               id="aboveAffectedCorrected" value="yes">
                                         <label class="form-check-label text-uppercase text-primary "
                                                for="aboveAffectedCorrected">
                                             above Affected Corrected
@@ -609,7 +609,7 @@
                                     <div class=" font-weight-bold" style="font-size: 1.6em">
                                         <input class="" type="radio"
                                                v-model="slipData.aboveAffectedCorrected"
-                                               name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="false"
+                                               name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="no"
                                                checked>
                                         <label class="form-check-label text-uppercase text-secondary"
                                                for="aboveAffectedNeedsToBeCorrected">
@@ -847,7 +847,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="Interior_exterior_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.interiorExterior">
                                                         <label class="form-check-label" for="Interior_exterior_true_id">
                                                             True
@@ -857,7 +857,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="Interior_exterior_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.interiorExterior">
                                                         <label class="form-check-label" for="Interior_exterior_false_id">
                                                             False
@@ -878,7 +878,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="lamp_indicator_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.lampsAndIndicators">
                                                         <label class="form-check-label" for="lamp_indicator_true_id">
                                                             True
@@ -888,7 +888,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="lamp_indicator_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.lampsAndIndicators">
                                                         <label class="form-check-label" for="lamp_indicator_false_id">
                                                             False
@@ -909,7 +909,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="steering_tires_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.steeringTires">
                                                         <label class="form-check-label" for="steering_tires_true_id">
                                                             True
@@ -919,7 +919,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="steering_tires_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.steeringTires">
                                                         <label class="form-check-label" for="steering_tires_false_id">
                                                             False
@@ -939,7 +939,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="wheel_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.wheelsAndHubsAndFastners">
                                                         <label class="form-check-label" for="wheel_true_id">
                                                             True
@@ -948,7 +948,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="wheel_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.wheelsAndHubsAndFastners">
                                                         <label class="form-check-label" for="wheel_false_id">
                                                             False
@@ -968,7 +968,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="glass_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.glassAndMirrors">
                                                         <label class="form-check-label" for="glass_true_id">
                                                             True
@@ -977,7 +977,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="glass_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.glassAndMirrors">
                                                         <label class="form-check-label" for="glass_false_id">
                                                             False
@@ -998,7 +998,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="brake_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.hydraulicBrakeSystem">
                                                         <label class="form-check-label" for="brake_true_id">
                                                             True
@@ -1007,7 +1007,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="brake_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.hydraulicBrakeSystem">
                                                         <label class="form-check-label" for="brake_false_id">
                                                             False
@@ -1028,7 +1028,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="heater_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.heaterDefroster">
                                                         <label class="form-check-label" for="heater_true_id">
                                                             True
@@ -1037,7 +1037,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="heater_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.heaterDefroster">
                                                         <label class="form-check-label" for="heater_false_id">
                                                             False
@@ -1060,7 +1060,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="windShield_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.windShieldWipersAndWashers">
                                                         <label class="form-check-label" for="windShield_true_id">
                                                             True
@@ -1070,7 +1070,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="windShield_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.windShieldWipersAndWashers">
                                                         <label class="form-check-label" for="windShield_false_id">
                                                             False
@@ -1091,7 +1091,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="horn_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.horn">
                                                         <label class="form-check-label" for="horn_true_id">
                                                             True
@@ -1100,7 +1100,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="horn_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.horn">
                                                         <label class="form-check-label" for="horn_false_id">
                                                             False
@@ -1122,7 +1122,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="chairLift_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                                         <label class="form-check-label" for="chairLift_true_id">
                                                             True
@@ -1132,7 +1132,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="chairLift_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                                         <label class="form-check-label" for="chairLift_false_id">
                                                             False
@@ -1153,7 +1153,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="trunk_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.turnJake">
                                                         <label class="form-check-label" for="trunk_true_id">
                                                             True
@@ -1162,7 +1162,7 @@
                                                     <div class="form-check form-check-inline "
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio" id="trunk_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.turnJake">
                                                         <label class="form-check-label" for="trunk_false_id">
                                                             False
@@ -1183,7 +1183,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="safe_to_drive_true_id"
-                                                               value="true"
+                                                               value="yes"
                                                                v-model="slipData.safeToDrive">
                                                         <label class="form-check-label" for="safe_to_drive_true_id">
                                                             True
@@ -1193,7 +1193,7 @@
                                                          style="font-size: 1.3rem">
                                                         <input class="form-check-input" type="radio"
                                                                id="safe_to_drive_false_id"
-                                                               value="false"
+                                                               value="no"
                                                                v-model="slipData.safeToDrive">
                                                         <label class="form-check-label" for="safe_to_drive_false_id">
                                                             False
@@ -1255,7 +1255,7 @@
                                             <input class="align-middle form-check-input"
                                                    v-model="slipData.aboveAffectedCorrected"
                                                    type="radio" name="exampleRadios"
-                                                   id="aboveAffectedCorrected" value="true">
+                                                   id="aboveAffectedCorrected" value="yes">
                                             <label class="form-check-label text-uppercase text-primary ml-3 "
                                                    for="aboveAffectedCorrected">
                                                 above Affected Corrected
@@ -1264,7 +1264,7 @@
                                         <div  class=" form-check form-check-inline my-5 font-weight-bold"  >
                                             <input class="form-check-input" type="radio"
                                                    v-model="slipData.aboveAffectedCorrected"
-                                                   name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="false"
+                                                   name="exampleRadios" id="aboveAffectedNeedsToBeCorrected" value="no"
                                                    checked>
                                             <label class="form-check-label text-uppercase text-secondary ml-3"
                                                    for="aboveAffectedNeedsToBeCorrected">
