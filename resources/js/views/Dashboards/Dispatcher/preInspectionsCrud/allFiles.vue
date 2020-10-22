@@ -1,6 +1,183 @@
 <template>
         <div>
             <!-- progress -->
+
+            <!-- search start -->
+            <!-- {{-- collapse button --}} -->
+            <v-btn v-if="!showSearchOption"
+                   block outlined tile class="my-4" color="info"
+                   @click="showSearchOption = !showSearchOption">
+                <v-icon color="info darken-1" class="mx-3">arrow_drop_down</v-icon>
+                Show Search Panel
+            </v-btn>
+            <v-btn v-if="showSearchOption"
+                   block outlined tile class="my-4" color="info"
+                   @click="showSearchOption = !showSearchOption">
+                <v-icon color="info darken-1" class="mx-3">arrow_drop_up</v-icon>
+                Hide Search Panel
+            </v-btn>
+            <!-- {{-- end collapse button --}} -->
+
+            <transition mode="out-in">
+                <div class="shadow pa-4" v-if="showSearchOption ">
+                    <div class="row col-12 justify-content-around">
+                        <!-- {{-- search by Date --}} -->
+                        <div class=" col-6">
+                            <div class="card bg-light">
+                                <div class="card-header">Search by Date</div>
+                                <div class="card-body text-center">
+                                    <div class="input-group mb-4">
+                                        <input
+                                            type="date"
+                                            v-model="searchByDate"
+                                            max="3000-12-31"
+                                            min="1000-01-01"
+                                            class="form-control"
+                                        />
+                                        <!-- {{-- search button --}} -->
+                                        <div class="input-group-prepend">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-dark"
+                                                @click.prevent="search(searchByDate,'searchByDate')"
+                                            >
+                                                <v-icon dark small>search</v-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- {{-- end search by Date --}} -->
+
+                        <!-- {{-- search by Job ID --}} -->
+                        <div class="col-6">
+
+                            <div class="card bg-light">
+                                <div class="card-header">Search by Driver Name</div>
+                                <div class="card-body text-center">
+                                    <form>
+                                        <div class="input-group mb-4">
+                                            <!-- {{-- search box --}} -->
+                                            <input
+                                                v-model="searchByDriverName"
+                                                placeholder="Search by Driver Name"
+                                                aria-describedby="button-addon7"
+                                                class="form-control"
+                                            />
+
+                                            <!-- {{-- search button --}} -->
+                                            <div class="input-group-prepend">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-dark"
+                                                    @click.prevent="search(searchByDriverName,'searchByDriverName')"
+                                                >
+                                                    <v-icon dark small>search</v-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- {{-- end search by Job ID --}} -->
+                    </div>
+                    <!-- {{-- search by Badge ID --}} -->
+                    <div class="row col-12 justify-content-around">
+                        <div class="col-6">
+
+                            <div class="card bg-light">
+                                <div class="card-header">Search by Badge ID</div>
+                                <div class="card-body text-center">
+                                    <form>
+                                        <div class="input-group mb-4">
+                                            <!-- {{-- search box --}} -->
+                                            <input
+                                                type="number"
+                                                v-model="searchByBadgeId"
+                                                placeholder="Search by Badge ID"
+                                                aria-describedby="button-addon7"
+                                                class="form-control"
+                                            />
+
+                                            <!-- {{-- search button --}} -->
+                                            <div class="input-group-prepend">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-dark"
+                                                    @click.prevent="search(searchByBadgeId,'searchByBadgeId')"
+                                                >
+                                                    <v-icon dark small>search</v-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- {{-- end search by Badge Id --}} -->
+
+                        <!-- {{-- search by Vehicle Number--}} -->
+                        <div class="col-6">
+
+                            <div class="card bg-light">
+                                <div class="card-header">Search by Vehicle Number</div>
+                                <div class="card-body text-center">
+                                    <form>
+                                        <div class="input-group mb-4">
+                                            <!-- {{-- search box --}} -->
+                                            <input
+                                                type="number"
+                                                v-model="searchByVehicleNumber"
+                                                placeholder="Search by Vehicle Number"
+                                                aria-describedby="button-addon7"
+                                                class="form-control"
+                                            />
+
+                                            <!-- {{-- search button --}} -->
+                                            <div class="input-group-prepend">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-dark"
+                                                    @click.prevent="search(searchByVehicleNumber,'searchByVehicleNumber')"
+                                                >
+                                                    <v-icon dark small>search</v-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- {{-- end search by Vehicle Number --}} -->
+                        <!--Clear button-->
+                        <div class="row col-12">
+
+                            <v-btn
+
+                                outlined
+                                elevation="0"
+                                block
+                                color=""
+                                @click="clearSearchFields"
+                            >
+                                <v-icon dark left>restore</v-icon>
+                                Clear All
+                            </v-btn>
+                        </div>
+                        <!--end clear button-->
+                    </div>
+                </div>
+            </transition>
+            <br>
+            <!-- search end -->
+
+
+
+
+
             <v-progress-linear v-if="isLoading" indeterminate color="cyan"></v-progress-linear>
 
             <div v-if="!isLoading" class="table-responsive">
@@ -67,6 +244,14 @@
                 isLoading: false,
                 current_page: 1,
                 last_page: 1,
+                //search inputs
+                showSearchOption: false,
+                searchByDate: null,
+                searchByDriverName: null,
+                searchByBadgeId: null,
+                searchByVehicleNumber: null,
+                searchQuery: null,
+                searchQueryArray: new Map(),
             };
         },
         methods: {
@@ -94,13 +279,16 @@
                 let win = window.open(url, '_blank');
                 win.focus();
             },
+
             fetchSlips(page) {
                 this.isLoading = true;
-                let url = this.BASE_URL() + "/api/dispatcher/preInspectionsSlips";
+                let url = this.BASE_URL() + "/api/dispatcher/preInspectionsSlips?";
                 let vm = this;
-
+                if (this.searchQuery) {
+                    url = url + this.searchQuery;
+                }
                 if (page) {
-                    url = url + "?page=" + page;
+                    url = url + "&page=" + page;
                 }
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + this.$store.state.token_dispatcher;
@@ -152,7 +340,43 @@
                         }
                     });
 
-            }
+            },
+            search(searchValue, type) {
+                if (searchValue == null) {
+                    searchValue = "";
+                    this.searchQueryArray.delete(type);
+                    this.searchQuery = null;
+                    for (let [key, value] of this.searchQueryArray) {
+                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
+                    }
+                } else {
+                    this.searchQueryArray.delete(type);
+                    this.searchQueryArray.set(type, searchValue);
+                    this.searchQuery = null;
+                    for (let [key, value] of this.searchQueryArray) {
+                        this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
+                    }
+                }
+
+                this.fetchSlips();
+                return;
+
+            },
+            clearSearchFields() {
+                this.searchByDate = null;
+                this.searchByDriverName = null;
+                this.searchByBadgeId = null;
+                this.searchByVehicleNumber = null;
+                this.searchQueryArray.delete("searchByDate");
+                this.searchQueryArray.delete("searchByDriverName");
+                this.searchQueryArray.delete("searchByBadgeId");
+                this.searchQueryArray.delete("searchByVehicleNumber");
+                this.searchQuery = null;
+                for (let [key, value] of this.searchQueryArray) {
+                    this.searchQuery = (this.searchQuery != null ? this.searchQuery : "") + "&" + key + "=" + value;
+                }
+                this.fetchSlips();
+            },
 
         },
         computed: {}

@@ -655,6 +655,28 @@ const router = new VueRouter(
                                 ]
                         },
                         {
+                            path: '/preInspections',
+                            component: EmptyRouterView,
+                            children:
+                                [
+                                    {
+                                        path: '',
+                                        name: 'DriverDashboard_preInspections_index',
+                                        component: DriverDashboard_preInspections_index,
+                                    },
+                                    {
+                                        path: 'show/:id',
+                                        name: 'DriverDashboard_preInspections_showSlip',
+                                        component: DriverDashboard_preInspections_showSlip,
+                                    },
+                                    {
+                                        path: 'edit/:id',
+                                        name: 'DriverDashboard_preInspections_editSlip',
+                                        component: DriverDashboard_preInspections_editSlip,
+                                    },
+                                ]
+                        },
+                        {
                             path: 'profile',
                             name: 'DriverDashboard_profile',
                             component: DriverDashboard_profile,
@@ -668,28 +690,7 @@ const router = new VueRouter(
 
                     ]
             },
-            {
-                path: '/preInspections',
-                component: EmptyRouterView,
-                children:
-                    [
-                        {
-                            path: '',
-                            name: 'DriverDashboard_preInspections_index',
-                            component: DriverDashboard_preInspections_index,
-                        },
-                        {
-                            path: 'show/:id',
-                            name: 'DriverDashboard_preInspections_showSlip',
-                            component: DriverDashboard_preInspections_showSlip,
-                        },
-                        {
-                            path: 'edit/:id',
-                            name: 'DriverDashboard_preInspections_editSlip',
-                            component: DriverDashboard_preInspections_editSlip,
-                        },
-                    ]
-            },
+
 
 
             /////////////////////////////////// Director  ///////////////////////////////////////

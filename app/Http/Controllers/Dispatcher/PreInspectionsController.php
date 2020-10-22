@@ -10,16 +10,89 @@ use App\PreInspection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use PDF;
+
 class PreInspectionsController extends Controller
 {
 
+
+    //search
+    public function search(Request $request)
+    {
+        $data = request()->validate([
+            'searchByVehicleNumber' => 'sometimes',
+            'searchByBadgeId' => 'sometimes',
+            'searchByDate' => 'sometimes',
+            'searchByDriverName' => 'sometimes',
+        ]);
+        $slips = PreInspection::
+        join('vehicles', 'VehicleId', '=', 'vehicles.id')
+            ->where(function ($q) use (
+                $data
+            ) {
+                if (array_key_exists("searchByVehicleNumber", $data)) {
+                    $q->where('vehicles.number', 'LIKE','%'.$data['searchByVehicleNumber'].'%');
+                }
+                if (array_key_exists("searchByBadgeId", $data)) {
+
+                    $q->where('ownerBadgeId', 'LIKE', '%'.$data['searchByBadgeId'].'%');
+                }
+                if (array_key_exists("searchByDriverName", $data)) {
+
+                    $q->where('driverName', 'LIKE', '%'.$data['searchByDriverName'].'%');
+                }
+                if (array_key_exists("searchByDate", $data)) {
+                    $date = strtotime($data['searchByDate']);
+                    $date = date('Y-m-d', $date);
+                    $q->where('date', 'LIKE', '%' . $date . '%');
+                }
+            })
+            ->orderBy('pre_inspection_slips.date')
+            ->paginate(20)
+            ->appends(request()->query());
+
+
+        foreach ($slips as $slip) {
+            if (isset($slip["vehicle"]["password"]))
+                unset($slip["vehicle"]["password"]);
+            if (isset($slip["vehicle"]["number"]) && isset($slip["vehicle"]["type"]))
+                $slip["vehicle"]["vehicleName"] = $slip["vehicle"]["type"] . " " . $slip["vehicle"]["number"];
+        }
+
+        return $slips;
+    }
 
     //get all slips
     public function allSlips(Request $request)
     {
 
+        $data = request()->validate([
+            'searchByVehicleNumber' => 'sometimes',
+            'searchByBadgeId' => 'sometimes',
+            'searchByDate' => 'sometimes',
+            'searchByDriverName' => 'sometimes',
+        ]);
         $slips = PreInspection::
-        withAll()
+        join('vehicles', 'VehicleId', '=', 'vehicles.id')
+            ->where(function ($q) use (
+                $data
+            ) {
+                if (array_key_exists("searchByVehicleNumber", $data)) {
+                    $q->where('vehicles.number', 'LIKE', $data['searchByVehicleNumber']);
+                }
+                if (array_key_exists("searchByBadgeId", $data)) {
+
+                    $q->where('ownerBadgeId', 'LIKE', $data['searchByBadgeId']);
+                }
+                if (array_key_exists("searchByDriverName", $data)) {
+
+                    $q->where('driverName', 'LIKE', '%'.$data['searchByDriverName'].'%');
+                }
+                if (array_key_exists("searchByDate", $data)) {
+                    $date = strtotime($data['searchByDate']);
+                    $date = date('Y-m-d', $date);
+                    $q->where('date', 'LIKE', '%' . $date . '%');
+                }
+            })
             ->orderBy('pre_inspection_slips.date')
             ->paginate(20)
             ->appends(request()->query());

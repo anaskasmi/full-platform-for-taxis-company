@@ -429,6 +429,7 @@ Route::prefix('/dispatcher')->name('dispatcher.')->namespace('Dispatcher')->grou
         //PreInspection routes
         //Route::post('storePreInspection', 'PreInspectionsController@store')->name('PreInspectionsController.store');
         Route::get('preInspectionsSlips', 'PreInspectionsController@allSlips')->name('PreInspectionsController.allSlips');
+        Route::get('preInspectionsSlips/search', 'PreInspectionsController@search')->name('PreInspectionsController.search');
         Route::get('slipsByDriver/{badgeId}', 'PreInspectionsController@slipsByDriver')->name('PreInspectionsController.slipsByDriver');
         Route::get('slipsByVehicle/{id}', 'PreInspectionsController@slipsByVehicle')->name('PreInspectionsController.slipsByVehicle');
         Route::get('preInspectionSlip/{id}', 'PreInspectionsController@getSlipById')->name('PreInspectionsController.getSlipById');
