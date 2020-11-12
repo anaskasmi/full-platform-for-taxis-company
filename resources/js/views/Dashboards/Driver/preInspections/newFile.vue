@@ -168,7 +168,7 @@
                                                value="yes"
                                                v-model="slipData.interiorExterior">
                                         <label class="form-check-label" for="Interior_exterior_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -178,7 +178,7 @@
                                                value="No"
                                                v-model="slipData.interiorExterior">
                                         <label class="form-check-label" for="Interior_exterior_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -199,7 +199,7 @@
                                                value="yes"
                                                v-model="slipData.lampsAndIndicators">
                                         <label class="form-check-label" for="lamp_indicator_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -209,7 +209,7 @@
                                                value="No"
                                                v-model="slipData.lampsAndIndicators">
                                         <label class="form-check-label" for="lamp_indicator_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -230,7 +230,7 @@
                                                value="yes"
                                                v-model="slipData.steeringTires">
                                         <label class="form-check-label" for="steering_tires_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -240,7 +240,7 @@
                                                value="No"
                                                v-model="slipData.steeringTires">
                                         <label class="form-check-label" for="steering_tires_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -260,7 +260,7 @@
                                                value="yes"
                                                v-model="slipData.wheelsAndHubsAndFastners">
                                         <label class="form-check-label" for="wheel_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -269,7 +269,7 @@
                                                value="No"
                                                v-model="slipData.wheelsAndHubsAndFastners">
                                         <label class="form-check-label" for="wheel_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -289,7 +289,7 @@
                                                value="yes"
                                                v-model="slipData.glassAndMirrors">
                                         <label class="form-check-label" for="glass_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -298,7 +298,7 @@
                                                value="No"
                                                v-model="slipData.glassAndMirrors">
                                         <label class="form-check-label" for="glass_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -319,7 +319,7 @@
                                                value="yes"
                                                v-model="slipData.hydraulicBrakeSystem">
                                         <label class="form-check-label" for="brake_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -328,7 +328,7 @@
                                                value="No"
                                                v-model="slipData.hydraulicBrakeSystem">
                                         <label class="form-check-label" for="brake_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -349,7 +349,7 @@
                                                value="yes"
                                                v-model="slipData.heaterDefroster">
                                         <label class="form-check-label" for="heater_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -358,7 +358,7 @@
                                                value="No"
                                                v-model="slipData.heaterDefroster">
                                         <label class="form-check-label" for="heater_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -381,7 +381,7 @@
                                                value="yes"
                                                v-model="slipData.windShieldWipersAndWashers">
                                         <label class="form-check-label" for="windShield_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -391,7 +391,7 @@
                                                value="No"
                                                v-model="slipData.windShieldWipersAndWashers">
                                         <label class="form-check-label" for="windShield_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -412,7 +412,7 @@
                                                value="yes"
                                                v-model="slipData.horn">
                                         <label class="form-check-label" for="horn_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -421,7 +421,7 @@
                                                value="No"
                                                v-model="slipData.horn">
                                         <label class="form-check-label" for="horn_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -443,7 +443,7 @@
                                                value="yes"
                                                v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                         <label class="form-check-label" for="chairLift_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -453,7 +453,7 @@
                                                value="No"
                                                v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                         <label class="form-check-label" for="chairLift_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -473,7 +473,7 @@
                                                value="yes"
                                                v-model="slipData.turnJake">
                                         <label class="form-check-label" for="trunk_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -482,7 +482,7 @@
                                                value="No"
                                                v-model="slipData.turnJake">
                                         <label class="form-check-label" for="trunk_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -501,7 +501,7 @@
                                                value="yes"
                                                v-model="slipData.safeToDrive">
                                         <label class="form-check-label" for="safe_to_drive_true_id">
-                                            True
+                                            Yes
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline "
@@ -510,7 +510,7 @@
                                                value="No"
                                                v-model="slipData.safeToDrive">
                                         <label class="form-check-label" for="safe_to_drive_false_id">
-                                            False
+                                            No
                                         </label>
 
                                     </div>
@@ -786,7 +786,7 @@
                                                    value="yes"
                                                    v-model="slipData.interiorExterior">
                                             <label class="form-check-label" for="Interior_exterior_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -796,7 +796,7 @@
                                                    value="No"
                                                    v-model="slipData.interiorExterior">
                                             <label class="form-check-label" for="Interior_exterior_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -817,7 +817,7 @@
                                                    value="yes"
                                                    v-model="slipData.lampsAndIndicators">
                                             <label class="form-check-label" for="lamp_indicator_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -827,7 +827,7 @@
                                                    value="No"
                                                    v-model="slipData.lampsAndIndicators">
                                             <label class="form-check-label" for="lamp_indicator_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -848,7 +848,7 @@
                                                    value="yes"
                                                    v-model="slipData.steeringTires">
                                             <label class="form-check-label" for="steering_tires_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -858,7 +858,7 @@
                                                    value="No"
                                                    v-model="slipData.steeringTires">
                                             <label class="form-check-label" for="steering_tires_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -878,7 +878,7 @@
                                                    value="yes"
                                                    v-model="slipData.wheelsAndHubsAndFastners">
                                             <label class="form-check-label" for="wheel_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -887,7 +887,7 @@
                                                    value="No"
                                                    v-model="slipData.wheelsAndHubsAndFastners">
                                             <label class="form-check-label" for="wheel_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -907,7 +907,7 @@
                                                    value="yes"
                                                    v-model="slipData.glassAndMirrors">
                                             <label class="form-check-label" for="glass_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -916,7 +916,7 @@
                                                    value="No"
                                                    v-model="slipData.glassAndMirrors">
                                             <label class="form-check-label" for="glass_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -937,7 +937,7 @@
                                                    value="yes"
                                                    v-model="slipData.hydraulicBrakeSystem">
                                             <label class="form-check-label" for="brake_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -946,7 +946,7 @@
                                                    value="No"
                                                    v-model="slipData.hydraulicBrakeSystem">
                                             <label class="form-check-label" for="brake_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -967,7 +967,7 @@
                                                    value="yes"
                                                    v-model="slipData.heaterDefroster">
                                             <label class="form-check-label" for="heater_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -976,7 +976,7 @@
                                                    value="No"
                                                    v-model="slipData.heaterDefroster">
                                             <label class="form-check-label" for="heater_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -999,7 +999,7 @@
                                                    value="yes"
                                                    v-model="slipData.windShieldWipersAndWashers">
                                             <label class="form-check-label" for="windShield_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -1009,7 +1009,7 @@
                                                    value="No"
                                                    v-model="slipData.windShieldWipersAndWashers">
                                             <label class="form-check-label" for="windShield_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -1030,7 +1030,7 @@
                                                    value="yes"
                                                    v-model="slipData.horn">
                                             <label class="form-check-label" for="horn_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -1039,7 +1039,7 @@
                                                    value="No"
                                                    v-model="slipData.horn">
                                             <label class="form-check-label" for="horn_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -1061,7 +1061,7 @@
                                                    value="yes"
                                                    v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                             <label class="form-check-label" for="chairLift_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -1071,7 +1071,7 @@
                                                    value="No"
                                                    v-model="slipData.wheelChairLiftAndEmergencyEquipment">
                                             <label class="form-check-label" for="chairLift_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -1091,7 +1091,7 @@
                                                    value="yes"
                                                    v-model="slipData.turnJake">
                                             <label class="form-check-label" for="trunk_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -1100,7 +1100,7 @@
                                                    value="No"
                                                    v-model="slipData.turnJake">
                                             <label class="form-check-label" for="trunk_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
@@ -1119,7 +1119,7 @@
                                                    value="yes"
                                                    v-model="slipData.safeToDrive">
                                             <label class="form-check-label" for="safe_to_drive_true_id">
-                                                True
+                                                YES
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline "
@@ -1128,7 +1128,7 @@
                                                    value="No"
                                                    v-model="slipData.safeToDrive">
                                             <label class="form-check-label" for="safe_to_drive_false_id">
-                                                False
+                                                No
                                             </label>
 
                                         </div>
