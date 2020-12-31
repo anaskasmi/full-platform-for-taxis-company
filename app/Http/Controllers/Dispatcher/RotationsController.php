@@ -14,6 +14,7 @@ use App\Vehicle;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Auth;
 
 class RotationsController extends Controller
 {
@@ -271,6 +272,7 @@ class RotationsController extends Controller
                 'rotations.job_id as job_id',
                 'rotations.date as date',
                 'rotations.note as note',
+                'rotations.owner as owner',
                 //city
                 'cities.id as city_id',
                 'cities.name as city',
@@ -654,6 +656,7 @@ class RotationsController extends Controller
                 'message' => "No Driver Found with Badge Id " . $data["badge_id"]
             ), 400);
         }
+        $data['owner'] = Auth::user()->name;
         //create rotation
         $rotation = Rotation::create($data);
         //update marks

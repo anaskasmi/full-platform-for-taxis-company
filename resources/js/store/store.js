@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {isContext} from 'vm';
-import {resolve} from 'path';
+import { isContext } from 'vm';
+import { resolve } from 'path';
 
 Vue.use(Vuex);
 
@@ -10,8 +10,10 @@ export const store = new Vuex.Store({
     state: {
 
 
-        BASE_URL: 'http://app.test',
-        // BASE_URL : 'https://mytaxioffice.com',
+        // BASE_URL: 'http://app.test',
+        BASE_URL: 'https://mytaxioffice.com',
+        // BASE_URL: 'http://127.0.0.1:8000',
+
         //tokens
         token_driver: localStorage.getItem('access_token_driver') || null,
         token_admin: localStorage.getItem('access_token_admin') || null,
@@ -352,11 +354,10 @@ export const store = new Vuex.Store({
 
             if (credentials.type == 'driver') {
                 return new Promise((resolve, reject) => {
-                    axios.post(context.state.BASE_URL + '/api/driver/auth/login',
-                        {
-                            'PermitNumber': credentials.PermitNumber,
-                            'password': credentials.password,
-                        }).then(
+                    axios.post(context.state.BASE_URL + '/api/driver/auth/login', {
+                        'PermitNumber': credentials.PermitNumber,
+                        'password': credentials.password,
+                    }).then(
                         res => {
                             const token = res.data.access_token;
                             localStorage.setItem('access_token_driver', token);
@@ -374,11 +375,10 @@ export const store = new Vuex.Store({
 
             } else if (credentials.type == 'admin') {
                 return new Promise((resolve, reject) => {
-                    axios.post(context.state.BASE_URL + '/api/admin/auth/login',
-                        {
-                            'email': credentials.email,
-                            'password': credentials.password,
-                        }).then(
+                    axios.post(context.state.BASE_URL + '/api/admin/auth/login', {
+                        'email': credentials.email,
+                        'password': credentials.password,
+                    }).then(
                         res => {
                             const token = res.data.access_token;
                             localStorage.setItem('access_token_admin', token);
@@ -395,11 +395,10 @@ export const store = new Vuex.Store({
                 });
             } else if (credentials.type == 'director') {
                 return new Promise((resolve, reject) => {
-                    axios.post(context.state.BASE_URL + '/api/director/auth/login',
-                        {
-                            'email': credentials.email,
-                            'password': credentials.password,
-                        }).then(
+                    axios.post(context.state.BASE_URL + '/api/director/auth/login', {
+                        'email': credentials.email,
+                        'password': credentials.password,
+                    }).then(
                         res => {
                             const token = res.data.access_token;
                             localStorage.setItem('access_token_director', token);
@@ -416,11 +415,10 @@ export const store = new Vuex.Store({
                 });
             } else if (credentials.type == 'dispatcher') {
                 return new Promise((resolve, reject) => {
-                    axios.post(context.state.BASE_URL + '/api/dispatcher/auth/login',
-                        {
-                            'email': credentials.email,
-                            'password': credentials.password,
-                        }).then(
+                    axios.post(context.state.BASE_URL + '/api/dispatcher/auth/login', {
+                        'email': credentials.email,
+                        'password': credentials.password,
+                    }).then(
                         res => {
                             const token = res.data.access_token;
                             localStorage.setItem('access_token_dispatcher', token);

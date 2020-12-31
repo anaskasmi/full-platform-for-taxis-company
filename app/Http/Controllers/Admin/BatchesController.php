@@ -174,27 +174,44 @@ class BatchesController extends Controller
             ->where('batch_id', $batch->batch_id)
             ->first();
             if (!$checkAccountSlip) {
-                //create account slip
-                $accountSlip = new AccountSlip;
-                //add batch id
-                $accountSlip->batch_id = $batch->batch_id;
-                //add job id
-                $accountSlip->job_id = $trip->job_id;
-                $accountSlip->date = $trip->dropoff__date;
-                $accountSlip->vehicle = $trip->vehicle;
-                $accountSlip->badge_id = $trip->badge_id;
-                $accountSlip->customer_name = $trip->customer_name;
-                $accountSlip->pickup = $trip->pickup;
-                $accountSlip->dropoff = $trip->dropoff;
-                $accountSlip->fare = (int)($trip->fare*100);
-                $accountSlip->tip = (int)($trip->tip*100);
-                $accountSlip->total =(int)($trip->total*100);
-                $accountSlip->account = $trip->account;
-                $accountSlip->PO = $trip->po;
-                //add status = unverified
-                $accountSlip->status = "unverified";
-                $accountSlip->save();
-                $numberOfAddedTrips ++;
+                try {
+                    //create account slip
+                    $accountSlip = new AccountSlip;
+                    //add batch id
+                    $accountSlip->batch_id = $batch->batch_id;
+                    //add job id
+                    $accountSlip->job_id = $trip->job_id;
+                    $accountSlip->date = $trip->dropoff__date;
+                    $accountSlip->vehicle = $trip->vehicle;
+                    $accountSlip->badge_id = $trip->badge_id;
+                    $accountSlip->customer_name = $trip->customer_name;
+                    $accountSlip->pickup = $trip->pickup;
+                    $accountSlip->dropoff = $trip->dropoff;
+                    try {
+                        $accountSlip->fare = (int)($trip->fare*100);
+                    } catch (\Throwable $th) {
+                        $accountSlip->fare =0;
+                    }
+                    try {
+                        $accountSlip->tip = (int)($trip->tip*100);
+                    } catch (\Throwable $th) {
+                        $accountSlip->tip = 0;
+                    }
+                    try {
+                        $accountSlip->total =(int)($trip->total*100);
+                    } catch (\Throwable $th) {
+                        $accountSlip->total = 0;
+                   }
+                    $accountSlip->account = $trip->account;
+                    $accountSlip->PO = $trip->po;
+                    //add status = unverified
+                    $accountSlip->status = "unverified";
+                    $accountSlip->save();
+                    $numberOfAddedTrips ++;
+                } catch (\Throwable $th) {
+                    
+                }
+                
             }
 
             //envelope_id will be filled later
